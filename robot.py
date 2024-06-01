@@ -1,7 +1,8 @@
-from motor import Motor, BiMotor
-from ultrasonic import Ultra
-from infrared import IR
-from servo import Servo
+from robotlibrary.motor import Motor, BiMotor
+from robotlibrary.ultrasonic import Ultra
+from robotlibrary.infrared import IR
+from robotlibrary.servo import Servo
+
 import utime, random
 class Robot:
     '''Initialize the class.
