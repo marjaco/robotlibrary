@@ -1,6 +1,6 @@
 from machine import Pin, PWM
 import utime
-
+# Version 1.0
 class Motor:
     
     def __init__(self, pinNo):
@@ -8,9 +8,12 @@ class Motor:
         self.gpio = pinNo
         self._on = False
         self.speed=0
+        self.forward=True
         self.pwm1=PWM(Pin(pinNo))
         self.pwm1.freq(50000)
         self.pwm1.duty_u16(0)
+        self.pwm2=PWM(Pin(pinNo+1))
+        self.pwm2.duty_u16(0)
 
     def set_speed(self,s):
         self._on=True
@@ -24,14 +27,7 @@ class Motor:
     def on(self):
         self._on=True
         self.pwm1.duty_u16(int(self.MAX_SPEED*self.speed/100))
-
-class BiMotor(Motor):
-    def __init__(self, pinNo):
-        super().__init__(pinNo)
-        self.forward=True
-        self.pwm2=PWM(Pin(pinNo+1))
-        self.pwm2.duty_u16(0)
-    
+        
     def set_forward(self,forward):
         if self.forward==forward:
             return
@@ -39,3 +35,5 @@ class BiMotor(Motor):
         self.pwm1,self.pwm2=self.pwm2,self.pwm1        
         self.forward=forward
         self.pwm1.duty_u16(int(self.MAX_SPEED*self.speed/100))
+        
+

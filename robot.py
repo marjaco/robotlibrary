@@ -1,19 +1,21 @@
-from robotlibrary.motor import Motor, BiMotor
+from robotlibrary.motor import Motor
 from robotlibrary.ultrasonic import Ultra
 from robotlibrary.infrared import IR
 from robotlibrary.servo import Servo
-
+# Version 1.0
 import utime, random
 class Robot:
     '''Initialize the class.
-        motor_left= First pin for left motor, f.ex. 12
+        The parameters are in this order: 
+        motor_left = First pin for left motor, f.ex. 12
         motor_right = First pin for right motor, f. ex 14
         us = First pin for ultrasonic sensor, f. ex. 16
-        ir = Pin for IR-sensor
+        ir = Pin for IR-sensor, f. ex. 11
+        servo = Pin for servo motor, f. ex. 9
         Motors and ultrasonic sensor must use consecutive pins.'''
     def __init__(self,ml,mr,us,ir,s):
-        self.motor_left = BiMotor(ml)
-        self.motor_right = BiMotor(mr)
+        self.motor_left = Motor(ml)
+        self.motor_right = Motor(mr)
         if us >= 0:
             self.us = Ultra(us)
         if ir >= 0:
@@ -23,7 +25,14 @@ class Robot:
         self.speed = 0
         self.new_speed = 0
         self.last_turn_right = random.randint(0,1) == 0
-        
+#     def __init__(self,elements):
+#         for key in elements: 
+#             self.key = elements[key]
+#             print(key)
+#         self.speed = 0
+#         self.new_speed = 0
+#         self.last_turn_right = random.randint(0,1) == 0
+    
     def drive(self, dir_l, dir_r):
         '''This abstracted driving function is only called locally by the other functions with better names. '''
         print("alte_G: ", self.speed, " neue G: ", self.new_speed)
