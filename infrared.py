@@ -1,6 +1,6 @@
 from machine import Pin,Timer
 import micropython
-
+# Version 1.0
 micropython.alloc_emergency_exception_buf(100)
 
 class IR:

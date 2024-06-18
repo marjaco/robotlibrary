@@ -13,26 +13,24 @@ class Robot:
         ir = Pin for IR-sensor, f. ex. 11
         servo = Pin for servo motor, f. ex. 9
         Motors and ultrasonic sensor must use consecutive pins.'''
-    def __init__(self,ml,mr,us,ir,s):
-        self.motor_left = Motor(ml)
-        self.motor_right = Motor(mr)
-        if us >= 0:
-            self.us = Ultra(us)
-        if ir >= 0:
-            self.ir = IR(ir,self)
-        if s >=0:
-            self.servo = Servo(s,self)
-        self.speed = 0
-        self.new_speed = 0
-        self.last_turn_right = random.randint(0,1) == 0
-#     def __init__(self,elements):
-#         for key in elements: 
-#             self.key = elements[key]
-#             print(key)
+#     def __init__(self,ml,mr,us,ir,s):
+#         self.motor_left = Motor(ml)
+#         self.motor_right = Motor(mr)
+#         if us >= 0:
+#             self.us = Ultra(us)
+#         if ir >= 0:
+#             self.ir = IR(ir,self)
+#         if s >=0:
+#             self.servo = Servo(s,self)
 #         self.speed = 0
 #         self.new_speed = 0
 #         self.last_turn_right = random.randint(0,1) == 0
-    
+    def __init__(self,**kwargs):
+        self.__dict__ = kwargs
+        self.speed = 0
+        self.new_speed = 0
+        self.last_turn_right = random.randint(0,1) == 0
+        
     def drive(self, dir_l, dir_r):
         '''This abstracted driving function is only called locally by the other functions with better names. '''
         print("alte_G: ", self.speed, " neue G: ", self.new_speed)
@@ -56,8 +54,9 @@ class Robot:
         self.speed = self.new_speed
         
     def set_speed(self,s):
-        '''Sets the new speed. Has to be set before
-        other driving functions when changing the speed of the robot. '''
+        '''Sets the new speed. Doesn't change the driving mode of the robot. '''
+        self.motor_left.set_speed(self.new_speed)
+        self.motor_right.set_speed(self.new_speed)
         self.new_speed = s
         
     def forward(self):
@@ -68,25 +67,31 @@ class Robot:
         '''Drive forward. Speed has to be set before with set_speed()'''
         self.drive(False, False)
 
-    def turn_right(self, d):
+    def spin_right(self, d):
         '''Turn right for the given duration. We cannot determine the angle the robot turns without a compass or gyroscope.'''
         self.drive_instantly(True,False)
         utime.sleep_ms(d)
         self.emergency_stop()
         
-    def turn_before_obstacle(self, distance):
+    def turn_right(self):
+        new_speed = self.motor_right.speed -10
+        self.motor_left.set_speed(self.motor_left.speed + 5)
+        self.motor_right.set_speed(self.motor_left.speed -5)
+        
+        
+    def spin_before_obstacle(self, distance):
         self.drive(True,False)
         while self.get_dist() < distance:
             pass
         self.emergency_stop()
             
-    def turn_left(self, d):
+    def spin_left(self, d):
         '''Turn right for the given duration. We cannot determine the angle the robot turns without a compass or gyroscope.'''
         self.drive_instantly(False,True)
         utime.sleep_ms(d)
         self.emergency_stop()
         
-    def toggle_turn(self, d):
+    def toggle_spin(self, d):
         '''Toggle turn for the given duration. We cannot determine the angle the robot turns without a compass or gyroscope.'''
         if self.last_turn_right:
             self.turn_left(d)
@@ -95,7 +100,7 @@ class Robot:
         self.last_turn_right = not self.last_turn_right
     
     
-    def random_turn(self,d):
+    def random_spin(self,d):
         '''Randomly turn for the given duration. We cannot determine the angle the robot turns without a compass or gyroscope.'''
         if random.randint(0,1) == 0:
             self.turn_left(d)
