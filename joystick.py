@@ -1,11 +1,8 @@
 from machine import Pin,ADC,Timer
+from robotlibrary.config import MIN_DUTY, MAX_DUTY, X_MEDIAN, Y_MEDIAN, DEBOUNCE_WAIT
 import utime
 from robotlibrary.motor import Motor
-X_MEDIAN = 29940
-Y_MEDIAN = 30510
-MAX_DUTY = 65535
-MIN_DUTY = 260
-DEBOUNCE_WAIT = 100
+
 class Joystick:
     def __init__(self, x,y,b):
         self.x = ADC(x)

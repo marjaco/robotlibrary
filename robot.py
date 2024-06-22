@@ -7,24 +7,13 @@ import utime, random
 class Robot:
     '''Initialize the class.
         The parameters are in this order: 
-        motor_left = First pin for left motor, f.ex. 12
-        motor_right = First pin for right motor, f. ex 14
+        ml = First pin for left motor, f.ex. 12
+        mr = First pin for right motor, f. ex 14
         us = First pin for ultrasonic sensor, f. ex. 16
         ir = Pin for IR-sensor, f. ex. 11
         servo = Pin for servo motor, f. ex. 9
         Motors and ultrasonic sensor must use consecutive pins.'''
-#     def __init__(self,ml,mr,us,ir,s):
-#         self.motor_left = Motor(ml)
-#         self.motor_right = Motor(mr)
-#         if us >= 0:
-#             self.us = Ultra(us)
-#         if ir >= 0:
-#             self.ir = IR(ir,self)
-#         if s >=0:
-#             self.servo = Servo(s,self)
-#         self.speed = 0
-#         self.new_speed = 0
-#         self.last_turn_right = random.randint(0,1) == 0
+
     def __init__(self,**kwargs):
         self.__dict__ = kwargs
         self.speed = 0
@@ -33,30 +22,29 @@ class Robot:
         
     def drive(self, dir_l, dir_r):
         '''This abstracted driving function is only called locally by the other functions with better names. '''
-        print("alte_G: ", self.speed, " neue G: ", self.new_speed)
-        self.motor_left.set_forward(dir_l)
-        self.motor_right.set_forward(dir_r)
+        self.ml.set_forward(dir_l)
+        self.mr.set_forward(dir_r)
         if self.new_speed < self.speed:
             steps = -1
         else:
             steps = 1
         for i in range(self.speed,self.new_speed,steps):
-            self.motor_left.set_speed(i)
-            self.motor_right.set_speed(i)
+            self.ml.set_speed(i)
+            self.mr.set_speed(i)
             utime.sleep_ms(10+int(i/2))
         self.speed = self.new_speed
         
     def drive_instantly(self,dir_l,dir_r):
-        self.motor_left.set_forward(dir_l)
-        self.motor_right.set_forward(dir_r)
-        self.motor_left.set_speed(self.new_speed)
-        self.motor_right.set_speed(self.new_speed)
+        self.ml.set_forward(dir_l)
+        self.mr.set_forward(dir_r)
+        self.ml.set_speed(self.new_speed)
+        self.mr.set_speed(self.new_speed)
         self.speed = self.new_speed
         
     def set_speed(self,s):
         '''Sets the new speed. Doesn't change the driving mode of the robot. '''
-        self.motor_left.set_speed(self.new_speed)
-        self.motor_right.set_speed(self.new_speed)
+        self.ml.set_speed(self.new_speed)
+        self.mr.set_speed(self.new_speed)
         self.new_speed = s
         
     def forward(self):
@@ -74,12 +62,19 @@ class Robot:
         self.emergency_stop()
         
     def turn_right(self):
-        new_speed = self.motor_right.speed -10
-        self.motor_left.set_speed(self.motor_left.speed + 5)
-        self.motor_right.set_speed(self.motor_left.speed -5)
-        
-        
+        '''This turns the robot to the right without it spinning on the spot. Each call makes the curve steeper.'''
+        new_speed = self.mr.speed -10
+        self.ml.set_speed(self.ml.speed + 5)
+        self.mr.set_speed(self.ml.speed -5)
+    
+    def turn_left(self):
+        '''This turns the robot to the right without it spinning on the spot. Each call makes the curve steeper.'''
+        new_speed = self.ml.speed -10
+        self.mr.set_speed(self.mr.speed + 5)
+        self.ml.set_speed(self.ml.speed -5)
+          
     def spin_before_obstacle(self, distance):
+        '''This spins until the distance is greater than distance'''
         self.drive(True,False)
         while self.get_dist() < distance:
             pass
@@ -110,16 +105,16 @@ class Robot:
     def stop(self):
         '''Stop the robot slowly by deceleration. '''
         self.set_speed(0)
-        self.drive(self.motor_left.forward, self.motor_right.forward)
+        self.drive(self.ml.forward, self.mr.forward)
         
     def emergency_stop(self):
         '''Stop the robot immediately.'''
-        self.motor_left.set_speed(0)
-        self.motor_right.set_speed(0)
+        self.ml.set_speed(0)
+        self.mr.set_speed(0)
         # self.set_speed(0)
         self.speed = 0
     
-    def obstacle_detected(self, pin, pin_num):
+    def ir_detected(self, pin, pin_num):
         '''This method is called when the IR-sensor has detected a change. Fill in your code accordingly'''
         if pin.value() == 0:
             print("obstacle detected on pin", pin_num)
@@ -128,9 +123,11 @@ class Robot:
         # self.emergency_stop()
         
     def get_dist(self):
+        '''Get the distance from the ultrasonic sensor.'''
         return self.us.get_dist()
 
     def set_angle(self,a):
+        '''If implemented, turn the servo motor with the ultrasonic sensor to the given angle.'''
         self.servo.set_angle(a)
     
     def get_smallest_distance(self):
