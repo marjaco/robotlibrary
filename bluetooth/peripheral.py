@@ -3,9 +3,10 @@ from robotlibrary.bluetooth.advertising import advertising_payload
 from robotlibrary.bluetooth.ble_flags import *
 from robotlibrary.bluetooth.ble_services_definitions import ROBOT_SERVICE, ROBOT_UUID, MOTOR_RX_UUID, MOTOR_TX_UUID
 
+from robotlibrary.bluetooth.parser import decode_motor
 
 class BLEPeripheral:
-    def __init__(self, name="", add_robot_stuff=False):
+    def __init__(self, name="Theo", add_robot_stuff=False):
         self.ble = bluetooth.BLE()
         self._ble_irq_dict = {}
         self._handles = {}
@@ -16,7 +17,8 @@ class BLEPeripheral:
         self._payload = advertising_payload(name=name, services=[ROBOT_UUID])
         if add_robot_stuff:
             self._handles[ROBOT_UUID] = {}
-            [robot_handles] = self.ble.gatts_register_services((ROBOT_SERVICE, ))
+            #[robot_handles] = self.ble.gatts_register_services((ROBOT_SERVICE, ))
+            [robot_handles] = self.ble.gatts_register_services((ROBOT_SERVICE,))
             self._handles[ROBOT_UUID][MOTOR_RX_UUID] = robot_handles[0]
             self._handles[ROBOT_UUID][MOTOR_TX_UUID] = robot_handles[1]
             self.register_irq(IRQ_CENTRAL_CONNECT, self._handle_connect)
@@ -46,10 +48,12 @@ class BLEPeripheral:
         conn_handle, value_handle = data
         val = self.ble.gatts_read(value_handle)
         print(f"{value_handle} sent: {val}")
+        
         for service in self._handles:
             for char in self._handles[service]:
 
                 if self._handles[service][char] == value_handle and self._read_callbacks[char] is not None:
+                    print(self._read_callbacks[char], "val:",decode_motor(val))
                     self._read_callbacks[char](val)
 
     def send(self, service_uuid, char_uuid, data):

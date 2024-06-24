@@ -37,26 +37,29 @@ class Robot:
         self.last_turn_right = random.randint(0,1) == 0
         if rc:
             self.controller = BLEPeripheral(add_robot_stuff=True)
-            self.controller.register_read_callback(MOTOR_RX_UUID, self.read)
+            def read(buffer: memoryview):
+                print("read")
+                speed, turn, forward = decode_motor(bytes(buffer))
+                print(f"Speed: {speed}, Turn: {turn}, forward: {forward}")
+                if speed != self.speed:
+                    self.set_speed(speed)
+                if turn == 0:
+                    self.forward()
+                elif turn < 0:
+                    self.turn_left()
+                elif turn > 0:
+                    self.turn_right()
+                if forward:
+                    self.forward()
+                else:
+                    self.backward()
+                #to_send = encode_motor(self.get_speed, 0, True) # Brauche ich das?
+                #self.controller.send(ROBOT_UUID, MOTOR_TX_UUID, to_send) # Brauche ich das?
+            
+            self.controller.register_read_callback(MOTOR_RX_UUID, read)
             self.controller.advertise()
-        
-    def read(buffer: memoryview):
-        print("read")
-        speed, turn, forward = decode_motor(bytes(buffer))
-        print(f"Speed: {speed}, Turn: {turn}, forward: {forward}")
-        self.set_speed(speed)
-        if turn == 0:
-            forward()
-        elif turn < 0:
-            turn_left()
-        elif turn > 0:
-            turn_right()
-        if forward:
-            forward()
-        else:
-            backward()
-        to_send = encode_motor(self.speed, 0, True) # Brauche ich das?
-        self.controller.send(ROBOT_UUID, MOTOR_TX_UUID, to_send) # Brauche ich das?
+            print(decode_motor(encode_motor(50,30,False)))
+    
         
     def drive(self, dir_l, dir_r):
         '''This abstracted driving function is only called locally by the other functions with better names. '''
@@ -87,11 +90,11 @@ class Robot:
         
     def forward(self):
         '''Drive forward. Speed has to be set before with set_speed()'''
-        self.drive(True, True)
+        self.drive_instantly(True, True)
         
     def backward(self):
         '''Drive forward. Speed has to be set before with set_speed()'''
-        self.drive(False, False)
+        self.drive_instantly(False, False)
 
     def spin_right(self, d):
         '''Turn right for the given duration. We cannot determine the angle the robot turns without a compass or gyroscope.'''
@@ -101,19 +104,21 @@ class Robot:
         
     def turn_right(self):
         '''This turns the robot to the right without it spinning on the spot. Each call makes the curve steeper.'''
-        new_speed = self.mr.speed -10
+        #new_speed = self.mr.speed -10
         self.ml.set_speed(self.ml.speed + 5)
-        self.mr.set_speed(self.ml.speed -5)
+        self.mr.set_speed(self.mr.speed - 5)
+        
     
     def turn_left(self):
         '''This turns the robot to the right without it spinning on the spot. Each call makes the curve steeper.'''
-        new_speed = self.ml.speed -10
+        #new_speed = self.ml.speed -10
+        print("turn left")
         self.mr.set_speed(self.mr.speed + 5)
-        self.ml.set_speed(self.ml.speed -5)
+        self.ml.set_speed(self.ml.speed - 5)
           
     def spin_before_obstacle(self, distance):
         '''This spins until the distance is greater than distance'''
-        self.drive(True,False)
+        self.drive_instantly(True,False)
         while self.get_dist() < distance:
             pass
         self.emergency_stop()
@@ -127,18 +132,18 @@ class Robot:
     def toggle_spin(self, d):
         '''Toggle turn for the given duration. We cannot determine the angle the robot turns without a compass or gyroscope.'''
         if self.last_turn_right:
-            self.turn_left(d)
+            self.spin_left(d)
         else:
-            self.turn_right(d)
+            self.spin_right(d)
         self.last_turn_right = not self.last_turn_right
     
     
     def random_spin(self,d):
         '''Randomly turn for the given duration. We cannot determine the angle the robot turns without a compass or gyroscope.'''
         if random.randint(0,1) == 0:
-            self.turn_left(d)
+            self.spin_left(d)
         else:
-            self.turn_right(d)
+            self.spin_right(d)
                 
     def stop(self):
         '''Stop the robot slowly by deceleration. '''

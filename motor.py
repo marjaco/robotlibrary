@@ -27,6 +27,7 @@ class Motor:
     
     def off(self):
         self.pwm1.duty_u16(0)
+        self.speed = 0
     
     def set_forward(self,forward):
         if self.forward==forward:
@@ -34,6 +35,6 @@ class Motor:
         self.pwm1.duty_u16(0)
         self.pwm1,self.pwm2=self.pwm2,self.pwm1        
         self.forward=forward
-        self.pwm1.duty_u16(int(self.MAX_DUTY*self.speed/100))
+        self.pwm1.duty_u16(int(MAX_DUTY*self.speed/100))
         
 

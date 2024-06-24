@@ -1,5 +1,5 @@
 from machine import PWM, Pin
-from pin_map import pin_map
+from robotlibrary.bluetooth.pin_map import pin_map
 
 
 class Motor:
