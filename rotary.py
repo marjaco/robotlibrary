@@ -11,7 +11,7 @@ class Rotary:
     SW_PRESS = 4
     SW_RELEASE = 8
     
-    def __init__(self,dt,clk,sw, rc):
+    def __init__(self,dt,clk,sw,rc):
         self.dt_pin = Pin(dt, Pin.IN, Pin.PULL_UP)
         self.clk_pin = Pin(clk, Pin.IN, Pin.PULL_UP)
         self.sw_pin = Pin(sw, Pin.IN, Pin.PULL_UP)
@@ -43,7 +43,7 @@ class Rotary:
         self.last_button_status = self.sw_pin.value()
         if self.sw_pin.value():
             self.rc.button()
-            micropython.schedule(self.call_handlers, Rotary.SW_RELEASE)
-        else:
-            micropython.schedule(self.call_handlers, Rotary.SW_PRESS)
+            
+        
+
             

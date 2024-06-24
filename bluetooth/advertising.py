@@ -1,5 +1,5 @@
 from micropython import const
-from ble_flags import *
+from robotlibrary.bluetooth.ble_flags import *
 import struct
 import bluetooth
 

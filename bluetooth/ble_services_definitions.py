@@ -1,5 +1,5 @@
 from bluetooth import UUID
-from ble_flags import FLAG_READ, FLAG_WRITE, FLAG_NOTIFY, FLAG_WRITE_NO_RESPONSE
+from robotlibrary.bluetooth.ble_flags import FLAG_READ, FLAG_WRITE, FLAG_NOTIFY, FLAG_WRITE_NO_RESPONSE
 
 MOTOR_TX_UUID = UUID("3f31a1a6-7b4a-4169-9128-746027c34b42")
 MOTOR_RX_UUID = UUID("23f4d47c-d711-4cef-b896-7f7f8248e59f")

@@ -16,3 +16,10 @@ DEBOUNCE_WAIT = 30
 ########## Configuration for the detecting black or white with the IR-sensor.
 WHITE_DETECTED = 0
 BLACK_DETECTED = 1
+
+########## Configuration of pins
+ML=12
+MR=14
+US=16
+IR=11
+SERVO=9
