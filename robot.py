@@ -4,12 +4,13 @@ from robotlibrary.ultrasonic import Ultra
 from robotlibrary.infrared import IR
 from robotlibrary.servo import Servo
 import robotlibrary.config
+
 ########## Bluetooth
 import bluetooth
 from robotlibrary.bluetooth.peripheral import BLEPeripheral
 from robotlibrary.bluetooth.ble_services_definitions import ROBOT_UUID, MOTOR_RX_UUID, MOTOR_TX_UUID
 from robotlibrary.bluetooth.parser import decode_motor, encode_motor
-from robotlibrary.bluetooth.pin_map import MOTOR_LEFT_FORWARD, MOTOR_LEFT_BACKWARD, MOTOR_RIGHT_FORWARD, MOTOR_RIGHT_BACKWARD
+#from robotlibrary.bluetooth.pin_map import MOTOR_LEFT_FORWARD, MOTOR_LEFT_BACKWARD, MOTOR_RIGHT_FORWARD, MOTOR_RIGHT_BACKWARD
 
 from time import sleep
 
@@ -17,50 +18,45 @@ from time import sleep
 # Version 1.1
 import utime, random
 class Robot:
-    '''Initialize the class.
-        The parameters are in this order: 
-        ml = First pin for left motor, f.ex. 12
-        mr = First pin for right motor, f. ex 14
-        us = First pin for ultrasonic sensor, f. ex. 16
-        ir = Pin for IR-sensor, f. ex. 11
-        servo = Pin for servo motor, f. ex. 9
-        Motors and ultrasonic sensor must use consecutive pins.'''
     
+    def __init__(self,rc):
+        '''Initialize the class. The parameters are defined in config.py
+        Motors and ultrasonic sensor must use consecutive pins.'''
+        if robotlibrary.config.ML is not None: 
+            self.ml = Motor(robotlibrary.config.ML)
+        if robotlibrary.config.MR is not None:
+            self.mr = Motor(robotlibrary.config.MR)
+        if robotlibrary.config.US is not None:
+            self.us = Ultra(robotlibrary.config.US)
+        if robotlibrary.config.IR is not None:
+            self.ir = IR(robotlibrary.config.IR,self)
+        if robotlibrary.config.SERVO is not None:
+            self.servo = Servo(robotlibrary.config.SERVO)
+        self.speed = 0
+        self.new_speed = 0
+        self.last_turn_right = random.randint(0,1) == 0
+        if rc:
+            self.controller = BLEPeripheral(add_robot_stuff=True)
+            self.controller.register_read_callback(MOTOR_RX_UUID, self.read)
+            self.controller.advertise()
+        
     def read(buffer: memoryview):
         print("read")
         speed, turn, forward = decode_motor(bytes(buffer))
+        print(f"Speed: {speed}, Turn: {turn}, forward: {forward}")
         self.set_speed(speed)
         if turn == 0:
             forward()
         elif turn < 0:
             turn_left()
         elif turn > 0:
-            turn_right
+            turn_right()
         if forward:
             forward()
         else:
             backward()
-        to_send = encode_motor(self.speed, 0, True)
-        self.controller.send(ROBOT_UUID, MOTOR_TX_UUID, to_send)
-            
-    def __init__(self,rc):
-        self.ml = Motor(robotlibrary.config.ML)
-        self.mr = Motor(robotlibrary.config.MR)
-        self.us = Ultra(robotlibrary.config.US)
-        self.ir = IR(robotlibrary.config.IR,self)
-        self.speed = 0
-        self.new_speed = 0
-        self.last_turn_right = random.randint(0,1) == 0
-        if rc:
-            self.controller = BLEPeripheral(add_robot_stuff=True)
-            
-            #to_send = encode_motor(self.speed, 0, True)
-            #self.controller.send(ROBOT_UUID, MOTOR_TX_UUID, to_send)
-            
-            self.controller.register_read_callback(MOTOR_RX_UUID, self.read)
-            self.controller.advertise()
-        
-    
+        to_send = encode_motor(self.speed, 0, True) # Brauche ich das?
+        self.controller.send(ROBOT_UUID, MOTOR_TX_UUID, to_send) # Brauche ich das?
         
     def drive(self, dir_l, dir_r):
         '''This abstracted driving function is only called locally by the other functions with better names. '''

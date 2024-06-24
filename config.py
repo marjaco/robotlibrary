@@ -18,6 +18,7 @@ WHITE_DETECTED = 0
 BLACK_DETECTED = 1
 
 ########## Configuration of pins
+# Motors and ultrasonic sensor must use consecutive pins. 
 ML=12
 MR=14
 US=16
