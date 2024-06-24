@@ -26,6 +26,7 @@ class RC:
         print("waiting for connection")
         while not self.server.is_connected():
             sleep(1)
+        sleep(5)
         print("Found connection")
 
 #         while True:
@@ -35,7 +36,7 @@ class RC:
 #                                                                     int(left_speed), int(right_speed))
 #             print(left_forward, right_forward)
             
-    def read(self):
+    def read(self,a):
         print("read")
     
     def send(self,t):
