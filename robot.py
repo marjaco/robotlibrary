@@ -11,7 +11,7 @@ from robotlibrary.bluetooth.peripheral import BLEPeripheral
 from robotlibrary.bluetooth.ble_services_definitions import ROBOT_UUID, MOTOR_RX_UUID, MOTOR_TX_UUID
 from robotlibrary.bluetooth.parser import decode_motor, encode_motor
 #from robotlibrary.bluetooth.pin_map import MOTOR_LEFT_FORWARD, MOTOR_LEFT_BACKWARD, MOTOR_RIGHT_FORWARD, MOTOR_RIGHT_BACKWARD
-
+import machine
 from time import sleep
 
 
@@ -38,27 +38,28 @@ class Robot:
         if rc:
             self.controller = BLEPeripheral(add_robot_stuff=True)
             def read(buffer: memoryview):
-                print("read")
                 speed, turn, forward = decode_motor(bytes(buffer))
-                print(f"Speed: {speed}, Turn: {turn}, forward: {forward}")
+                #print(f"Speed: {speed}, Turn: {turn}, forward: {forward}")
                 if speed != self.speed:
-                    self.set_speed(speed)
+                    self.set_speed_instantly(speed)
                 if turn == 0:
-                    self.forward()
+                    self.go_straight()
                 elif turn < 0:
-                    self.turn_left()
+                    if turn < -5:
+                        self.spin_left()
+                    else:
+                        self.turn_left()
                 elif turn > 0:
-                    self.turn_right()
-                if forward:
-                    self.forward()
-                else:
-                    self.backward()
-                #to_send = encode_motor(self.get_speed, 0, True) # Brauche ich das?
-                #self.controller.send(ROBOT_UUID, MOTOR_TX_UUID, to_send) # Brauche ich das?
-            
+                    if turn > 5:
+                        self.spin_right()
+                    else:
+                        self.turn_right()
+                if turn > -5 and turn < 5:    
+                    self.set_forward(forward)
+                            
             self.controller.register_read_callback(MOTOR_RX_UUID, read)
             self.controller.advertise()
-            print(decode_motor(encode_motor(50,30,False)))
+            #print(decode_motor(encode_motor(50,30,False)))
     
         
     def drive(self, dir_l, dir_r):
@@ -82,53 +83,79 @@ class Robot:
         self.mr.set_speed(self.new_speed)
         self.speed = self.new_speed
         
-    def set_speed(self,s):
+    def set_speed_instantly(self,s):
         '''Sets the new speed. Doesn't change the driving mode of the robot. '''
         self.ml.set_speed(self.new_speed)
         self.mr.set_speed(self.new_speed)
+        self.speed = s
         self.new_speed = s
         
-    def forward(self):
-        '''Drive forward. Speed has to be set before with set_speed()'''
-        self.drive_instantly(True, True)
+    def set_speed(self,s):
+        '''Sets the new speed. Doesn't change the driving mode of the robot. '''
+        self.new_speed = s
+        if self.new_speed < self.speed:
+            steps = -1
+        else:
+            steps = 1
+        for i in range(self.speed,self.new_speed,steps):
+            self.ml.set_speed(i)
+            self.mr.set_speed(i)
+            utime.sleep_ms(10+int(i/2))
+        self.speed = self.new_speed
         
-    def backward(self):
-        '''Drive forward. Speed has to be set before with set_speed()'''
-        self.drive_instantly(False, False)
+    def set_forward(self,f):
+        self.ml.set_forward(f)
+        self.mr.set_forward(f)
+        self.ml.set_speed(self.speed)
+        self.mr.set_speed(self.speed)
+        
+#     def forward(self):
+#         '''Drive forward. Speed has to be set before with set_speed()'''
+#         self.drive(True, True)
+#      
+#     def backward(self):
+#         '''Drive forward. Speed has to be set before with set_speed()'''
+#         self.drive(False, False)
 
-    def spin_right(self, d):
-        '''Turn right for the given duration. We cannot determine the angle the robot turns without a compass or gyroscope.'''
+    def spin_right(self):
+        '''Spin right. We cannot determine the angle the robot turns without a compass or gyroscope.'''
+        self.ml.reset_offset()
+        self.mr.reset_offset()
         self.drive_instantly(True,False)
-        utime.sleep_ms(d)
-        self.emergency_stop()
+        #utime.sleep_ms(d)
+        #self.emergency_stop()
+    
+    def spin_left(self):
+        '''Spin right. We cannot determine the angle the robot turns without a compass or gyroscope.'''
+        self.ml.reset_offset()
+        self.mr.reset_offset()
+        self.drive_instantly(False,True)
+        #utime.sleep_ms(d)
+        #self.emergency_stop()
         
     def turn_right(self):
         '''This turns the robot to the right without it spinning on the spot. Each call makes the curve steeper.'''
-        #new_speed = self.mr.speed -10
-        self.ml.set_speed(self.ml.speed + 5)
-        self.mr.set_speed(self.mr.speed - 5)
+        self.ml.change_speed(5)
+        self.mr.change_speed(-5)
         
-    
     def turn_left(self):
         '''This turns the robot to the right without it spinning on the spot. Each call makes the curve steeper.'''
-        #new_speed = self.ml.speed -10
-        print("turn left")
-        self.mr.set_speed(self.mr.speed + 5)
-        self.ml.set_speed(self.ml.speed - 5)
-          
+        self.mr.change_speed(5)
+        self.ml.change_speed(-5)
+        
+    def go_straight(self):
+        self.ml.reset_offset()
+        self.mr.reset_offset()
+        self.ml.set_speed(self.speed)
+        self.mr.set_speed(self.speed)
+        
     def spin_before_obstacle(self, distance):
         '''This spins until the distance is greater than distance'''
         self.drive_instantly(True,False)
         while self.get_dist() < distance:
             pass
         self.emergency_stop()
-            
-    def spin_left(self, d):
-        '''Turn right for the given duration. We cannot determine the angle the robot turns without a compass or gyroscope.'''
-        self.drive_instantly(False,True)
-        utime.sleep_ms(d)
-        self.emergency_stop()
-        
+                
     def toggle_spin(self, d):
         '''Toggle turn for the given duration. We cannot determine the angle the robot turns without a compass or gyroscope.'''
         if self.last_turn_right:

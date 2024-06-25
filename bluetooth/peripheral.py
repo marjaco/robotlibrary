@@ -47,13 +47,13 @@ class BLEPeripheral:
     def _handle_read(self, data):
         conn_handle, value_handle = data
         val = self.ble.gatts_read(value_handle)
-        print(f"{value_handle} sent: {val}")
+        #print(f"{value_handle} sent: {val}")
         
         for service in self._handles:
             for char in self._handles[service]:
 
                 if self._handles[service][char] == value_handle and self._read_callbacks[char] is not None:
-                    print(self._read_callbacks[char], "val:",decode_motor(val))
+                    #print(self._read_callbacks[char], "val:",decode_motor(val))
                     self._read_callbacks[char](val)
 
     def send(self, service_uuid, char_uuid, data):

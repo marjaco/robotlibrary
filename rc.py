@@ -12,12 +12,13 @@ class RC:
         self.forward = True
         self.speed = 0
         self.val = 0
+        self.change = True
         self.rotary_top = Rotary(18,19,16,self)
         self.rotary_bottom = Rotary(20,21,17,self)
         self.timer = Timer()
         self.timer.init(mode=Timer.PERIODIC, period=20, callback=self.set_speed)
         self.send_timer = Timer()
-        self.send_timer.init(mode=Timer.PERIODIC, period=2000, callback=self.send)
+        self.send_timer.init(mode=Timer.PERIODIC, period=200, callback=self.send)
         self.duty_cycle = 0
         self.p = ADC(28)
         self.server = BLECentral(True)
@@ -40,32 +41,35 @@ class RC:
         print("read")
     
     def send(self,t):
-        print("sending data ...")
-        data = encode_motor(self.speed, self.val, self.forward)
-        self.server.send(ROBOT_UUID, MOTOR_RX_UUID, data)
+        if self.change: 
+            #print("sending data ...")
+            data = encode_motor(self.speed, self.val, self.forward)
+            self.server.send(ROBOT_UUID, MOTOR_RX_UUID, data)
+            self.change = False
     
     def rotary_changed(self,change):
+        self.change = True
         if change == Rotary.ROT_CW: # Rotary encoder turned clockwise.
             self.val = self.val + 1
             if self.val > 0:
-                print("go right")
+                #print("go right")
                 #current_status["left_speed"] -= self.val * 5
                 #current_status["right_speed"] += self.val * 5
             else: # We are back to straight on.
                 self.val = 0
-                print("go straight")
+                #print("go straight")
                 # go straight on
             
         elif change == Rotary.ROT_CCW: # Rotary encoder turned anti-clockwise.
             self.val = self.val - 1
             
             if self.val < 0:
-                print("go left")
+                #print("go left")
                 #current_status["left_speed"] += self.val * 5
                 #current_status["right_forward"] -= self.val * 5
             else:
                 self.val = 0
-                print("go straight")
+                #print("go straight")
                 # go straight on
         elif change == Rotary.SW_RELEASE: # Button pressed.
             utime.sleep_ms(10)
@@ -73,9 +77,10 @@ class RC:
             
     def button(self):
         self.forward = not self.forward
+        self.change = True
         #current_status["left_forward"] = not current_status["left_forward"]
         #current_status["right_forward"] = not current_status["right_forward"]
-        print("toggle direction")
+        #print("toggle direction")
         
     def set_speed(self,t):
         cycles = [0,0,0,0,0]
@@ -95,7 +100,8 @@ class RC:
                 speed = int(MAX_SPEED/MAX_DUTY*dc)
             if speed != self.speed:
                 self.speed = speed
-                print(self.speed)
+                #print(self.speed)
+                self.change = True
         #current_status["left_speed"] = speed
         #current_status["right_speed"] = speed
         #send_motor_command()

@@ -14,7 +14,7 @@ class Motor:
         self.pwm2=PWM(Pin(pinNo+1))
         self.pwm2.freq(50000)
         self.pwm2.duty_u16(0)
-        
+        self.speed_offset = 0
 
     def set_speed(self,s):
         '''Sets the speed of the motor. Checks for sensible input.'''
@@ -22,9 +22,17 @@ class Motor:
             s = 0
         elif s > MAX_SPEED:
             s = MAX_SPEED
-        self.pwm1.duty_u16(int(MAX_DUTY*s/100))
+        self.pwm1.duty_u16(int(MAX_DUTY*(s+self.speed_offset)/100))
         self.speed=s
     
+    def change_speed(self,sc):
+        if self.speed + sc > MIN_SPEED or self.speed +sc < MAX_SPEED: 
+            self.speed_offset += sc
+            self.set_speed(self.speed)
+        
+    def reset_offset(self):
+        self.speed_offset = 0
+        
     def off(self):
         self.pwm1.duty_u16(0)
         self.speed = 0
@@ -35,6 +43,7 @@ class Motor:
         self.pwm1.duty_u16(0)
         self.pwm1,self.pwm2=self.pwm2,self.pwm1        
         self.forward=forward
-        self.pwm1.duty_u16(int(MAX_DUTY*self.speed/100))
+        self.set_speed(self.speed)
+        #self.pwm1.duty_u16(int(MAX_DUTY*(self.speed+self.speed_offset)/100))
         
 
