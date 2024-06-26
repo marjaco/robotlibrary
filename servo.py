@@ -1,6 +1,6 @@
 from machine import Pin, PWM
 import utime
-# Version 1.0
+
 class Servo:
     def __init__(self,pin):
         self.pin=PWM(Pin(pin))

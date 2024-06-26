@@ -1,4 +1,4 @@
-########## Cinfiguration for the Joystick rmote control
+########## Configuration for the Joystick remote control
 JS_X_MEDIAN = 29940 
 JS_Y_MEDIAN = 30510
 JS_MAX_DUTY = 65535
@@ -18,9 +18,9 @@ WHITE_DETECTED = 0
 BLACK_DETECTED = 1
 
 ########## Configuration of pins
-# Motors and ultrasonic sensor must use consecutive pins. 
+# Motors and ultrasonic sensor must use consecutive pins. Comment out parts you don't use. 
 ML=12
 MR=14
 US=16
-IR=11
-SERVO=9
+IR=None #11
+SERVO=None #9

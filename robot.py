@@ -10,12 +10,11 @@ import bluetooth
 from robotlibrary.bluetooth.peripheral import BLEPeripheral
 from robotlibrary.bluetooth.ble_services_definitions import ROBOT_UUID, MOTOR_RX_UUID, MOTOR_TX_UUID
 from robotlibrary.bluetooth.parser import decode_motor, encode_motor
-#from robotlibrary.bluetooth.pin_map import MOTOR_LEFT_FORWARD, MOTOR_LEFT_BACKWARD, MOTOR_RIGHT_FORWARD, MOTOR_RIGHT_BACKWARD
-import machine
+
+import machine, sys
 from time import sleep
 
 
-# Version 1.1
 import utime, random
 class Robot:
     
@@ -39,7 +38,7 @@ class Robot:
             self.controller = BLEPeripheral(add_robot_stuff=True)
             def read(buffer: memoryview):
                 speed, turn, forward = decode_motor(bytes(buffer))
-                #print(f"Speed: {speed}, Turn: {turn}, forward: {forward}")
+                # print(f"Speed: {speed}, Turn: {turn}, forward: {forward}") # uncomment for debugging
                 if speed != self.speed:
                     self.set_speed_instantly(speed)
                 if turn == 0:
@@ -59,7 +58,7 @@ class Robot:
                             
             self.controller.register_read_callback(MOTOR_RX_UUID, read)
             self.controller.advertise()
-            #print(decode_motor(encode_motor(50,30,False)))
+
     
         
     def drive(self, dir_l, dir_r):

@@ -1,7 +1,7 @@
 from machine import Pin
 from time import sleep
 import utime
-# Version 1.0
+
 class Ultra:
    def __init__(self, pinNo):
        self.trigger = Pin(pinNo, Pin.OUT) # to trigger a sound impulse

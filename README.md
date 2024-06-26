@@ -2,5 +2,8 @@ This is a library written in micropython for a modified SMARS robot, driven by a
 + ultrasonic sensor
 + infrared sensor
 + servo motor that turns the ultrasonic sensor for sweeps of the surroundings.
++ the motors of course
++ a remote control via bluetooth can be connected. 2 tpyes are available: 1 with a slider for speed and two rotary encoders, one with a joystick.
++ a bluetooth library that handles the connections. 
   
-You have also two classes for different types of remote controls. (work in progress)
+More information on [Jb Knowledgebase](https://jb-net.eu/bookstack)

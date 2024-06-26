@@ -1,17 +1,24 @@
+########## Import the configuration
 from robotlibrary.config import MIN_DUTY, MAX_DUTY, MAX_SPEED, MIN_SPEED
 from robotlibrary.rotary import Rotary
-import utime
-from time import sleep
+
+########## Import bluetooth library
 from robotlibrary.bluetooth.central import BLECentral
 from robotlibrary.bluetooth.ble_services_definitions import MOTOR_TX_UUID, MOTOR_RX_UUID, ROBOT_UUID
 from robotlibrary.bluetooth.parser import encode_motor, decode_motor
+
+########## Import pico micropython libraries
+import utime
 from machine import Timer,ADC
+import micropython
+micropython.alloc_emergency_exception_buf(100)
+
 class RC:
     
     def __init__(self):
         self.forward = True
         self.speed = 0
-        self.val = 0
+        self.turn_val = 0 # 0=straight on; >0=turn right; <0=turn left
         self.change = True
         self.rotary_top = Rotary(18,19,16,self)
         self.rotary_bottom = Rotary(20,21,17,self)
@@ -26,8 +33,8 @@ class RC:
         self.server.scan()
         print("waiting for connection")
         while not self.server.is_connected():
-            sleep(1)
-        sleep(5)
+            utime.sleep(1)
+        utime.sleep(5)
         print("Found connection")
 
 #         while True:
@@ -43,34 +50,21 @@ class RC:
     def send(self,t):
         if self.change: 
             #print("sending data ...")
-            data = encode_motor(self.speed, self.val, self.forward)
+            data = encode_motor(self.speed, self.turn_val, self.forward)
             self.server.send(ROBOT_UUID, MOTOR_RX_UUID, data)
             self.change = False
     
     def rotary_changed(self,change):
+        '''This is called when the direction knob is turned to determine the turn or spin. '''
         self.change = True
         if change == Rotary.ROT_CW: # Rotary encoder turned clockwise.
-            self.val = self.val + 1
-            if self.val > 0:
-                #print("go right")
-                #current_status["left_speed"] -= self.val * 5
-                #current_status["right_speed"] += self.val * 5
-            else: # We are back to straight on.
-                self.val = 0
-                #print("go straight")
-                # go straight on
-            
+            self.turn_val = self.turn_val + 1
+            if self.turn_val < 0:
+                self.turn_val = 0            
         elif change == Rotary.ROT_CCW: # Rotary encoder turned anti-clockwise.
-            self.val = self.val - 1
-            
-            if self.val < 0:
-                #print("go left")
-                #current_status["left_speed"] += self.val * 5
-                #current_status["right_forward"] -= self.val * 5
-            else:
-                self.val = 0
-                #print("go straight")
-                # go straight on
+            self.turn_val = self.turn_val - 1
+            if self.turn_val > 0:
+                self.turn_val = 0
         elif change == Rotary.SW_RELEASE: # Button pressed.
             utime.sleep_ms(10)
             self.button()
@@ -78,11 +72,9 @@ class RC:
     def button(self):
         self.forward = not self.forward
         self.change = True
-        #current_status["left_forward"] = not current_status["left_forward"]
-        #current_status["right_forward"] = not current_status["right_forward"]
-        #print("toggle direction")
-        
+                
     def set_speed(self,t):
+        '''This calculates the speed between MIN_SPEED and MAX_SPEED that is sent to the robot.'''
         cycles = [0,0,0,0,0]
         sum=0
         for i in range(0,len(cycles)):
@@ -100,11 +92,7 @@ class RC:
                 speed = int(MAX_SPEED/MAX_DUTY*dc)
             if speed != self.speed:
                 self.speed = speed
-                #print(self.speed)
                 self.change = True
-        #current_status["left_speed"] = speed
-        #current_status["right_speed"] = speed
-        #send_motor_command()
 
 def main():
     rc = RC()
