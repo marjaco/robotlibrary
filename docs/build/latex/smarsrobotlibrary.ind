@@ -1,0 +1,398 @@
+\begin{sphinxtheindex}
+\let\bigletter\sphinxstyleindexlettergroup
+\let\spxpagem \sphinxstyleindexpagemain
+\let\spxentry \sphinxstyleindexentry
+\let\spxextra \sphinxstyleindexextra
+
+  \bigletter {\sphinxsymbolsname}
+  \item \spxentry{\_ADV\_MAX\_PAYLOAD}\spxextra{in module robotlibrary.bluetooth.advertising}, 
+		\hyperpage{1}
+  \item \spxentry{\_drive()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{10}
+  \item \spxentry{\_drive\_instantly()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{10}
+  \item \spxentry{\_get\_duty()}\spxextra{robotlibrary.servo.Servo method}, \hyperpage{12}
+  \item \spxentry{\_handle\_characteristics()}\spxextra{robotlibrary.bluetooth.central.BLECentral method}, 
+		\hyperpage{4}
+  \item \spxentry{\_handle\_connect()}\spxextra{robotlibrary.bluetooth.central.BLECentral method}, 
+		\hyperpage{4}
+  \item \spxentry{\_handle\_connect()}\spxextra{robotlibrary.bluetooth.peripheral.BLEPeripheral method}, 
+		\hyperpage{6}
+  \item \spxentry{\_handle\_disconnect()}\spxextra{robotlibrary.bluetooth.central.BLECentral method}, 
+		\hyperpage{4}
+  \item \spxentry{\_handle\_disconnect()}\spxextra{robotlibrary.bluetooth.peripheral.BLEPeripheral method}, 
+		\hyperpage{6}
+  \item \spxentry{\_handle\_read()}\spxextra{robotlibrary.bluetooth.central.BLECentral method}, 
+		\hyperpage{4}
+  \item \spxentry{\_handle\_read()}\spxextra{robotlibrary.bluetooth.peripheral.BLEPeripheral method}, 
+		\hyperpage{6}
+  \item \spxentry{\_handle\_scan()}\spxextra{robotlibrary.bluetooth.central.BLECentral method}, 
+		\hyperpage{4}
+  \item \spxentry{\_handle\_services()}\spxextra{robotlibrary.bluetooth.central.BLECentral method}, 
+		\hyperpage{4}
+  \item \spxentry{\_irq()}\spxextra{robotlibrary.bluetooth.central.BLECentral method}, 
+		\hyperpage{5}
+  \item \spxentry{\_irq()}\spxextra{robotlibrary.bluetooth.peripheral.BLEPeripheral method}, 
+		\hyperpage{6}
+  \item \spxentry{\_on\_service\_discovery\_complete()}\spxextra{robotlibrary.bluetooth.central.BLECentral method}, 
+		\hyperpage{4}
+
+  \indexspace
+  \bigletter A
+  \item \spxentry{ADV\_DIRECT\_IND}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{ADV\_IND}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, \hyperpage{3}
+  \item \spxentry{ADV\_NONCONN\_IND}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{ADV\_SCAN\_IND}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{ADV\_TYPE\_APPEARANCE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{ADV\_TYPE\_FLAGS}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{ADV\_TYPE\_MANUFACTURER\_DATA}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{ADV\_TYPE\_NAME}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{ADV\_TYPE\_UUID128\_COMPLETE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{ADV\_TYPE\_UUID128\_MORE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{ADV\_TYPE\_UUID16\_COMPLETE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{ADV\_TYPE\_UUID16\_MORE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{ADV\_TYPE\_UUID32\_COMPLETE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{ADV\_TYPE\_UUID32\_MORE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{advertise()}\spxextra{robotlibrary.bluetooth.peripheral.BLEPeripheral method}, 
+		\hyperpage{6}
+  \item \spxentry{advertising\_payload()}\spxextra{in module robotlibrary.bluetooth.advertising}, 
+		\hyperpage{1}
+  \item \spxentry{author}\spxextra{in module conf}, \hyperpage{13}
+  \item \spxentry{autoapi\_dirs}\spxextra{in module conf}, \hyperpage{13}
+
+  \indexspace
+  \bigletter B
+  \item \spxentry{BLACK\_DETECTED}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+  \item \spxentry{BLECentral}\spxextra{class in robotlibrary.bluetooth.central}, \hyperpage{4}
+  \item \spxentry{BLEPeripheral}\spxextra{class in robotlibrary.bluetooth.peripheral}, 
+		\hyperpage{6}
+  \item \spxentry{button()}\spxextra{robotlibrary.rc.RC method}, \hyperpage{10}
+  \item \spxentry{button\_handler()}\spxextra{robotlibrary.joystick.Joystick method}, \hyperpage{8}
+
+  \indexspace
+  \bigletter C
+  \item \spxentry{change\_speed()}\spxextra{robotlibrary.motor.Motor method}, \hyperpage{9}
+  \item \spxentry{conf}
+    \subitem \spxentry{module}, \hyperpage{13}
+  \item \spxentry{copyright}\spxextra{in module conf}, \hyperpage{13}
+
+  \indexspace
+  \bigletter D
+  \item \spxentry{DEBOUNCE\_WAIT}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+  \item \spxentry{decode\_field()}\spxextra{in module robotlibrary.bluetooth.advertising}, 
+		\hyperpage{2}
+  \item \spxentry{decode\_motor()}\spxextra{in module robotlibrary.bluetooth.parser}, \hyperpage{6}
+  \item \spxentry{decode\_services()}\spxextra{in module robotlibrary.bluetooth.advertising}, 
+		\hyperpage{2}
+
+  \indexspace
+  \bigletter E
+  \item \spxentry{emergency\_stop()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{11}
+  \item \spxentry{encode\_motor()}\spxextra{in module robotlibrary.bluetooth.parser}, \hyperpage{6}
+  \item \spxentry{exclude\_patterns}\spxextra{in module conf}, \hyperpage{13}
+  \item \spxentry{extensions}\spxextra{in module conf}, \hyperpage{13}
+
+  \indexspace
+  \bigletter F
+  \item \spxentry{FLAG\_NOTIFY}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{4}
+  \item \spxentry{FLAG\_READ}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, \hyperpage{4}
+  \item \spxentry{FLAG\_WRITE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, \hyperpage{4}
+  \item \spxentry{FLAG\_WRITE\_NO\_RESPONSE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{4}
+
+  \indexspace
+  \bigletter G
+  \item \spxentry{GATTS\_ERROR\_INSUFFICIENT\_AUTHENTICATION}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{GATTS\_ERROR\_INSUFFICIENT\_AUTHORIZATION}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{GATTS\_ERROR\_INSUFFICIENT\_ENCRYPTION}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{GATTS\_ERROR\_READ\_NOT\_PERMITTED}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{GATTS\_ERROR\_WRITE\_NOT\_PERMITTED}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{GATTS\_NO\_ERROR}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{get\_direction()}\spxextra{robotlibrary.joystick.Joystick method}, \hyperpage{8}
+  \item \spxentry{get\_dist()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{11}
+  \item \spxentry{get\_dist()}\spxextra{robotlibrary.ultrasonic.Ultra method}, \hyperpage{12}
+  \item \spxentry{get\_longest\_distance()}\spxextra{robotlibrary.robot.Robot method}, 
+		\hyperpage{11}
+  \item \spxentry{get\_smallest\_distance()}\spxextra{robotlibrary.robot.Robot method}, 
+		\hyperpage{11}
+  \item \spxentry{get\_speed()}\spxextra{robotlibrary.joystick.Joystick method}, \hyperpage{8}
+  \item \spxentry{go\_straight()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{10}
+
+  \indexspace
+  \bigletter H
+  \item \spxentry{html\_static\_path}\spxextra{in module conf}, \hyperpage{13}
+  \item \spxentry{html\_theme}\spxextra{in module conf}, \hyperpage{13}
+
+  \indexspace
+  \bigletter I
+  \item \spxentry{INFRARED\_UUID}\spxextra{in module robotlibrary.bluetooth.ble\_services\_definitions}, 
+		\hyperpage{4}
+  \item \spxentry{IR}\spxextra{class in robotlibrary.infrared}, \hyperpage{8}
+  \item \spxentry{IR}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+  \item \spxentry{ir\_detected()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{11}
+  \item \spxentry{IRQ\_CENTRAL\_CONNECT}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{IRQ\_CENTRAL\_DISCONNECT}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{IRQ\_CONNECTION\_UPDATE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_ENCRYPTION\_UPDATE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_GATTC\_CHARACTERISTIC\_DONE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{IRQ\_GATTC\_CHARACTERISTIC\_RESULT}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{IRQ\_GATTC\_DESCRIPTOR\_DONE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{IRQ\_GATTC\_DESCRIPTOR\_RESULT}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{IRQ\_GATTC\_INDICATE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_GATTC\_NOTIFY}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_GATTC\_READ\_DONE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_GATTC\_READ\_RESULT}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_GATTC\_SERVICE\_DONE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{IRQ\_GATTC\_SERVICE\_RESULT}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{IRQ\_GATTC\_WRITE\_DONE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_GATTS\_INDICATE\_DONE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_GATTS\_READ\_REQUEST}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{IRQ\_GATTS\_WRITE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{IRQ\_GET\_SECRET}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_L2CAP\_ACCEPT}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_L2CAP\_CONNECT}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_L2CAP\_DISCONNECT}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_L2CAP\_RECV}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_L2CAP\_SEND\_READY}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_MTU\_EXCHANGED}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{IRQ\_PERIPHERAL\_CONNECT}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{IRQ\_PERIPHERAL\_DISCONNECT}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{IRQ\_SCAN\_DONE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{IRQ\_SCAN\_RESULT}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{2}
+  \item \spxentry{IRQ\_SET\_SECRET}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{is\_connected()}\spxextra{robotlibrary.bluetooth.central.BLECentral method}, 
+		\hyperpage{5}
+  \item \spxentry{is\_connected()}\spxextra{robotlibrary.bluetooth.peripheral.BLEPeripheral method}, 
+		\hyperpage{6}
+
+  \indexspace
+  \bigletter J
+  \item \spxentry{Joystick}\spxextra{class in robotlibrary.joystick}, \hyperpage{8}
+  \item \spxentry{joystick}\spxextra{in module robotlibrary.joystick}, \hyperpage{8}
+  \item \spxentry{JS\_MAX\_DUTY}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+  \item \spxentry{JS\_MIN\_DUTY}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+  \item \spxentry{JS\_X\_MEDIAN}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+  \item \spxentry{JS\_Y\_MEDIAN}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+
+  \indexspace
+  \bigletter M
+  \item \spxentry{main()}\spxextra{in module robotlibrary.bluetooth.main\_central}, \hyperpage{5}
+  \item \spxentry{main()}\spxextra{in module robotlibrary.bluetooth.main\_peripheral}, 
+		\hyperpage{5}
+  \item \spxentry{main()}\spxextra{in module robotlibrary.rc}, \hyperpage{10}
+  \item \spxentry{MAX\_DUTY}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+  \item \spxentry{MAX\_SPEED}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+  \item \spxentry{MIN\_DUTY}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+  \item \spxentry{MIN\_SPEED}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+  \item \spxentry{ML}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+  \item \spxentry{module}
+    \subitem \spxentry{conf}, \hyperpage{13}
+    \subitem \spxentry{robotlibrary}, \hyperpage{1}
+    \subitem \spxentry{robotlibrary.bluetooth}, \hyperpage{1}
+    \subitem \spxentry{robotlibrary.bluetooth.advertising}, \hyperpage{1}
+    \subitem \spxentry{robotlibrary.bluetooth.ble\_flags}, \hyperpage{2}
+    \subitem \spxentry{robotlibrary.bluetooth.ble\_services\_definitions}, \hyperpage{4}
+    \subitem \spxentry{robotlibrary.bluetooth.central}, \hyperpage{4}
+    \subitem \spxentry{robotlibrary.bluetooth.main\_central}, \hyperpage{5}
+    \subitem \spxentry{robotlibrary.bluetooth.main\_peripheral}, \hyperpage{5}
+    \subitem \spxentry{robotlibrary.bluetooth.parser}, \hyperpage{6}
+    \subitem \spxentry{robotlibrary.bluetooth.peripheral}, \hyperpage{6}
+    \subitem \spxentry{robotlibrary.config}, \hyperpage{7}
+    \subitem \spxentry{robotlibrary.infrared}, \hyperpage{8}
+    \subitem \spxentry{robotlibrary.joystick}, \hyperpage{8}
+    \subitem \spxentry{robotlibrary.motor}, \hyperpage{9}
+    \subitem \spxentry{robotlibrary.rc}, \hyperpage{9}
+    \subitem \spxentry{robotlibrary.robot}, \hyperpage{10}
+    \subitem \spxentry{robotlibrary.rotary}, \hyperpage{11}
+    \subitem \spxentry{robotlibrary.servo}, \hyperpage{12}
+    \subitem \spxentry{robotlibrary.ultrasonic}, \hyperpage{12}
+  \item \spxentry{Motor}\spxextra{class in robotlibrary.motor}, \hyperpage{9}
+  \item \spxentry{MOTOR\_RX}\spxextra{in module robotlibrary.bluetooth.ble\_services\_definitions}, 
+		\hyperpage{4}
+  \item \spxentry{MOTOR\_RX\_UUID}\spxextra{in module robotlibrary.bluetooth.ble\_services\_definitions}, 
+		\hyperpage{4}
+  \item \spxentry{MOTOR\_TX}\spxextra{in module robotlibrary.bluetooth.ble\_services\_definitions}, 
+		\hyperpage{4}
+  \item \spxentry{MOTOR\_TX\_UUID}\spxextra{in module robotlibrary.bluetooth.ble\_services\_definitions}, 
+		\hyperpage{4}
+  \item \spxentry{MR}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+
+  \indexspace
+  \bigletter O
+  \item \spxentry{obstacle()}\spxextra{robotlibrary.infrared.IR method}, \hyperpage{8}
+  \item \spxentry{off()}\spxextra{robotlibrary.motor.Motor method}, \hyperpage{9}
+
+  \indexspace
+  \bigletter P
+  \item \spxentry{PASSKEY\_ACTION\_DISPLAY}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{PASSKEY\_ACTION\_INPUT}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{PASSKEY\_ACTION\_NONE}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{PASSKEY\_ACTION\_NUMERIC\_COMPARISON}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, 
+		\hyperpage{3}
+  \item \spxentry{project}\spxextra{in module conf}, \hyperpage{13}
+
+  \indexspace
+  \bigletter R
+  \item \spxentry{random\_spin()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{11}
+  \item \spxentry{RC}\spxextra{class in robotlibrary.rc}, \hyperpage{9}
+  \item \spxentry{read()}\spxextra{in module robotlibrary.bluetooth.main\_central}, \hyperpage{5}
+  \item \spxentry{read()}\spxextra{robotlibrary.rc.RC method}, \hyperpage{9}
+  \item \spxentry{register\_irq()}\spxextra{robotlibrary.bluetooth.central.BLECentral method}, 
+		\hyperpage{5}
+  \item \spxentry{register\_irq()}\spxextra{robotlibrary.bluetooth.peripheral.BLEPeripheral method}, 
+		\hyperpage{6}
+  \item \spxentry{register\_read\_callback()}\spxextra{robotlibrary.bluetooth.central.BLECentral method}, 
+		\hyperpage{5}
+  \item \spxentry{register\_read\_callback()}\spxextra{robotlibrary.bluetooth.peripheral.BLEPeripheral method}, 
+		\hyperpage{6}
+  \item \spxentry{release}\spxextra{in module conf}, \hyperpage{13}
+  \item \spxentry{reset()}\spxextra{robotlibrary.joystick.Joystick method}, \hyperpage{8}
+  \item \spxentry{reset\_detected()}\spxextra{robotlibrary.infrared.IR method}, \hyperpage{8}
+  \item \spxentry{reset\_offset()}\spxextra{robotlibrary.motor.Motor method}, \hyperpage{9}
+  \item \spxentry{Robot}\spxextra{class in robotlibrary.robot}, \hyperpage{10}
+  \item \spxentry{ROBOT\_SERVICE}\spxextra{in module robotlibrary.bluetooth.ble\_services\_definitions}, 
+		\hyperpage{4}
+  \item \spxentry{ROBOT\_UUID}\spxextra{in module robotlibrary.bluetooth.ble\_services\_definitions}, 
+		\hyperpage{4}
+  \item \spxentry{robotlibrary}
+    \subitem \spxentry{module}, \hyperpage{1}
+  \item \spxentry{robotlibrary.bluetooth}
+    \subitem \spxentry{module}, \hyperpage{1}
+  \item \spxentry{robotlibrary.bluetooth.advertising}
+    \subitem \spxentry{module}, \hyperpage{1}
+  \item \spxentry{robotlibrary.bluetooth.ble\_flags}
+    \subitem \spxentry{module}, \hyperpage{2}
+  \item \spxentry{robotlibrary.bluetooth.ble\_services\_definitions}
+    \subitem \spxentry{module}, \hyperpage{4}
+  \item \spxentry{robotlibrary.bluetooth.central}
+    \subitem \spxentry{module}, \hyperpage{4}
+  \item \spxentry{robotlibrary.bluetooth.main\_central}
+    \subitem \spxentry{module}, \hyperpage{5}
+  \item \spxentry{robotlibrary.bluetooth.main\_peripheral}
+    \subitem \spxentry{module}, \hyperpage{5}
+  \item \spxentry{robotlibrary.bluetooth.parser}
+    \subitem \spxentry{module}, \hyperpage{6}
+  \item \spxentry{robotlibrary.bluetooth.peripheral}
+    \subitem \spxentry{module}, \hyperpage{6}
+  \item \spxentry{robotlibrary.config}
+    \subitem \spxentry{module}, \hyperpage{7}
+  \item \spxentry{robotlibrary.infrared}
+    \subitem \spxentry{module}, \hyperpage{8}
+  \item \spxentry{robotlibrary.joystick}
+    \subitem \spxentry{module}, \hyperpage{8}
+  \item \spxentry{robotlibrary.motor}
+    \subitem \spxentry{module}, \hyperpage{9}
+  \item \spxentry{robotlibrary.rc}
+    \subitem \spxentry{module}, \hyperpage{9}
+  \item \spxentry{robotlibrary.robot}
+    \subitem \spxentry{module}, \hyperpage{10}
+  \item \spxentry{robotlibrary.rotary}
+    \subitem \spxentry{module}, \hyperpage{11}
+  \item \spxentry{robotlibrary.servo}
+    \subitem \spxentry{module}, \hyperpage{12}
+  \item \spxentry{robotlibrary.ultrasonic}
+    \subitem \spxentry{module}, \hyperpage{12}
+  \item \spxentry{ROT\_CCW}\spxextra{robotlibrary.rotary.Rotary attribute}, \hyperpage{11}
+  \item \spxentry{ROT\_CW}\spxextra{robotlibrary.rotary.Rotary attribute}, \hyperpage{11}
+  \item \spxentry{Rotary}\spxextra{class in robotlibrary.rotary}, \hyperpage{11}
+  \item \spxentry{rotary\_change()}\spxextra{robotlibrary.rotary.Rotary method}, \hyperpage{11}
+  \item \spxentry{rotary\_changed()}\spxextra{robotlibrary.rc.RC method}, \hyperpage{9}
+
+  \indexspace
+  \bigletter S
+  \item \spxentry{scan()}\spxextra{robotlibrary.bluetooth.central.BLECentral method}, \hyperpage{5}
+  \item \spxentry{SCAN\_RSP}\spxextra{in module robotlibrary.bluetooth.ble\_flags}, \hyperpage{3}
+  \item \spxentry{send()}\spxextra{robotlibrary.bluetooth.central.BLECentral method}, \hyperpage{5}
+  \item \spxentry{send()}\spxextra{robotlibrary.bluetooth.peripheral.BLEPeripheral method}, 
+		\hyperpage{6}
+  \item \spxentry{send()}\spxextra{robotlibrary.rc.RC method}, \hyperpage{9}
+  \item \spxentry{Servo}\spxextra{class in robotlibrary.servo}, \hyperpage{12}
+  \item \spxentry{SERVO}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+  \item \spxentry{set\_angle()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{11}
+  \item \spxentry{set\_angle()}\spxextra{robotlibrary.servo.Servo method}, \hyperpage{12}
+  \item \spxentry{set\_forward()}\spxextra{robotlibrary.motor.Motor method}, \hyperpage{9}
+  \item \spxentry{set\_forward()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{10}
+  \item \spxentry{set\_speed()}\spxextra{robotlibrary.motor.Motor method}, \hyperpage{9}
+  \item \spxentry{set\_speed()}\spxextra{robotlibrary.rc.RC method}, \hyperpage{10}
+  \item \spxentry{set\_speed()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{10}
+  \item \spxentry{set\_speed\_instantly()}\spxextra{robotlibrary.robot.Robot method}, 
+		\hyperpage{10}
+  \item \spxentry{spin\_before\_obstacle()}\spxextra{robotlibrary.robot.Robot method}, 
+		\hyperpage{11}
+  \item \spxentry{spin\_left()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{10}
+  \item \spxentry{spin\_right()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{10}
+  \item \spxentry{stop()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{11}
+  \item \spxentry{SW\_PRESS}\spxextra{robotlibrary.rotary.Rotary attribute}, \hyperpage{11}
+  \item \spxentry{SW\_RELEASE}\spxextra{robotlibrary.rotary.Rotary attribute}, \hyperpage{11}
+  \item \spxentry{switch\_detect()}\spxextra{robotlibrary.rotary.Rotary method}, \hyperpage{12}
+
+  \indexspace
+  \bigletter T
+  \item \spxentry{templates\_path}\spxextra{in module conf}, \hyperpage{13}
+  \item \spxentry{toggle\_spin()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{11}
+  \item \spxentry{turn\_left()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{10}
+  \item \spxentry{turn\_right()}\spxextra{robotlibrary.robot.Robot method}, \hyperpage{10}
+
+  \indexspace
+  \bigletter U
+  \item \spxentry{Ultra}\spxextra{class in robotlibrary.ultrasonic}, \hyperpage{12}
+  \item \spxentry{ULTRASONIC\_UUID}\spxextra{in module robotlibrary.bluetooth.ble\_services\_definitions}, 
+		\hyperpage{4}
+  \item \spxentry{US}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+
+  \indexspace
+  \bigletter W
+  \item \spxentry{WHITE\_DETECTED}\spxextra{in module robotlibrary.config}, \hyperpage{7}
+
+\end{sphinxtheindex}

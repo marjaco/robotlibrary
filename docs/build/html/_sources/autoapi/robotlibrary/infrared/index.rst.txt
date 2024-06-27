@@ -1,0 +1,33 @@
+:py:mod:`robotlibrary.infrared`
+===============================
+
+.. py:module:: robotlibrary.infrared
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   robotlibrary.infrared.IR
+
+
+
+
+.. py:class:: IR(pinNo, robot)
+
+
+   This class manages the IR-sensor. Write your code in Robot.ir_detected()
+
+   .. py:method:: reset_detected(t)
+
+
+   .. py:method:: obstacle(pin)
+
+      This is called on any change in the IR-sensor. 
+
+
+

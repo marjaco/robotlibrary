@@ -1,0 +1,62 @@
+:py:mod:`robotlibrary.bluetooth.central`
+========================================
+
+.. py:module:: robotlibrary.bluetooth.central
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   robotlibrary.bluetooth.central.BLECentral
+
+
+
+
+.. py:class:: BLECentral(add_robot_stuff=False)
+
+
+   .. py:method:: _handle_scan(data)
+
+
+   .. py:method:: _handle_connect(data)
+
+
+   .. py:method:: _handle_disconnect(data)
+
+
+   .. py:method:: _handle_services(data)
+
+
+   .. py:method:: _on_service_discovery_complete(data)
+
+
+   .. py:method:: _handle_characteristics(data)
+
+
+   .. py:method:: _handle_read(data)
+
+
+   .. py:method:: _irq(event: int, data)
+
+
+   .. py:method:: register_irq(event: int, func)
+
+
+   .. py:method:: scan()
+
+
+   .. py:method:: register_read_callback(uuid, callback)
+
+
+   .. py:method:: send(service_uuid, char_uuid, data)
+
+
+   .. py:method:: is_connected()
+
+
+

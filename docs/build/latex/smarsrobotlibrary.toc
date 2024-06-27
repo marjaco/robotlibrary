@@ -1,0 +1,63 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}API Reference}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary}}}{1}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Subpackages}{1}{subsection.1.1.1}%
+\contentsline {subsubsection}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.bluetooth}}}{1}{subsubsection*.4}%
+\contentsline {paragraph}{Submodules}{1}{paragraph*.5}%
+\contentsline {subparagraph}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.bluetooth.advertising}}}{1}{subparagraph*.6}%
+\contentsline {subparagraph}{Module Contents}{1}{subparagraph*.7}%
+\contentsline {subparagraph}{Functions}{1}{subparagraph*.8}%
+\contentsline {subparagraph}{Attributes}{1}{subparagraph*.9}%
+\contentsline {subparagraph}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.bluetooth.ble\_flags}}}{2}{subparagraph*.14}%
+\contentsline {subparagraph}{Module Contents}{2}{subparagraph*.15}%
+\contentsline {subparagraph}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.bluetooth.ble\_services\_definitions}}}{4}{subparagraph*.75}%
+\contentsline {subparagraph}{Module Contents}{4}{subparagraph*.76}%
+\contentsline {subparagraph}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.bluetooth.central}}}{4}{subparagraph*.85}%
+\contentsline {subparagraph}{Module Contents}{4}{subparagraph*.86}%
+\contentsline {subparagraph}{Classes}{4}{subparagraph*.87}%
+\contentsline {subparagraph}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.bluetooth.main\_central}}}{5}{subparagraph*.102}%
+\contentsline {subparagraph}{Module Contents}{5}{subparagraph*.103}%
+\contentsline {subparagraph}{Functions}{5}{subparagraph*.104}%
+\contentsline {subparagraph}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.bluetooth.main\_peripheral}}}{5}{subparagraph*.107}%
+\contentsline {subparagraph}{Module Contents}{5}{subparagraph*.108}%
+\contentsline {subparagraph}{Functions}{5}{subparagraph*.109}%
+\contentsline {subparagraph}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.bluetooth.parser}}}{6}{subparagraph*.111}%
+\contentsline {subparagraph}{Module Contents}{6}{subparagraph*.112}%
+\contentsline {subparagraph}{Functions}{6}{subparagraph*.113}%
+\contentsline {subparagraph}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.bluetooth.peripheral}}}{6}{subparagraph*.116}%
+\contentsline {subparagraph}{Module Contents}{6}{subparagraph*.117}%
+\contentsline {subparagraph}{Classes}{6}{subparagraph*.118}%
+\contentsline {subsection}{\numberline {1.1.2}Submodules}{7}{subsection.1.1.2}%
+\contentsline {subsubsection}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.config}}}{7}{subsubsection*.129}%
+\contentsline {paragraph}{Module Contents}{7}{paragraph*.130}%
+\contentsline {subsubsection}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.infrared}}}{8}{subsubsection*.147}%
+\contentsline {paragraph}{Module Contents}{8}{paragraph*.148}%
+\contentsline {subparagraph}{Classes}{8}{subparagraph*.149}%
+\contentsline {subsubsection}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.joystick}}}{8}{subsubsection*.153}%
+\contentsline {paragraph}{Module Contents}{8}{paragraph*.154}%
+\contentsline {subparagraph}{Classes}{8}{subparagraph*.155}%
+\contentsline {subparagraph}{Attributes}{8}{subparagraph*.156}%
+\contentsline {subsubsection}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.motor}}}{9}{subsubsection*.163}%
+\contentsline {paragraph}{Module Contents}{9}{paragraph*.164}%
+\contentsline {subparagraph}{Classes}{9}{subparagraph*.165}%
+\contentsline {subsubsection}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.rc}}}{9}{subsubsection*.172}%
+\contentsline {paragraph}{Module Contents}{9}{paragraph*.173}%
+\contentsline {subparagraph}{Classes}{9}{subparagraph*.174}%
+\contentsline {subparagraph}{Functions}{9}{subparagraph*.175}%
+\contentsline {subsubsection}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.robot}}}{10}{subsubsection*.183}%
+\contentsline {paragraph}{Module Contents}{10}{paragraph*.184}%
+\contentsline {subparagraph}{Classes}{10}{subparagraph*.185}%
+\contentsline {subsubsection}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.rotary}}}{11}{subsubsection*.207}%
+\contentsline {paragraph}{Module Contents}{11}{paragraph*.208}%
+\contentsline {subparagraph}{Classes}{11}{subparagraph*.209}%
+\contentsline {subsubsection}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.servo}}}{12}{subsubsection*.217}%
+\contentsline {paragraph}{Module Contents}{12}{paragraph*.218}%
+\contentsline {subparagraph}{Classes}{12}{subparagraph*.219}%
+\contentsline {subsubsection}{\sphinxstyleliteralintitle {\sphinxupquote {robotlibrary.ultrasonic}}}{12}{subsubsection*.223}%
+\contentsline {paragraph}{Module Contents}{12}{paragraph*.224}%
+\contentsline {subparagraph}{Classes}{12}{subparagraph*.225}%
+\contentsline {section}{\numberline {1.2}\sphinxstyleliteralintitle {\sphinxupquote {conf}}}{13}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Module Contents}{13}{subsection.1.2.1}%
+\contentsline {chapter}{\numberline {2}Indices and tables}{15}{chapter.2}%
+\contentsline {chapter}{Python Module Index}{17}{section*.238}%
+\contentsline {chapter}{Index}{19}{section*.239}%

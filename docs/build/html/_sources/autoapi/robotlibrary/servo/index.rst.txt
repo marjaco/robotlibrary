@@ -1,0 +1,36 @@
+:py:mod:`robotlibrary.servo`
+============================
+
+.. py:module:: robotlibrary.servo
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   robotlibrary.servo.Servo
+
+
+
+
+.. py:class:: Servo(pin)
+
+
+   This class manages the servo motor that turns the ultrasonic sensor. You need a servo motor installed to get use out of this. 
+   Don't use directly or edit.
+
+   .. py:method:: set_angle(a)
+
+      If installed, the servor motor will set the angle of the ultrasonic sensor. 90° ist straight ahead.
+
+
+   .. py:method:: _get_duty(angle)
+
+      Internal function. Calculates the PWM duty for the given angle.
+
+
+

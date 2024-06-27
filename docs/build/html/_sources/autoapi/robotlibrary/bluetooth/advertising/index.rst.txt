@@ -1,0 +1,42 @@
+:py:mod:`robotlibrary.bluetooth.advertising`
+============================================
+
+.. py:module:: robotlibrary.bluetooth.advertising
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   robotlibrary.bluetooth.advertising.advertising_payload
+   robotlibrary.bluetooth.advertising.decode_field
+   robotlibrary.bluetooth.advertising.decode_services
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   robotlibrary.bluetooth.advertising._ADV_MAX_PAYLOAD
+
+
+.. py:data:: _ADV_MAX_PAYLOAD
+
+   
+
+.. py:function:: advertising_payload(limited_disc=False, br_edr=False, name=None, services=None, appearance=0)
+
+
+.. py:function:: decode_field(payload, adv_type)
+
+
+.. py:function:: decode_services(payload)
+
+

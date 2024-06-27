@@ -1,0 +1,32 @@
+:py:mod:`robotlibrary`
+======================
+
+.. py:module:: robotlibrary
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   bluetooth/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   config/index.rst
+   infrared/index.rst
+   joystick/index.rst
+   motor/index.rst
+   rc/index.rst
+   robot/index.rst
+   rotary/index.rst
+   servo/index.rst
+   ultrasonic/index.rst
+
+

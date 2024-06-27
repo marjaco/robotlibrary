@@ -1,0 +1,127 @@
+:py:mod:`robotlibrary.robot`
+============================
+
+.. py:module:: robotlibrary.robot
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   robotlibrary.robot.Robot
+
+
+
+
+.. py:class:: Robot(rc)
+
+
+   This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py
+
+   .. py:method:: _drive(dir_l, dir_r)
+
+      This abstracted driving function is only called locally by the other functions with better names. 
+      It accelerates and decelerates to make driving more natural. Do not call directly!!
+
+
+   .. py:method:: _drive_instantly(dir_l, dir_r)
+
+      This abstracted driving function is only called locally by the other functions with better names. 
+      It sets the speed immediatly. Do not call directly!!
+
+
+   .. py:method:: set_speed_instantly(s)
+
+      Sets the new speed immediately. Doesn't change the driving mode of the robot. 
+
+
+   .. py:method:: set_speed(s)
+
+      Sets the new speed and accelerates and decelerates. Doesn't change the driving mode of the robot. 
+
+
+   .. py:method:: set_forward(f)
+
+      Sets the direction of the robot. True means forward.
+
+
+   .. py:method:: spin_right()
+
+      Spin right indefinitely. 
+
+
+   .. py:method:: spin_left()
+
+      Spin left indefinitely. 
+
+
+   .. py:method:: turn_right()
+
+      This turns the robot to the right without it spinning on the spot. Each call makes the turn steeper.
+
+
+   .. py:method:: turn_left()
+
+      This turns the robot to the right without it spinning on the spot. Each call makes the turn steeper.
+
+
+   .. py:method:: go_straight()
+
+      Lets the robot go straight on. Usually called when a turn shall end. 
+
+
+   .. py:method:: spin_before_obstacle(distance)
+
+      This spins until the distance to an obstacle is greater than the given parameter __distance__.
+
+
+   .. py:method:: toggle_spin(d)
+
+      Toggle turn for the given duration. With each call the oppsoite direction(clockwise / anti-clockwise) is used.
+
+
+   .. py:method:: random_spin(d)
+
+      Randomly turn for the given duration.
+
+
+   .. py:method:: stop()
+
+      Stop the robot slowly by deceleration. 
+
+
+   .. py:method:: emergency_stop()
+
+      Stop the robot immediately.
+
+
+   .. py:method:: ir_detected(pin, pin_num)
+
+      If implemented this method is called when the IR-sensor has detected a change. Fill in your code accordingly
+
+
+   .. py:method:: get_dist()
+
+      Get the distance from the ultrasonic sensor.
+
+
+   .. py:method:: set_angle(a)
+
+      If implemented, turn the servo motor with the ultrasonic sensor to the given angle.
+
+
+   .. py:method:: get_smallest_distance()
+
+      This returns the angle of the ultrasonic sensor where it measured the smallest distance
+
+
+   .. py:method:: get_longest_distance()
+
+      This returns the angle of the ultrasonic sensor where it measured the longest distance
+
+
+
