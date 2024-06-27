@@ -17,10 +17,9 @@ from time import sleep
 
 import utime, random
 class Robot:
-    
+    '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py'''
     def __init__(self,rc):
-        '''Initialize the class. The parameters are defined in config.py
-        Motors and ultrasonic sensor must use consecutive pins.'''
+        
         if robotlibrary.config.ML is not None: 
             self.ml = Motor(robotlibrary.config.ML)
         if robotlibrary.config.MR is not None:
@@ -61,8 +60,9 @@ class Robot:
 
     
         
-    def drive(self, dir_l, dir_r):
-        '''This abstracted driving function is only called locally by the other functions with better names. '''
+    def _drive(self, dir_l, dir_r):
+        '''This abstracted driving function is only called locally by the other functions with better names. 
+        It accelerates and decelerates to make driving more natural. Do not call directly!!'''
         self.ml.set_forward(dir_l)
         self.mr.set_forward(dir_r)
         if self.new_speed < self.speed:
@@ -75,7 +75,9 @@ class Robot:
             utime.sleep_ms(10+int(i/2))
         self.speed = self.new_speed
         
-    def drive_instantly(self,dir_l,dir_r):
+    def _drive_instantly(self,dir_l,dir_r):
+        '''This abstracted driving function is only called locally by the other functions with better names. 
+        It sets the speed immediatly. Do not call directly!!'''
         self.ml.set_forward(dir_l)
         self.mr.set_forward(dir_r)
         self.ml.set_speed(self.new_speed)
@@ -83,14 +85,14 @@ class Robot:
         self.speed = self.new_speed
         
     def set_speed_instantly(self,s):
-        '''Sets the new speed. Doesn't change the driving mode of the robot. '''
+        '''Sets the new speed immediately. Doesn't change the driving mode of the robot. '''
         self.ml.set_speed(self.new_speed)
         self.mr.set_speed(self.new_speed)
         self.speed = s
         self.new_speed = s
         
     def set_speed(self,s):
-        '''Sets the new speed. Doesn't change the driving mode of the robot. '''
+        '''Sets the new speed and accelerates and decelerates. Doesn't change the driving mode of the robot. '''
         self.new_speed = s
         if self.new_speed < self.speed:
             steps = -1
@@ -103,60 +105,50 @@ class Robot:
         self.speed = self.new_speed
         
     def set_forward(self,f):
+        '''Sets the direction of the robot. True means forward.'''
         self.ml.set_forward(f)
         self.mr.set_forward(f)
         self.ml.set_speed(self.speed)
         self.mr.set_speed(self.speed)
         
-#     def forward(self):
-#         '''Drive forward. Speed has to be set before with set_speed()'''
-#         self.drive(True, True)
-#      
-#     def backward(self):
-#         '''Drive forward. Speed has to be set before with set_speed()'''
-#         self.drive(False, False)
-
     def spin_right(self):
-        '''Spin right. We cannot determine the angle the robot turns without a compass or gyroscope.'''
+        '''Spin right indefinitely. '''
         self.ml.reset_offset()
         self.mr.reset_offset()
-        self.drive_instantly(True,False)
-        #utime.sleep_ms(d)
-        #self.emergency_stop()
+        self._drive_instantly(True,False)
     
     def spin_left(self):
-        '''Spin right. We cannot determine the angle the robot turns without a compass or gyroscope.'''
+        '''Spin left indefinitely. '''
         self.ml.reset_offset()
         self.mr.reset_offset()
-        self.drive_instantly(False,True)
-        #utime.sleep_ms(d)
-        #self.emergency_stop()
+        self._drive_instantly(False,True)
         
     def turn_right(self):
-        '''This turns the robot to the right without it spinning on the spot. Each call makes the curve steeper.'''
+        '''This turns the robot to the right without it spinning on the spot. Each call makes the turn steeper.'''
         self.ml.change_speed(5)
         self.mr.change_speed(-5)
         
     def turn_left(self):
-        '''This turns the robot to the right without it spinning on the spot. Each call makes the curve steeper.'''
+        '''This turns the robot to the right without it spinning on the spot. Each call makes the turn steeper.'''
         self.mr.change_speed(5)
         self.ml.change_speed(-5)
         
     def go_straight(self):
+        '''Lets the robot go straight on. Usually called when a turn shall end. '''
         self.ml.reset_offset()
         self.mr.reset_offset()
         self.ml.set_speed(self.speed)
         self.mr.set_speed(self.speed)
         
     def spin_before_obstacle(self, distance):
-        '''This spins until the distance is greater than distance'''
-        self.drive_instantly(True,False)
+        '''This spins until the distance to an obstacle is greater than the given parameter __distance__.'''
+        self._drive_instantly(True,False)
         while self.get_dist() < distance:
             pass
         self.emergency_stop()
                 
     def toggle_spin(self, d):
-        '''Toggle turn for the given duration. We cannot determine the angle the robot turns without a compass or gyroscope.'''
+        '''Toggle turn for the given duration. With each call the oppsoite direction(clockwise / anti-clockwise) is used.'''
         if self.last_turn_right:
             self.spin_left(d)
         else:
@@ -165,7 +157,7 @@ class Robot:
     
     
     def random_spin(self,d):
-        '''Randomly turn for the given duration. We cannot determine the angle the robot turns without a compass or gyroscope.'''
+        '''Randomly turn for the given duration.'''
         if random.randint(0,1) == 0:
             self.spin_left(d)
         else:
@@ -174,7 +166,7 @@ class Robot:
     def stop(self):
         '''Stop the robot slowly by deceleration. '''
         self.set_speed(0)
-        self.drive(self.ml.forward, self.mr.forward)
+        self._drive(self.ml.forward, self.mr.forward)
         
     def emergency_stop(self):
         '''Stop the robot immediately.'''
@@ -184,7 +176,7 @@ class Robot:
         self.speed = 0
     
     def ir_detected(self, pin, pin_num):
-        '''This method is called when the IR-sensor has detected a change. Fill in your code accordingly'''
+        '''If implemented this method is called when the IR-sensor has detected a change. Fill in your code accordingly'''
         if pin.value() == 0:
             print("obstacle detected on pin", pin_num)
         else:

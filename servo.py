@@ -2,6 +2,8 @@ from machine import Pin, PWM
 import utime
 
 class Servo:
+    '''This class manages the servo motor that turns the ultrasonic sensor. You need a servo motor installed to get use out of this. 
+    Don't use directly or edit.'''
     def __init__(self,pin):
         self.pin=PWM(Pin(pin))
         self.pin.freq(50)

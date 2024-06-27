@@ -14,7 +14,7 @@ import micropython
 micropython.alloc_emergency_exception_buf(100)
 
 class RC:
-    
+    '''This class represents the remote control with two rotary encoders and a slider to set the speed. Don't edit unless you know what you are doing. '''
     def __init__(self):
         self.forward = True
         self.speed = 0
@@ -36,13 +36,6 @@ class RC:
             utime.sleep(1)
         utime.sleep(5)
         print("Found connection")
-
-#         while True:
-#             text = input("Please input in format: left_forward, right_forward, left_speed, right_speed: ")
-#             [left_forward, right_forward, left_speed, right_speed] = text.split(", ")
-#             left_forward, right_forward, left_speed, right_speed = (left_forward == "True", right_forward == "True",
-#                                                                     int(left_speed), int(right_speed))
-#             print(left_forward, right_forward)
             
     def read(self,a):
         print("read")
@@ -70,6 +63,7 @@ class RC:
             self.button()
             
     def button(self):
+        '''This is the button click.'''
         self.forward = not self.forward
         self.change = True
                 
@@ -89,7 +83,8 @@ class RC:
             elif dc < MIN_DUTY:
                 speed = 0
             else: 
-                speed = int(MAX_SPEED/MAX_DUTY*dc)
+                speed = int((MAX_SPEED/MAX_DUTY*dc)*((MAX_SPEED-MIN_SPEED)/MAX_SPEED)+MIN_SPEED)
+                print(speed)
             if speed != self.speed:
                 self.speed = speed
                 self.change = True

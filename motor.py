@@ -3,7 +3,7 @@ from robotlibrary.config import MIN_DUTY, MAX_DUTY, MAX_SPEED, MIN_SPEED
 import utime
 
 class Motor:
-    
+    '''This class manages the motor. Don't edit!'''
     def __init__(self, pinNo):
         self.gpio = pinNo
         self.speed=0
@@ -18,10 +18,10 @@ class Motor:
 
     def set_speed(self,s):
         '''Sets the speed of the motor. Checks for sensible input.'''
-        if s + self.speed_offset < MIN_SPEED:
+        if s + self.speed_offset <= MIN_SPEED:
             s = 0
             self.reset_offset()
-        elif s + self.speed_offset > MAX_SPEED:
+        elif s + self.speed_offset >= MAX_SPEED:
             s = MAX_SPEED
         self.pwm1.duty_u16(int(MAX_DUTY*(s+self.speed_offset)/100))
         self.speed=s

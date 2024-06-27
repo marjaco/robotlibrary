@@ -5,7 +5,7 @@ import micropython
 from robotlibrary.config import DEBOUNCE_WAIT
 micropython.alloc_emergency_exception_buf(100)
 class Rotary:
-    
+    '''This class deals with the rotary encoders for the remote control. Don't use directly or edit.'''
     ROT_CW = 1
     ROT_CCW = 2
     SW_PRESS = 4
