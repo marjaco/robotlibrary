@@ -23,6 +23,7 @@ class Motor:
             self.reset_offset()
         elif s + self.speed_offset >= MAX_SPEED:
             s = MAX_SPEED
+            self.reset_offset()
         self.pwm1.duty_u16(int(MAX_DUTY*(s+self.speed_offset)/100))
         self.speed=s
     
