@@ -6,7 +6,7 @@ from robotlibrary.bluetooth.ble_services_definitions import ROBOT_SERVICE, ROBOT
 from robotlibrary.bluetooth.parser import decode_motor
 
 class BLEPeripheral:
-    def __init__(self, name="Theo", add_robot_stuff=False):
+    def __init__(self, name: str, add_robot_stuff=False):
         self.ble = bluetooth.BLE()
         self._ble_irq_dict = {}
         self._handles = {}

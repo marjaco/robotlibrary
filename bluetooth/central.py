@@ -5,7 +5,8 @@ import bluetooth
 
 
 class BLECentral:
-    def __init__(self, add_robot_stuff=False):
+    def __init__(self, to_connect_name: str, add_robot_stuff=False):
+        self._to_connect_name = to_connect_name
         self.ble = bluetooth.BLE()
         self.ble.active(True)
         self.ble.irq(self._irq)
@@ -28,7 +29,9 @@ class BLECentral:
     def _handle_scan(self, data):
         addr_type, addr, adv_type, rssi, adv_data = data
         print("Found Peripheral:", addr_type, addr, decode_field(adv_data, ADV_TYPE_NAME))
-        if adv_type in [ADV_IND, ADV_DIRECT_IND] and ROBOT_UUID in decode_services(adv_data):
+        device_name = decode_field(adv_data, ADV_TYPE_NAME)
+        device_uuid = decode_services(adv_data)
+        if adv_type in [ADV_IND, ADV_DIRECT_IND] and ROBOT_UUID in device_uuid and self._to_connect_name == device_name:
             self.ble.gap_scan(None)
             print("Found Candidate:", addr_type, addr, decode_field(adv_data, ADV_TYPE_NAME))
             self.ble.gap_connect(addr_type, addr)
