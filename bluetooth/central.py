@@ -1,6 +1,6 @@
-from ble_flags import *
-from ble_services_definitions import ROBOT_UUID, MOTOR_RX_UUID, MOTOR_TX_UUID
-from advertising import decode_services, decode_field
+from robotlibrary.bluetooth.ble_flags import *
+from robotlibrary.bluetooth.ble_services_definitions import ROBOT_UUID, MOTOR_RX_UUID, MOTOR_TX_UUID
+from robotlibrary.bluetooth.advertising import decode_services, decode_field
 import bluetooth
 
 
@@ -28,10 +28,10 @@ class BLECentral:
 
     def _handle_scan(self, data):
         addr_type, addr, adv_type, rssi, adv_data = data
-        print("Found Peripheral:", addr_type, addr, decode_field(adv_data, ADV_TYPE_NAME))
-        device_name = decode_field(adv_data, ADV_TYPE_NAME)
+        print("Found Peripheral:", addr_type, bytes(addr), decode_field(adv_data, ADV_TYPE_NAME))
+        device_name = [bytes(i).decode() for i in decode_field(adv_data, ADV_TYPE_NAME)]
         device_uuid = decode_services(adv_data)
-        if adv_type in [ADV_IND, ADV_DIRECT_IND] and ROBOT_UUID in device_uuid and self._to_connect_name == device_name:
+        if adv_type in [ADV_IND, ADV_DIRECT_IND] and ROBOT_UUID in device_uuid and self._to_connect_name in device_name:
             self.ble.gap_scan(None)
             print("Found Candidate:", addr_type, addr, decode_field(adv_data, ADV_TYPE_NAME))
             self.ble.gap_connect(addr_type, addr)
@@ -97,3 +97,4 @@ class BLECentral:
 
     def is_connected(self):
         return self._is_connected
+

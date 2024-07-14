@@ -6,6 +6,9 @@ JS_Y_MEDIAN = 30510
 JS_MAX_DUTY = 65535
 JS_MIN_DUTY = 260
 
+########## Configuration of the name of the robot for matching with the remote control.
+ROBOT_NAME = "HAL9000"
+
 ########## Configuration for the motors.
 '''This defines the parameters for the motors. 
 

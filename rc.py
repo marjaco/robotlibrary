@@ -1,6 +1,8 @@
 ########## Import the configuration
 from robotlibrary.config import MIN_DUTY, MAX_DUTY, MAX_SPEED, MIN_SPEED
+from robotlibrary.config import ROBOT_NAME
 from robotlibrary.rotary import Rotary
+
 
 ########## Import bluetooth library
 from robotlibrary.bluetooth.central import BLECentral
@@ -28,7 +30,7 @@ class RC:
         self.send_timer.init(mode=Timer.PERIODIC, period=200, callback=self.send)
         self.duty_cycle = 0
         self.p = ADC(28)
-        self.server = BLECentral(True)
+        self.server = BLECentral(ROBOT_NAME, True)
         self.server.register_read_callback(MOTOR_TX_UUID, self.read)
         self.server.scan()
         print("waiting for connection")

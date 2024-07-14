@@ -41,7 +41,7 @@ class BLEPeripheral:
         conn_handle, _, _ = data
         print("Disconnected", conn_handle)
         self._connections.remove(conn_handle)
-        # Start advertising again to allow a new connection.
+        # Start advertising again to allow for a new connection.
         self.advertise()
 
     def _handle_read(self, data):
