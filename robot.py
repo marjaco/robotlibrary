@@ -85,10 +85,11 @@ class Robot:
         
     def set_speed_instantly(self,s):
         '''Sets the new speed immediately. Doesn't change the driving mode of the robot. '''
-        self.ml.set_speed(self.new_speed)
-        self.mr.set_speed(self.new_speed)
         self.speed = s
         self.new_speed = s
+        self.ml.set_speed(self.new_speed)
+        self.mr.set_speed(self.new_speed)
+        
         
     def set_speed(self,s):
         '''Sets the new speed and accelerates and decelerates. Doesn't change the driving mode of the robot. '''
