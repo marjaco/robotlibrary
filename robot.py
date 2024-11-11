@@ -140,27 +140,31 @@ class Robot:
         self.mr.set_speed(self.speed)
         
     def spin_before_obstacle(self, distance):
-        '''This spins until the distance to an obstacle is greater than the given parameter __distance__.'''
+        '''This spins until the distance to an obstacle is greater than the given parameter *distance*.'''
         self._drive_instantly(True,False)
         while self.get_dist() < distance:
             pass
         self.emergency_stop()
                 
     def toggle_spin(self, d):
-        '''Toggle turn for the given duration. With each call the oppsoite direction(clockwise / anti-clockwise) is used.'''
+        '''Toggle turn for the given duration. With each call the opposite direction(clockwise / anti-clockwise) is used.'''
         if self.last_turn_right:
-            self.spin_left(d)
+            self.spin_left()
         else:
-            self.spin_right(d)
+            self.spin_right()
+        utime.sleep_ms(d)
+        self.emergency_stop()
         self.last_turn_right = not self.last_turn_right
     
     
     def random_spin(self,d):
         '''Randomly turn for the given duration.'''
         if random.randint(0,1) == 0:
-            self.spin_left(d)
+            self.spin_left()
         else:
-            self.spin_right(d)
+            self.spin_right()
+        utime.sleep_ms(d)
+        self.emergency_stop()
                 
     def stop(self):
         '''Stop the robot slowly by deceleration. '''
