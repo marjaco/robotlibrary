@@ -41,3 +41,22 @@ MR=14
 US=16
 IR=None #11
 SERVO=None #9
+
+
+########## Configuration for the Servos in the picocrab robot
+
+SERVO_MIN_DUTY = 1350
+SERVO_MAX_DUTY = 8100
+SHOULDER_FRONT_MIN_ANGLE =  40 # backward motion
+SHOULDER_FRONT_MAX_ANGLE = 165 # forward motion
+SHOULDER_REAR_MIN_ANGLE =  20 # backward motion
+SHOULDER_REAR_MAX_ANGLE = 140 # forward motion
+KNEE_MIN_ANGLE = 65 # up motion
+KNEE_MAX_ANGLE = 180 # down motion
+
+########## Type definitions
+
+SHOULDER_FRONT = 4
+SHOULDER_REAR = 6
+KNEE = 8
+

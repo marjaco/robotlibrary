@@ -11,11 +11,10 @@ from robotlibrary.bluetooth.peripheral import BLEPeripheral
 from robotlibrary.bluetooth.ble_services_definitions import ROBOT_UUID, MOTOR_RX_UUID, MOTOR_TX_UUID
 from robotlibrary.bluetooth.parser import decode_motor, encode_motor
 
-import machine, sys
+import machine, sys, utime, random
 from time import sleep
 
 
-import utime, random
 class Robot:
     '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py'''
     def __init__(self,rc):
