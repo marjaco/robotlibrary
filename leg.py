@@ -40,11 +40,21 @@ class Leg:
         self.knee.park()
         self.shoulder.park()
         
-
+    def calibrate(self):
+        self.knee.calibrate()
+        self.shoulder.calibrate()
+    
+    def curl(self):
+        self.knee.curl()
+        self.shoulder.curl()
+        
+    def tap(self):
+        self.knee.tap()
+        
 def main():
     l = Leg(0, False, False, "rear left")
-    for i in range(5):
-        l.move_forward()
+    
+    l.tap()
 #     legs = [Leg(4, True, True, "front right"), Leg(2, False, True, "front left"),Leg(6, True, False, "rear right"), Leg(0, False, False, "rear left")]
 #     legs[0].shoulder.move_forward()
 #     legs[3].shoulder.move_backward()

@@ -49,11 +49,25 @@ class Crab:
         self.rear_right.park()
         self.rear_left.park()
         
+    def curl(self):
+        self.front_right.curl()
+        self.front_left.curl()
+        self.rear_right.curl()
+        self.rear_left.curl()
+    
+    def calibrate(self):
+        self.front_right.calibrate()
+        self.front_left.calibrate()
+        self.rear_right.calibrate()
+        self.rear_left.calibrate()
+        
 def main():
     c = Crab(True)
     c.park()
     sleep(1)
-    c.move_forward()
+#    c.park()
+#     sleep(1)
+#     c.move_forward()
     
 if __name__ == "__main__":
     # execute only if run as a script

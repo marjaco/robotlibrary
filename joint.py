@@ -1,10 +1,7 @@
 # peripherals
-#from robotlibrary.motor import Motor
-#from robotlibrary.ultrasonic import Ultra
-#from robotlibrary.infrared import IR
 from robotlibrary.servo_crab import Servo
 import robotlibrary.config
-from time import sleep
+from time import sleep, sleep_ms
 
 class Joint:
     FRONT_FORWARD_ANGLE = 160
@@ -19,7 +16,7 @@ class Joint:
         
         self.__min_duty = robotlibrary.config.SERVO_MIN_DUTY
         self.__max_duty = robotlibrary.config.SERVO_MAX_DUTY
-        self.servo = Servo(pin, inverted)
+        
         self.left_side = left_side
         
         if s_type == robotlibrary.config.SHOULDER_FRONT:
@@ -31,8 +28,9 @@ class Joint:
         elif s_type == robotlibrary.config.KNEE:
             self.__min_angle = robotlibrary.config.KNEE_MIN_ANGLE
             self.__max_angle = robotlibrary.config.KNEE_MAX_ANGLE
-        else:
-            return
+            self.__min_duty = 1800
+            self.__max_duty = 7600
+        self.servo = Servo(pin, inverted, self.__min_duty, self.__max_duty)
         
         
     @property
@@ -150,6 +148,24 @@ class Joint:
                 self.servo.set_angle(self.min_angle)
             else:
                 self.servo.set_angle(180-self.min_angle)
+    
+    def curl(self):
+        if self.s_type == robotlibrary.config.KNEE:
+            self.servo.set_angle(self.max_angle)
+        elif self.s_type == robotlibrary.config.SHOULDER_FRONT or self.s_type == robotlibrary.config.SHOULDER_REAR:
+            self.servo.set_angle(90)
+                
+    def tap(self):
+        if self.s_type == robotlibrary.config.KNEE:
+            for i in range(3):
+                self.servo.set_angle(85)
+                sleep_ms(50)
+                self.servo.set_angle(70)
+                sleep_ms(50)
+            
+    def calibrate(self):
+        self.servo.set_angle(90)
+        
     def __set_angle(self,a):
         if not self.left_side:
             self.servo.set_angle(a)
@@ -158,57 +174,10 @@ class Joint:
             self.servo.set_angle(180-a)
             print(f"Winkel links: {a}")
         
-def main():
-    
-    j = Joint(robotlibrary.config.SHOULDER_REAR, "rear left", True, False, 0)
-    j2 = Joint(robotlibrary.config.SHOULDER_REAR, "rear left", False, False, 6)
-    j.__set_angle(120)
-    j2.__set_angle(120)
-    
-    sleep(100)
-    j2 = Joint(robotlibrary.config.SHOULDER_FRONT, "rear left", True, 2)
-#     for i in range (30):
-#         j.up()
-#         j2.up()
-    for i in range(3):
-        walk = True
-        while walk:
-            w1=j.forward()
-            w2=j2.forward()
-            walk = w1 or w2
-        print(f"{j.servo.angle}, {j2.servo.angle}")
-        walk = True
-        while walk:
-            w1= j.backward()
-            w2 = j2.backward()
-            walk = w1 or w2
-        sleep(1)
-        print(f"{j.servo.angle}, {j2.servo.angle}")
-    
-    #j.park()
-#     joints = [Joint(robotlibrary.config.KNEE,"left rear", False, 1), Joint(robotlibrary.config.KNEE,"left front", False, 3), Joint(robotlibrary.config.KNEE,"right_front", False, 5), Joint(robotlibrary.config.KNEE,"right_rear", False, 7) ]
-#     sleep(2)
-#     for j in joints:
-#         j.move_up()
-#         sleep(1)
-#     for j in reversed(joints):
-#         j.move_down()
-#         sleep(1)    
-#     for j in joints:
-#         j.park()
-#     j.park()
-#     print(j.__dict__)
-#     joints = [Joint(robotlibrary.config.SHOULDER_FRONT,"left front", True, 2), Joint(robotlibrary.config.SHOULDER_REAR,"left rear", True, 0),  Joint(robotlibrary.config.SHOULDER_FRONT,"right_front", False, 4), Joint(robotlibrary.config.SHOULDER_REAR,"right_rear", False, 6)]
-#     sleep(2)
-#     for j in joints:
-#         j.move_forward()
-#         sleep(1)
-#     for j in reversed(joints):
-#         j.move_backward()
-#         sleep(1)    
-#     for j in joints:
-#         j.park()
-#     j.park()
+def main():    
+    j = Joint(robotlibrary.config.KNEE, "rear left", True, True, 1)
+    print(j.__min_angle, j.__max_angle)
+    j.curl()
     print(j.__dict__)
     
 if __name__ == "__main__":

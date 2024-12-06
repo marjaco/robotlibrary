@@ -6,12 +6,12 @@ class Servo:
     '''This class manages the servo motor that turns the ultrasonic sensor. You need a servo motor installed to get use out of this. 
     Don't use directly or edit if you don't know what you are doing.'''
     
-    def __init__(self,pin,inverted):
+    def __init__(self,pin,inverted, min_duty, max_duty):
         self.inverted = inverted
         self.pin=PWM(Pin(pin))
         self.pin.freq(50)
-        self.min=robotlibrary.config.SERVO_MIN_DUTY
-        self.max=robotlibrary.config.SERVO_MAX_DUTY
+        self.min=min_duty
+        self.max=max_duty
         self.__angle=90
         self.set_angle(90)
         #self.calibrate()
@@ -24,7 +24,8 @@ class Servo:
         
     
     def set_angle(self,a):
-        if 0 < a < 180:
+        #print(f"Setting angle: {a}")
+        if 0 <= a <= 180:
             self.__angle = a
             if not self.inverted: 
                 self.pin.duty_u16(self.__get_duty(self.__angle))
@@ -54,8 +55,9 @@ class Servo:
         return round((self.max-self.min)/180*angle+self.min)
     
 def main():
-    s = Servo(0, False)
-    s.set_angle(60)
+    s = Servo(6, False)
+    s.set_angle(120)
+    
 if __name__ == "__main__":
     # execute only if run as a script
     main()
