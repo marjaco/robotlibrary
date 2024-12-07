@@ -22,6 +22,8 @@ class Crab:
         self.front_left = Leg(2, False, True, "front left")
         self.rear_right = Leg(6, True, False, "rear right")
         self.rear_left = Leg(0, False, False, "rear left")
+        if robotlibrary.config.US is not None:
+            self.us = Ultra(robotlibrary.config.US)
         
     
     def move_forward(self):
@@ -62,9 +64,12 @@ class Crab:
         self.rear_left.calibrate()
         
 def main():
-    c = Crab(True)
-    c.park()
-    sleep(1)
+    try: 
+        c = Crab(True)
+        c.move_forward()
+    except KeyboardInterrupt:
+        c.park()
+        
 #    c.park()
 #     sleep(1)
 #     c.move_forward()
