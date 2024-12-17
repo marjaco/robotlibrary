@@ -6,10 +6,14 @@ from robotlibrary.servo import Servo
 import robotlibrary.config
 
 ########## Bluetooth
-import bluetooth
-from robotlibrary.bluetooth.peripheral import BLEPeripheral
-from robotlibrary.bluetooth.ble_services_definitions import ROBOT_UUID, MOTOR_RX_UUID, MOTOR_TX_UUID
-from robotlibrary.bluetooth.parser import decode_motor, encode_motor
+try: 
+    import bluetooth
+    from robotlibrary.bluetooth.peripheral import BLEPeripheral
+    from robotlibrary.bluetooth.ble_services_definitions import ROBOT_UUID, MOTOR_RX_UUID, MOTOR_TX_UUID
+    from robotlibrary.bluetooth.parser import decode_motor, encode_motor
+    BLUETOOTH_CHIP = True
+except:
+    BLUETOOTH_CHIP = False
 
 import machine, sys, utime, random
 from time import sleep
@@ -31,7 +35,7 @@ class Robot:
         self.speed = 0
         self.new_speed = 0
         self.last_turn_right = random.randint(0,1) == 0
-        if rc:
+        if rc and BLUETOOTH_CHIP:
             self.controller = BLEPeripheral(robotlibrary.config.ROBOT_NAME, add_robot_stuff=True)
             def read(buffer: memoryview):
                 speed, turn, forward = decode_motor(bytes(buffer))
@@ -228,7 +232,20 @@ class Robot:
         
         
 def main():
-    r = Robot(True)
+    r = Robot(False)
+    obstacle_detected = False
+    new_speed = 100
+    speed_now = 0
+    min_distance = 15
+    while new_speed <= new_speed and not obstacle_detected:
+        r.set_speed_instantly(speed_now)
+        utime.sleep_ms(10+int(speed_now/2))
+        speed_now += 1
+        if r.get_dist() < min_distance:
+            obstacle_detected = True
+    if obstacle_detected:
+        # Stop or turn or whatever
+        obstacle_detected = False
     while True:
         utime.sleep_ms(500)
     

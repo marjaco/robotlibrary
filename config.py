@@ -43,7 +43,7 @@ IR=None #11
 SERVO=None #9
 
 
-########## Configuration for the Servos in the picocrab robot
+########## Configuration for the Servos in the Crawly robot
 
 SERVO_MIN_DUTY = 1350
 SERVO_MAX_DUTY = 8100
@@ -54,9 +54,21 @@ SHOULDER_REAR_MAX_ANGLE = 140#140 # forward motion
 KNEE_MIN_ANGLE = 65 # up motion
 KNEE_MAX_ANGLE = 180 # down motion
 
-########## Type definitions
+### Configuration for the movements of Crawly
+CRAWLY_FRONT_FORWARD_ANGLE = 130
+CRAWLY_FRONT_BACKWARD_ANGLE = 90
+CRAWLY_REAR_FORWARD_ANGLE = 90
+CRAWLY_REAR_BACKWARD_ANGLE = 50
+CRAWLY_UP_ANGLE = 75
+CRAWLY_DOWN_ANGLE = 90
+
+### Type definitions
 
 SHOULDER_FRONT = 4
 SHOULDER_REAR = 6
 KNEE = 8
+HIP = 10
+
+########## Configuration for the servos in the Walky robot
+
 

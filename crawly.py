@@ -15,18 +15,26 @@ import machine, sys, utime, random
 from time import sleep
 
 
-class Crab:
+class Crawly:
     '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py'''
     def __init__(self,rc):
-        self.front_right = Leg(4, True, True, "front right")
-        self.front_left = Leg(2, False, True, "front left")
-        self.rear_right = Leg(6, True, False, "rear right")
-        self.rear_left = Leg(0, False, False, "rear left")
+#         self.front_right = Leg(4, True, True, "front right")
+#         self.front_left = Leg(2, False, True, "front left")
+#         self.rear_right = Leg(6, True, False, "rear right")
+#         self.rear_left = Leg(0, False, False, "rear left")
+        self.legs = {
+            "front_right" : Leg(4, True, True, "front right"),
+            "rear_right" : Leg(6, True, False, "rear right"),
+            "rear_left" : Leg(0, False, False, "rear left"),
+            "front_left" : Leg(2, False, True, "front left")
+            }
         if robotlibrary.config.US is not None:
             self.us = Ultra(robotlibrary.config.US)
         
+        
     
     def move_forward(self):
+        '''This makes the crawler move forward in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
         while True:
             walk = True
             while walk:
@@ -63,9 +71,12 @@ class Crab:
         self.rear_right.calibrate()
         self.rear_left.calibrate()
         
+    def tap(self, leg):
+        leg.tap()
+    
 def main():
     try: 
-        c = Crab(True)
+        c = Crawly(True)
         c.move_forward()
     except KeyboardInterrupt:
         c.park()
