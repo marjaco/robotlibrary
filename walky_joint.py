@@ -4,10 +4,10 @@ import robotlibrary.config
 from time import sleep, sleep_ms
 
 class Joint:
-    HIP_FORWARD_ANGLE = 110
-    HIP_BACKWARD_ANGLE = 80
-    KNEE_FORWARD_ANGLE = 180
-    KNEE_BACKWARD_ANGLE = 120
+    # HIP_FORWARD_ANGLE = 110
+    # HIP_BACKWARD_ANGLE = 80
+    # KNEE_FORWARD_ANGLE = 180
+    # KNEE_BACKWARD_ANGLE = 120
     def __init__(self, j_type, name, left_side, inverted, pin):
         self.NAME = name
         self.j_type = j_type
@@ -54,20 +54,20 @@ class Joint:
         
     def up(self):
         if not self.left_side:
-            self.servo.set_angle(self.KNEE_BACKWARD_ANGLE)
+            self.servo.set_angle(robotlibrary.config.KNEE_BACKWARD_ANGLE)
         else:
-            self.servo.set_angle(180-self.KNEE_BACKWARD_ANGLE)
+            self.servo.set_angle(180-robotlibrary.config.KNEE_BACKWARD_ANGLE)
         return False
     def down(self):
         if not self.left_side:
-            self.servo.set_angle(self.KNEE_FORWARD_ANGLE)
+            self.servo.set_angle(robotlibrary.config.KNEE_FORWARD_ANGLE)
         else:
-            self.servo.set_angle(180-self.KNEE_FORWARD_ANGLE)
+            self.servo.set_angle(180-robotlibrary.config.KNEE_FORWARD_ANGLE)
         return False
 
     def forward(self) -> bool:
         if not self.left_side:
-            if self.j_type == robotlibrary.config.HIP and self.servo.angle < self.HIP_FORWARD_ANGLE:
+            if self.j_type == robotlibrary.config.HIP and self.servo.angle < robotlibrary.config.HIP_FORWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle +2)
                 #print(f"Winkel rechts vorne: {self.servo.angle +2}")
                 return True
@@ -75,7 +75,7 @@ class Joint:
             return False
         else:
             #print(self.servo.angle)
-            if self.j_type == robotlibrary.config.HIP and self.servo.angle > 180-self.HIP_FORWARD_ANGLE:
+            if self.j_type == robotlibrary.config.HIP and self.servo.angle > 180-robotlibrary.config.HIP_FORWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle - 2)
                 #print(f"Winkel links vorne: {self.servo.angle -2}")
                 return True
@@ -84,12 +84,12 @@ class Joint:
 
     def backward(self) -> bool:
         if not self.left_side:
-            if self.j_type == robotlibrary.config.HIP and self.servo.angle > self.HIP_BACKWARD_ANGLE:
+            if self.j_type == robotlibrary.config.HIP and self.servo.angle > robotlibrary.config.HIP_BACKWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle -2)
                 return True
             return False
         else:
-            if self.j_type == robotlibrary.config.HIP and self.servo.angle < 180-self.HIP_BACKWARD_ANGLE:
+            if self.j_type == robotlibrary.config.HIP and self.servo.angle < 180-robotlibrary.config.HIP_BACKWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle + 2)
                 return True
             return False

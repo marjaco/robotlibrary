@@ -16,12 +16,9 @@ class Servo:
         if a > self.angle:
             for i in range(self._get_duty(self.angle),self._get_duty(a)):
                 self.pin.duty_u16(i)
-                
-
         elif a < self.angle:
             for i in range(self._get_duty(self.angle), self._get_duty(a),-1):
-                self.pin.duty_u16(i)
-                
+                self.pin.duty_u16(i)        
         self.angle = a
         time.sleep_ms(4)  
         

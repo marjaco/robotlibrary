@@ -1,4 +1,4 @@
-from robotlibrary.joint import Joint
+from robotlibrary.crawly_joint import Joint
 import robotlibrary.config
 from time import sleep
 
@@ -15,58 +15,47 @@ class Leg:
         self.knee = Joint(robotlibrary.config.KNEE, name, False, True, pin+1)
         
     def move_forward(self) -> bool:
-#         walk = True
-#         while self.knee.up():
-#             pass
-#         while self.shoulder.forward():
-#             pass
-#         return False
-    
+        '''This makes a small adjustment in the move forward of this leg. Returns True as long as the movement is NOT finished
+        and returns False, once the movement is finished. This does not move the robot forward, 
+        as the leg is raised in this movement.
+        '''
         w1 = self.knee.up()
         w2 = self.shoulder.forward()
         return w1 or w2
+    
     def move_backward(self) -> bool:
+        '''This makes a small adjustment in the move backward of this leg. Returns True as long as the movement is NOT finished
+        and returns False, once the movement is finished. This does actually move the robot forward, 
+        as the leg is lowered.
+        '''
         w1 = self.knee.down()
         w2 = self.shoulder.backward()
         return w1 or w2
     
-#         while self.knee.down():
-#             pass
-#         while self.shoulder.backward():
-#             pass
-#         return False
     
     def park(self):
+        '''This streteches the leg.'''
         self.knee.park()
         self.shoulder.park()
         
     def calibrate(self):
+        '''This sets all the servos to 90°'''
         self.knee.calibrate()
         self.shoulder.calibrate()
     
     def curl(self):
+        '''This bends the knees and sets the shoulder to 90°.'''
         self.knee.curl()
         self.shoulder.curl()
         
     def tap(self):
+        '''Taps the leg.'''
         self.knee.tap()
         
 def main():
+    '''This file, executed, taps the leg.'''
     l = Leg(0, False, False, "rear left")
-    
     l.tap()
-#     legs = [Leg(4, True, True, "front right"), Leg(2, False, True, "front left"),Leg(6, True, False, "rear right"), Leg(0, False, False, "rear left")]
-#     legs[0].shoulder.move_forward()
-#     legs[3].shoulder.move_backward()
-#     for l in legs:
-#         l.move_forward()
-#     for l in legs:
-#         pass
-#         l.park()
-#     for l in legs:
-#         l.knee.down()
-        
-    
     
 if __name__ == "__main__":
     # execute only if run as a script

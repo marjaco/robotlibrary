@@ -14,7 +14,6 @@ class Servo:
         self.max=max_duty
         self.__angle=90
         self.set_angle(90)
-        #self.calibrate()
     @property
     def angle(self):
         return self.__angle
@@ -37,18 +36,24 @@ class Servo:
     def set_angle_slowly(self,a):
         '''If installed, the servor motor will set the angle of the ultrasonic sensor. 90° ist straight ahead.'''
         print("wrong")
-#         if a > self.__angle:
-#             for i in range(self.__get_duty(self.__angle),self.__get_duty(a)):
-#                 self.pin.duty_u16(i)
-#                 time.sleep_us(100)
-# 
-#         elif a < self.__angle:
-#             for i in range(self.__get_duty(self.__angle), self.__get_duty(a),-1):
-#                 self.pin.duty_u16(i)
-#                 time.sleep_us(100)
-#         self.__angle = a
-#         time.sleep_ms(4)
-        return False
+        if a > self.__angle:
+            if not self.inverted:
+                for i in range(self.__get_duty(self.__angle),self.__get_duty(a)):
+                    self.pin.duty_u16(i)
+            else: 
+                for i in range(self.__get_duty(180-self.__angle),self.__get_duty(a), -1):
+                    self.pin.duty_u16(i)
+                
+
+        elif a < self.__angle:
+            if not self.inverted:
+                for i in range(self.__get_duty(self.__angle), self.__get_duty(a),-1):
+                    self.pin.duty_u16(i)
+            else: 
+                for i in range(self.__get_duty(180-self.__angle), self.__get_duty(a)):
+                    self.pin.duty_u16(i) 
+        self.__angle = a
+        time.sleep_ms(4)
         
     def __get_duty(self,angle):
         '''Internal function. Calculates the PWM duty for the given angle.'''

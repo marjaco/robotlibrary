@@ -14,11 +14,12 @@ ROBOT_NAME = "HAL9000"
 
 MAX_DUTY: Set to lower than the maximum not to overload the motors.
 
-MIN_DUTY: You can leave this at 0. Set MIN_SPEED instead.
+MIN_DUTY: Leave this at 0. Set MIN_SPEED instead.
 
 MIN_SPEED: Set this to a value slightly below the speed that sets the robot in motion. 
 
 MAX_SPEED: If you want another scale than 0-100, set the maximum here. '''
+
 MAX_DUTY = 60000 # Maximum duty for the motors. Absolute maximum is 65535.
 MIN_DUTY = 0 # Minimum duty for the motors. Absolute minimum is 0.
 MIN_SPEED = 45
@@ -43,14 +44,18 @@ IR=None #11
 SERVO=None #9
 
 
-########## Configuration for the Servos in the Crawly robot
+########## Configuration for the Servos in the Crawly and Walky robot
+# If you mix differnet servo types with different duty cycles, you can use the type2 constant for this.
+SERVO_MIN_DUTY = 1350 # Change only if the servo doesn't move 180°.
+SERVO_MAX_DUTY = 8100 # Change only if the servo doesn't move 180°.
+SERVO_MIN_DUTY_TYPE2 = 1800 # In case you use different types of servos with different duty_cycles. You need to change the source code in crawly_joint.py
+SERVO_MAX_DUTY_TYPE2 = 7600 # In case you use different types of servos with different duty_cycles. You need to change the source code in crawly_joint.py
 
-SERVO_MIN_DUTY = 1350
-SERVO_MAX_DUTY = 8100
+########## Configuration for the Servos in the Crawly robot
 SHOULDER_FRONT_MIN_ANGLE =  45 # backward motion
-SHOULDER_FRONT_MAX_ANGLE = 180#165 # forward motion
+SHOULDER_FRONT_MAX_ANGLE = 180 # forward motion
 SHOULDER_REAR_MIN_ANGLE =  20 # backward motion
-SHOULDER_REAR_MAX_ANGLE = 140#140 # forward motion
+SHOULDER_REAR_MAX_ANGLE = 140 # forward motion
 KNEE_MIN_ANGLE = 65 # up motion
 KNEE_MAX_ANGLE = 180 # down motion
 
@@ -69,6 +74,8 @@ SHOULDER_REAR = 6
 KNEE = 8
 HIP = 10
 
-########## Configuration for the servos in the Walky robot
-
-
+########## Configuration for the servos movements in the Walky robot
+HIP_FORWARD_ANGLE = 110
+HIP_BACKWARD_ANGLE = 80
+KNEE_FORWARD_ANGLE = 180
+KNEE_BACKWARD_ANGLE = 120
