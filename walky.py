@@ -35,27 +35,6 @@ class Walky:
     
     def move_forward(self):
         '''This makes the crawler move forward in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
-#         while True:
-#             
-#             walk = True
-#             while self.legs["front_right"].move_forward():
-#                 pass
-#             while self.legs["front_left"].move_forward():
-#                 pass
-#             while self.legs["rear_left"].move_forward():
-#                 pass
-#             while self.legs["rear_right"].move_forward():
-#                 pass
-#             while walk:
-#                 w1 = self.legs["front_right"].move_backward()
-#                 w2 = self.legs["rear_left"].move_backward()
-#                 w3 = self.legs["rear_right"].move_backward()
-#                 w4 = self.legs["front_left"].move_backward()
-#                 walk = w1 or w2 or w3 or w4
-#                 
-#                 
-                
-                 
         while True:
             walk = True
             while walk:
@@ -97,7 +76,6 @@ class Walky:
 def main(): 
     w = Walky(False)
     w.calibrate()
-    w.move_forward()
     
 if __name__ == "__main__":
     # execute only if run as a script

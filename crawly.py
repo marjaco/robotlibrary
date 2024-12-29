@@ -1,6 +1,6 @@
 # peripherals
 from robotlibrary.ultrasonic import Ultra
-from Entwicklung.robotlibrary.crawly_leg import Leg
+from robotlibrary.crawly_leg import Leg
 import robotlibrary.config
 
 ########## Bluetooth
