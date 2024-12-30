@@ -20,7 +20,7 @@ class Joint:
         inverted: There are servo motors that turn in a different direction than other. In this case, set to True.
         pin: The pin number that controls the servo motor. 
         '''
-        self.NAME = name
+        self.name = name
         self.j_type = j_type
         min_duty = robotlibrary.config.SERVO_MIN_DUTY
         max_duty = robotlibrary.config.SERVO_MAX_DUTY
@@ -37,23 +37,6 @@ class Joint:
             min_duty = robotlibrary.config.SERVO_MIN_DUTY_TYPE2 # Comment out if the duty cycle is not different from the shoulder servo's duty cycle.
             max_duty = robotlibrary.config.SERVO_MAX_DUTY_TYPE2 # Comment out if the duty cycle is not different from the shoulder servo's duty cycle.
         self.servo = Servo(pin, inverted, min_duty, max_duty)
-          
-    # @property
-    # def min_duty(self):
-    #     return self.__min_duty     
-       
-    # @min_duty.setter
-    # def set_min_duty(value):
-    #     print(value)
-    #     self.__min_duty = value    
-        
-    # @property
-    # def max_duty(self):
-    #     return self.__max_duty     
-       
-    # @max_duty.setter
-    # def set_max_duty(value):
-    #     self.__max_duty = value  
           
     @property
     def min_angle(self):

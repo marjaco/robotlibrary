@@ -74,9 +74,10 @@ def main():
     '''Starting this file calibrates all servos and then terminates.'''
     try: 
         c = Crawly(True)
-        c.calibrate()
+        c.move_forward()
     except KeyboardInterrupt:
         c.park()
+        sleep(1)
     
 if __name__ == "__main__":
     # execute only if run as a script

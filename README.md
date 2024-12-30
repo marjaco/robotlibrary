@@ -1,4 +1,4 @@
-# Robotlibrary for raspberry pi pico
+# Robotlibrary for Raspberry Pi Pico
 ## Project description
 This is a library written in micropython for robots based on the Raspberry Pi Pico. The follwing sensors / parts can be used with this: 
 + ultrasonic sensor

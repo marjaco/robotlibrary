@@ -31,7 +31,7 @@ class Robot:
         if robotlibrary.config.IR is not None:
             self.ir = IR(robotlibrary.config.IR,self)
         if robotlibrary.config.SERVO is not None:
-            self.servo = Servo(robotlibrary.config.SERVO)
+            self.servo = Servo(robotlibrary.config.SERVO, False, robotlibrary.config.SERVO_MIN_DUTY, robotlibrary.config.SERVO_MAX_DUTY)
         self.speed = 0
         self.new_speed = 0
         self.last_turn_right = random.randint(0,1) == 0
@@ -59,9 +59,7 @@ class Robot:
             print("Ende")                
             self.controller.register_read_callback(MOTOR_RX_UUID, read)
             self.controller.advertise()
-
     
-        
     def _drive(self, dir_l, dir_r):
         '''This abstracted driving function is only called locally by the other functions with better names. 
         It accelerates and decelerates to make driving more natural. Do not call directly!!'''
@@ -196,8 +194,8 @@ class Robot:
 
     def set_angle(self,a):
         '''If implemented, turn the servo motor with the ultrasonic sensor to the given angle.'''
-        self.servo.set_angle(a)
-    
+        self.servo.set_angle_slowly(a)
+        
     def get_smallest_distance(self):
         '''This returns the angle of the ultrasonic sensor where it measured the smallest distance'''
         self.set_angle(0)
@@ -233,6 +231,7 @@ class Robot:
         
 def main():
     r = Robot(False)
+    r.get_smallest_distance()
     obstacle_detected = False
     new_speed = 100
     speed_now = 0
@@ -246,6 +245,7 @@ def main():
     if obstacle_detected:
         # Stop or turn or whatever
         obstacle_detected = False
+    
     while True:
         utime.sleep_ms(500)
     
