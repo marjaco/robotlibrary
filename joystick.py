@@ -1,8 +1,8 @@
 from machine import Pin,ADC,Timer
-from robotlibrary.config import MIN_DUTY, MAX_DUTY, X_MEDIAN, Y_MEDIAN, DEBOUNCE_WAIT
+from robotlibrary.config import JS_MIN_DUTY, JS_MAX_DUTY, JS_X_MEDIAN, JS_Y_MEDIAN, DEBOUNCE_WAIT, MIN_SPEED, MAX_SPEED
 import utime
 from robotlibrary.motor import Motor
-
+from collections import deque
 class Joystick:
     def __init__(self, x,y,b):
         self.x = ADC(x)
@@ -12,7 +12,8 @@ class Joystick:
         self.pressed = False
         self.last_pressed = 0
         self.timer = Timer()
-        
+        self.direction_data = deque([JS_X_MEDIAN,JS_X_MEDIAN,JS_X_MEDIAN,JS_X_MEDIAN,JS_X_MEDIAN],5)
+        self.speed_data = deque([JS_Y_MEDIAN,JS_Y_MEDIAN,JS_Y_MEDIAN,JS_Y_MEDIAN,JS_Y_MEDIAN],5)
     def reset(self,t):
         self.pressed = False
     
@@ -30,43 +31,41 @@ class Joystick:
                 self.timer.init(mode=Timer.ONE_SHOT, period=300, callback=self.reset)
     
     def get_speed(self,s):
+        self.speed_data.popleft()
+        self.speed_data.append(s)
+        s = int(sum(self.speed_data)/len(self.speed_data))
         speed = 0
-        if s < Y_MEDIAN-300:
-            speed = abs(MAX_DUTY-s*2)
-        elif s > Y_MEDIAN+300:
-            speed = -abs(MAX_DUTY-s*2)    
+        if s < JS_Y_MEDIAN-300:
+            speed = abs(JS_MAX_DUTY-s*2)
+        elif s > JS_Y_MEDIAN+300:
+            speed = -abs(JS_MAX_DUTY-s*2)    
         else:
             speed = 0
         if speed > -4000 and speed < 4000:
                 speed = 0
-        return int(100/MAX_DUTY*speed)
+        return int(MAX_SPEED/JS_MAX_DUTY*speed)
     
     def get_direction(self,d):
+        self.direction_data.popleft()
+        self.direction_data.append(d)
+        d = int(sum(self.direction_data)/len(self.direction_data))
         direction = 0
-        if d < X_MEDIAN-200:
-            direction = -abs(90-(90/X_MEDIAN*d))
-        elif d > X_MEDIAN+200:
-            direction = abs(90/65535*d)
+        if d < JS_X_MEDIAN-200:
+            direction = -abs(90-(90/JS_X_MEDIAN*d))
+        elif d > JS_X_MEDIAN+200:
+            direction = abs(90/JS_MAX_DUTY*d)
         else:
             direction = 0
         return int(direction)
+    
+def main():
+    joystick = Joystick(26,27,0)
 
-joystick = Joystick(26,27,0)
-
-while True:
-#     y_values = list()
-#     x_values = list()
-#     for i in range(0,100):
-#         x_values.append(joystick.x.read_u16())
-#         y_values.append(joystick.y.read_u16())
-#     sum = 0
-#     print(y_values)
-#     for y in y_values:
-#         sum += y
-    #print(f"Yvalues median: {sum/100}")
-    #print(f"X-Werte: {joystick.x.read_u16()}")
-    #print(f"Y-Werte: {joystick.y.read_u16()}")
-
-    print(f"X-Werte: {joystick.get_direction(joystick.x.read_u16())}")
-    print(f"Y-Werte: {joystick.get_speed(joystick.y.read_u16())}")
-    utime.sleep_ms(1000)
+    while True:
+        print(f"X-Werte(Direction): {joystick.get_direction(joystick.x.read_u16())} | Y-Werte(Speed): {joystick.get_speed(joystick.y.read_u16())}")
+        #print(f"Y-Werte(Speed): {joystick.get_speed(joystick.y.read_u16())}")
+        utime.sleep_ms(1000)
+    
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()
