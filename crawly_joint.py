@@ -1,5 +1,5 @@
 # peripherals
-from robotlibrary.servo_crab import Servo
+from robotlibrary.servo import Servo
 import robotlibrary.config
 from time import sleep, sleep_ms
 
