@@ -138,6 +138,8 @@ class Joint:
                 sleep_ms(50)
             
     def calibrate(self):
+        self.servo.set_angle(0)
+        sleep_ms(500)
         self.servo.set_angle(90)
         
     def __set_angle(self,a):

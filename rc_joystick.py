@@ -2,7 +2,7 @@
 from robotlibrary.config import MIN_DUTY, MAX_DUTY, MAX_SPEED, MIN_SPEED
 from robotlibrary.config import ROBOT_NAME
 from robotlibrary.rotary import Rotary
-
+from robotlibrary.joystick import Joystick
 
 ########## Import bluetooth library
 from robotlibrary.bluetooth.central import BLECentral

@@ -134,6 +134,10 @@ class Robot:
         self.mr.change_speed(5)
         self.ml.change_speed(-5)
         
+    def turn(self, turn):
+        self.mr.change_speed(-turn)
+        self.ml.change_speed(turn)
+        
     def go_straight(self):
         '''Lets the robot go straight on. Usually called when a turn shall end. '''
         self.ml.reset_offset()
@@ -226,6 +230,12 @@ class Robot:
                 longest_index=i
                 longest_dist=dist
         return longest_index+1
+    
+    def follow_line(self):
+        ir = IR_Array(0,3)
+        pid = PID(ir)
+        while True:
+            
         
         
 def main():

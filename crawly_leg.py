@@ -54,8 +54,8 @@ class Leg:
         
 def main():
     '''This file, executed, taps the leg.'''
-    l = Leg(0, False, False, "rear left")
-    l.tap()
+    l = Leg(6, False, False, "rear left")
+    l.calibrate()
     
 if __name__ == "__main__":
     # execute only if run as a script

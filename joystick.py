@@ -2,6 +2,7 @@ from machine import Pin,ADC,Timer
 from robotlibrary.config import JS_MIN_DUTY, JS_MAX_DUTY, JS_X_MEDIAN, JS_Y_MEDIAN, DEBOUNCE_WAIT, MIN_SPEED, MAX_SPEED
 import utime
 from robotlibrary.motor import Motor
+
 from collections import deque
 class Joystick:
     def __init__(self, x,y,b):
@@ -30,7 +31,8 @@ class Joystick:
                 self.last_pressed = utime.ticks_ms()
                 self.timer.init(mode=Timer.ONE_SHOT, period=300, callback=self.reset)
     
-    def get_speed(self,s):
+    def get_speed(self):
+        s = self.y.read_u16()
         self.speed_data.popleft()
         self.speed_data.append(s)
         s = int(sum(self.speed_data)/len(self.speed_data))
@@ -45,7 +47,8 @@ class Joystick:
                 speed = 0
         return int(MAX_SPEED/JS_MAX_DUTY*speed)
     
-    def get_direction(self,d):
+    def get_direction(self):
+        d = self.x.read_u16()
         self.direction_data.popleft()
         self.direction_data.append(d)
         d = int(sum(self.direction_data)/len(self.direction_data))
@@ -62,7 +65,7 @@ def main():
     joystick = Joystick(26,27,0)
 
     while True:
-        print(f"X-Werte(Direction): {joystick.get_direction(joystick.x.read_u16())} | Y-Werte(Speed): {joystick.get_speed(joystick.y.read_u16())}")
+        print(f"X-Werte(Direction): {joystick.get_direction()} | Y-Werte(Speed): {joystick.get_speed()}")
         #print(f"Y-Werte(Speed): {joystick.get_speed(joystick.y.read_u16())}")
         utime.sleep_ms(1000)
     
