@@ -146,7 +146,7 @@ def main():
     '''Starting this file calibrates all servos and then terminates.'''
     try: 
         c = Crawly(True)
-        c.move_forward()
+        c.move_forward(10)
     except KeyboardInterrupt:
         c.park()
         sleep(1)
