@@ -27,27 +27,99 @@ class Crawly:
             self.us = Ultra(robotlibrary.config.US)
         
     
-    def move_forward(self):
+    def move_forward(self, steps):
         '''This makes the crawler move forward in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
-        while True:
+        while steps > 0:
             walk = True
             # First half of one stepcycle.
             while walk:
-                w1 = self.legs["front_right"].move_forward()
-                w2 = self.legs["rear_left"].move_forward()
-                w3 = self.legs["rear_right"].move_backward()
-                w4 = self.legs["front_left"].move_backward()
+                w1 = self.legs["front_right"].forward_move_forward()
+                w2 = self.legs["rear_left"].forward_move_forward()
+                w3 = self.legs["rear_right"].forward_move_backward()
+                w4 = self.legs["front_left"].forward_move_backward()
                 walk = w1 or w2 or w3 or w4
             
             walk = True
             # Second half of one stepcycle
             while walk:
-                w1 = self.legs["front_right"].move_backward()
-                w2 = self.legs["rear_left"].move_backward()
-                w3 = self.legs["rear_right"].move_forward()
-                w4 = self.legs["front_left"].move_forward()
+                w1 = self.legs["front_right"].forward_move_backward()
+                w2 = self.legs["rear_left"].forward_move_backward()
+                w3 = self.legs["rear_right"].forward_move_forward()
+                w4 = self.legs["front_left"].forward_move_forward()
                 
                 walk = w1 or w2 or w3 or w4
+            steps = steps-1
+
+    def move_backward(self, steps):
+        '''This makes the crawler move backward in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
+        while steps > 0:
+            walk = True
+            # First half of one stepcycle.
+            while walk:
+                w1 = self.legs["front_right"].backward_move_backward()
+                w2 = self.legs["rear_left"].backward_move_backward()
+                w3 = self.legs["rear_right"].backward_move_forward()
+                w4 = self.legs["front_left"].backward_move_forward()
+                walk = w1 or w2 or w3 or w4
+            
+            walk = True
+            # Second half of one stepcycle
+            while walk:
+                w1 = self.legs["front_right"].backward_move_forward()
+                w2 = self.legs["rear_left"].backward_move_forward()
+                w3 = self.legs["rear_right"].backward_move_backward()
+                w4 = self.legs["front_left"].backward_move_backward()
+                
+                walk = w1 or w2 or w3 or w4
+            steps = steps-1
+
+
+    def turn_left(self, steps):
+        '''This makes the crawler turn to the left in on place in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
+        while steps > 0:
+            walk = True
+            # First half of one stepcycle.
+            while walk:
+                w1 = self.legs["front_right"].forward_move_forward()
+                w2 = self.legs["rear_left"].backward_move_backward()
+                w3 = self.legs["rear_right"].forward_move_backward()
+                w4 = self.legs["front_left"].backward_move_forward()
+                walk = w1 or w2 or w3 or w4
+            
+            walk = True
+            # Second half of one stepcycle
+            while walk:
+                w1 = self.legs["front_right"].forward_move_backward()
+                w2 = self.legs["rear_left"].backward_move_forward()
+                w3 = self.legs["rear_right"].forward_move_forward()
+                w4 = self.legs["front_left"].backward_move_backward()
+                
+                walk = w1 or w2 or w3 or w4
+            steps = steps-1
+
+    def turn_right(self, steps):
+        '''This makes the crawler turn to the right in on place in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
+        while steps > 0:
+            walk = True
+            # First half of one stepcycle.
+            while walk:
+                w1 = self.legs["front_right"].backward_move_forward()
+                w2 = self.legs["rear_left"].forward_move_backward()
+                w3 = self.legs["rear_right"].backward_move_backward()
+                w4 = self.legs["front_left"].forward_move_forward()
+                walk = w1 or w2 or w3 or w4
+            
+            walk = True
+            # Second half of one stepcycle
+            while walk:
+                w1 = self.legs["front_right"].backward_move_backward()
+                w2 = self.legs["rear_left"].forward_move_forward()
+                w3 = self.legs["rear_right"].backward_move_forward()
+                w4 = self.legs["front_left"].forward_move_backward()
+                
+                walk = w1 or w2 or w3 or w4
+            steps = steps-1
+
             
     def park(self):
         '''This stretches legs the legs lengthwise, so the robot lies on its underside.'''
