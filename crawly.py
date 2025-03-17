@@ -75,7 +75,7 @@ class Crawly:
 
 
     def turn_left(self, steps):
-        '''This makes the crawler turn to the left in on place in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
+        '''This makes the crawler turn to the left in one place in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
         while steps > 0:
             walk = True
             # First half of one stepcycle.
@@ -98,7 +98,7 @@ class Crawly:
             steps = steps-1
 
     def turn_right(self, steps):
-        '''This makes the crawler turn to the right in on place in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
+        '''This makes the crawler turn to the right in one place in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
         while steps > 0:
             walk = True
             # First half of one stepcycle.
