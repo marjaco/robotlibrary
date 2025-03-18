@@ -66,7 +66,6 @@ def main():
 
     while True:
         print(f"X-Werte(Direction): {joystick.get_direction()} | Y-Werte(Speed): {joystick.get_speed()}")
-        #print(f"Y-Werte(Speed): {joystick.get_speed(joystick.y.read_u16())}")
         utime.sleep_ms(1000)
     
 if __name__ == "__main__":

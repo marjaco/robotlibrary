@@ -26,9 +26,9 @@ class RC:
         #self.rotary_bottom = Rotary(20,21,17,self)
         self.joystick = Joystick(26,27,0) # Pins for x axis, y axis and button
         self.timer = Timer()
-        self.timer.init(mode=Timer.PERIODIC, period=20, callback=self.set_values)
+        self.timer.init(mode=Timer.PERIODIC, period=50, callback=self.set_values)
         self.send_timer = Timer()
-        self.send_timer.init(mode=Timer.PERIODIC, period=200, callback=self.send)
+        self.send_timer.init(mode=Timer.PERIODIC, period=100, callback=self.send)
         self.duty_cycle = 0
         #self.p = ADC(28)
         self.server = BLECentral(ROBOT_NAME, True)
