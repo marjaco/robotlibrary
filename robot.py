@@ -41,22 +41,22 @@ class Robot:
                 speed, turn, forward = decode_motor(bytes(buffer))
                 #print(f"Speed: {speed}, Turn: {turn}, forward: {forward}") # uncomment for debugging
                 if speed != self.speed:
-                    self.set_speed_instantly(speed)
+                    self.set_speed_instantly(speed)                    
                 if turn == 0:
                     self.go_straight()
                 elif turn < 0:
-                    if turn < -5:
+                    if turn < -50:
                         self.spin_left()
                     else:
                         self.turn_left()
                 elif turn > 0:
-                    if turn > 5:
+                    if turn > 50:
                         self.spin_right()
                     else:
                         self.turn_right()
-                if turn > -5 and turn < 5:    
+                if turn > -50 and turn < 50:    
                     self.set_forward(forward)
-            print("Ende")                
+            #print("Ende")                
             self.controller.register_read_callback(MOTOR_RX_UUID, read)
             self.controller.advertise()
     
@@ -234,32 +234,37 @@ class Robot:
     def follow_line(self):
         ir = IR_Array(0,3)
         pid = PID(ir)
-        while True:
+        
             
         
         
 def main():
    try: 
         r = Robot(False)
-        r.get_smallest_distance()
-        r.set_angle(90)
-        r.set_speed(80)
-        obstacle_detected = False
-        new_speed = 100
-        speed_now = 0
-        min_distance = 15
-        while speed_now <= new_speed and not obstacle_detected:
-            r.set_speed_instantly(speed_now)
-            utime.sleep_ms(10+int(speed_now/2))
-            speed_now += 1
-            if r.get_dist() < min_distance:
-                obstacle_detected = True
-        if obstacle_detected:
-            r.spin_before_obstacle(min_distance+10)
-            obstacle_detected = False
-        
-        while True:
-            utime.sleep_ms(500)
+        r.set_speed_instantly(100)
+        sleep_ms(500)
+        r.set_forward(False)
+        sleep_ms(500)
+        r.emergency_stop()
+#         r.get_smallest_distance()
+#         r.set_angle(90)
+#         r.set_speed(80)
+#         obstacle_detected = False
+#         new_speed = 100
+#         speed_now = 0
+#         min_distance = 15
+#         while speed_now <= new_speed and not obstacle_detected:
+#             r.set_speed_instantly(speed_now)
+#             utime.sleep_ms(10+int(speed_now/2))
+#             speed_now += 1
+#             if r.get_dist() < min_distance:
+#                 obstacle_detected = True
+#         if obstacle_detected:
+#             r.spin_before_obstacle(min_distance+10)
+#             obstacle_detected = False
+#         
+#         while True:
+#             utime.sleep_ms(500)
             
    except Exception as err:
         r.emergency_stop()

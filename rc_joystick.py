@@ -22,15 +22,12 @@ class RC:
         self.speed = 0
         self.turn_val = 0 # 0=straight on; >0=turn right; <0=turn left
         self.change = True
-        #self.rotary_top = Rotary(18,19,16,self)
-        #self.rotary_bottom = Rotary(20,21,17,self)
         self.joystick = Joystick(26,27,0) # Pins for x axis, y axis and button
         self.timer = Timer()
         self.timer.init(mode=Timer.PERIODIC, period=50, callback=self.set_values)
         self.send_timer = Timer()
-        self.send_timer.init(mode=Timer.PERIODIC, period=100, callback=self.send)
+        self.send_timer.init(mode=Timer.PERIODIC, period=200, callback=self.send)
         self.duty_cycle = 0
-        #self.p = ADC(28)
         self.server = BLECentral(ROBOT_NAME, True)
         self.server.register_read_callback(MOTOR_TX_UUID, self.read)
         self.server.scan()
@@ -44,14 +41,11 @@ class RC:
         print("read")
     
     def send(self,t):
-        if self.change: 
-            #print("sending data ...")
+        #if self.change: 
+            print("sending data ...")
             data = encode_motor(self.speed, self.turn_val, self.forward)
             self.server.send(ROBOT_UUID, MOTOR_RX_UUID, data)
-            self.change = False
-    
-    
-        
+            self.change = False   
             
     def button(self):
         '''This is the button click.'''
@@ -60,8 +54,10 @@ class RC:
                 
     def set_values(self,t): # Geschwindigkeit vom Joystick holen noch programmieren
         '''This calculates the speed between MIN_SPEED and MAX_SPEED that is sent to the robot.'''
-        self.speed = self.joystick.get_speed()
+        s = self.joystick.get_speed()
+        self.speed = abs(s)
         self.turn_val = self.joystick.get_direction()
+        self.forward = s > 0
         
 def main():
     rc = RC()

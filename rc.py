@@ -53,11 +53,11 @@ class RC:
         '''This is called when the direction knob is turned to determine the turn or spin. '''
         self.change = True
         if change == Rotary.ROT_CW: # Rotary encoder turned clockwise.
-            self.turn_val = self.turn_val + 1
+            self.turn_val = self.turn_val + 10
             if self.turn_val < 0:
                 self.turn_val = 0            
         elif change == Rotary.ROT_CCW: # Rotary encoder turned anti-clockwise.
-            self.turn_val = self.turn_val - 1
+            self.turn_val = self.turn_val - 10
             if self.turn_val > 0:
                 self.turn_val = 0
         elif change == Rotary.SW_RELEASE: # Button pressed.

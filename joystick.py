@@ -15,6 +15,7 @@ class Joystick:
         self.timer = Timer()
         self.direction_data = deque([JS_X_MEDIAN,JS_X_MEDIAN,JS_X_MEDIAN,JS_X_MEDIAN,JS_X_MEDIAN],5)
         self.speed_data = deque([JS_Y_MEDIAN,JS_Y_MEDIAN,JS_Y_MEDIAN,JS_Y_MEDIAN,JS_Y_MEDIAN],5)
+        
     def reset(self,t):
         self.pressed = False
     
@@ -66,7 +67,7 @@ def main():
 
     while True:
         print(f"X-Werte(Direction): {joystick.get_direction()} | Y-Werte(Speed): {joystick.get_speed()}")
-        utime.sleep_ms(1000)
+        utime.sleep_ms(100)
     
 if __name__ == "__main__":
     # execute only if run as a script
