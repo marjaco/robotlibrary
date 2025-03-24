@@ -3,6 +3,8 @@ from robotlibrary.motor import Motor
 from robotlibrary.ultrasonic import Ultra
 from robotlibrary.infrared import IR
 from robotlibrary.servo import Servo
+from robotlibrary.ir_array import IR_Array
+from robotlibrary.pid import PID
 import robotlibrary.config
 
 ########## Bluetooth
@@ -231,44 +233,32 @@ class Robot:
                 longest_dist=dist
         return longest_index+1
     
+    
     def follow_line(self):
-        ir = IR_Array(0,3)
-        pid = PID(ir)
+        pv = 0
+        ir = IR_Array(0,5)
+        pid = PID(ir, 0.01)
+        self.set_speed(80)
+        while True:
+            control = int(round(pid.pid_controller()))
+            pv += control * 0.01
+            print(control)
+            self.mr.set_speed(self.speed - control)
+            self.ml.set_speed(self.speed + control)
+            sleep_ms(10)
         
             
         
         
 def main():
-   try: 
-        r = Robot(False)
-        r.set_speed_instantly(100)
-        sleep_ms(500)
-        r.set_forward(False)
-        sleep_ms(500)
-        r.emergency_stop()
-#         r.get_smallest_distance()
-#         r.set_angle(90)
-#         r.set_speed(80)
-#         obstacle_detected = False
-#         new_speed = 100
-#         speed_now = 0
-#         min_distance = 15
-#         while speed_now <= new_speed and not obstacle_detected:
-#             r.set_speed_instantly(speed_now)
-#             utime.sleep_ms(10+int(speed_now/2))
-#             speed_now += 1
-#             if r.get_dist() < min_distance:
-#                 obstacle_detected = True
-#         if obstacle_detected:
-#             r.spin_before_obstacle(min_distance+10)
-#             obstacle_detected = False
-#         
-#         while True:
-#             utime.sleep_ms(500)
-            
-   except Exception as err:
-        r.emergency_stop()
-        print("stop")
+
+    r = Robot(False)
+    r.follow_line()
+        
+
+    print(err)
+    r.emergency_stop()
+    print("stop")
     
 if __name__ == "__main__":
     # execute only if run as a script

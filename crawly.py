@@ -5,11 +5,7 @@ import robotlibrary.config
 
 ########## Bluetooth
 # This is not implemented yet.
-import bluetooth
-from robotlibrary.bluetooth.peripheral import BLEPeripheral
-from robotlibrary.bluetooth.ble_services_definitions import ROBOT_UUID, MOTOR_RX_UUID, MOTOR_TX_UUID
-from robotlibrary.bluetooth.parser import decode_motor, encode_motor
-
+#BLUETOOTH_CHIP = FALSE
 #import machine, sys, utime, random
 from time import sleep
 
@@ -134,7 +130,7 @@ class Crawly:
     def calibrate(self):
         '''This sets all servos to 90° so the legs can be assembled with the correct angles.'''
         for l in self.legs.values():
-            l.calibrate
+            l.calibrate()
         
     def tap(self):
         '''This taps all the legs. Looks and sounds scary and can also identify the legs.'''
@@ -146,7 +142,7 @@ def main():
     '''Starting this file calibrates all servos and then terminates.'''
     try: 
         c = Crawly(True)
-        c.move_forward(10)
+        c.calibrate()
     except KeyboardInterrupt:
         c.park()
         sleep(1)

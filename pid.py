@@ -7,9 +7,9 @@ class PID:
         self.ir_array = ir_array
         self.setpoint = 0  # Desired setpoint
         self.pv = 0  # Initial process variable
-        self.kp = 0.6  # Proportional gain
-        self.ki = 0.5  # Integral gain
-        self.kd = 0.1  # Derivative gain
+        self.kp = 1.0  # Proportional gain
+        self.ki = 0.1  # Integral gain
+        self.kd = 0.05  # Derivative gain
         self.previous_error = 0
         self.integral = 0
         self.last_control_time = int(time.time_ns())
@@ -18,7 +18,7 @@ class PID:
                 
     def pid_controller(self):
         error = self.ir_array.get_error()
-        print(f"Error: {error}")
+        #print(f"Error: {error}")
         self.integral += error * self.dt
         derivative = (error - self.previous_error) / self.dt
         self.previous_error = error
@@ -38,4 +38,3 @@ if __name__ == "__main__":
     main()
 
 
-l
