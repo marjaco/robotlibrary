@@ -4,3 +4,5 @@ docs/source
 docs/make.bat
 docs/Makefile
 docs/build/doctrees
+.idea
+
