@@ -11,7 +11,7 @@ from robotlibrary.bluetooth.parser import encode_motor, decode_motor
 
 ########## Import pico micropython libraries
 import utime
-from machine import Timer,ADC
+from machine import Timer,ADC,Pin
 import micropython
 micropython.alloc_emergency_exception_buf(100)
 
@@ -23,6 +23,10 @@ class RC:
         self.turn_val = 0 # 0=straight on; >0=turn right; <0=turn left
         self.change = True
         self.joystick = Joystick(26,27,0) # Pins for x axis, y axis and button
+        self.button = Pin(0,Pin.IN, Pin.PULL_UP)
+        self.button.irq(handler=self.switch_detect, trigger=Pin.IRQ_FALLING | Pin.IRQ_RISING )
+        self.last_button_status = self.button.value()
+        self.button_status = self.button.value()
         self.timer = Timer()
         self.timer.init(mode=Timer.PERIODIC, period=50, callback=self.set_values)
         self.send_timer = Timer()
@@ -42,15 +46,10 @@ class RC:
     
     def send(self,t):
         #if self.change: 
-            print("sending data ...")
-            data = encode_motor(self.speed, self.turn_val, self.forward)
+            # print("sending data ...")
+            data = encode_motor(self.speed, self.turn_val, self.forward, self.button_status)
             self.server.send(ROBOT_UUID, MOTOR_RX_UUID, data)
             self.change = False   
-            
-    def button(self):
-        '''This is the button click.'''
-        self.forward = not self.forward
-        self.change = True
                 
     def set_values(self,t): # Geschwindigkeit vom Joystick holen noch programmieren
         '''This calculates the speed between MIN_SPEED and MAX_SPEED that is sent to the robot.'''
@@ -59,6 +58,13 @@ class RC:
         self.turn_val = self.joystick.get_direction()
         self.forward = s > 0
         
+    def switch_detect(self,pin):
+        if self.last_button_status == self.button.value():
+            return
+        self.last_button_status = self.button.value()
+        self.button_status = self.button.value()
+            
+            
 def main():
     rc = RC()
     while True:

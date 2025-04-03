@@ -45,7 +45,7 @@ class RC:
     def send(self,t):
         if self.change: 
             #print("sending data ...")
-            data = encode_motor(self.speed, self.turn_val, self.forward)
+            data = encode_motor(self.speed, self.turn_val, self.forward, 0)
             self.server.send(ROBOT_UUID, MOTOR_RX_UUID, data)
             self.change = False
     
