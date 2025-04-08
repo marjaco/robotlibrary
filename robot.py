@@ -35,6 +35,7 @@ class Robot:
         if robotlibrary.config.SERVO is not None:
             self.servo = Servo(robotlibrary.config.SERVO, False, robotlibrary.config.SERVO_MIN_DUTY, robotlibrary.config.SERVO_MAX_DUTY)
         self.speed = 0
+        self.forward = True
         self.new_speed = 0
         self.last_turn_right = random.randint(0,1) == 0
         if rc and BLUETOOTH_CHIP:
@@ -42,6 +43,9 @@ class Robot:
             def read(buffer: memoryview):
                 speed, turn, forward, button_press = decode_motor(bytes(buffer)) #forward is unused.
                 #print(f"Speed: {speed}, Turn: {turn}, forward: {forward}") # uncomment for debugging
+                if forward != self.forward:
+                    self.forward = forward
+                    self.set_forward(forward)
                 if speed != self.speed:
                     self.set_speed_instantly(speed)                    
                 if turn == 0:
@@ -56,9 +60,10 @@ class Robot:
                         self.spin_right()
                     else:
                         self.turn_right()
-                if turn > -50 and turn < 50:    
+                if turn > -50 and turn < 50:
+                    self.set_forward(self.forward)
                     self.go_straight()
-                if button_pressed:
+                if button_press:
                     print("Button pressed.")
             #print("Ende")                
             self.controller.register_read_callback(MOTOR_RX_UUID, read)
