@@ -116,6 +116,56 @@ class Crawly:
                 walk = w1 or w2 or w3 or w4
             steps = steps-1
 
+
+    
+    def move_left(self, steps):
+        '''This makes the crawler move to the left in a coordinated way. Most of the functionality lies in the other classes Joint and Leg.'''
+        while steps > 0:
+            walk = True
+            # First half of one step cycle.
+            while walk:
+                w1 = self.legs["front_right"].left_move_ahead()
+                w2 = self.legs["rear_left"].left_move_center()
+                w3 = self.legs["rear_right"].left_move_center()
+                w4 = self.legs["front_left"].left_move_ahead()
+
+                walk = w1 or w2 or w3 or w4
+            
+            walk = True
+            # Second half of one step cycle
+            while walk:
+                w1 = self.legs["front_right"].left_move_center()
+                w2 = self.legs["rear_left"].left_move_ahead()
+                w3 = self.legs["rear_right"].left_move_ahead()
+                w4 = self.legs["front_left"].left_move_center()
+                
+                walk = w1 or w2 or w3 or w4
+            steps = steps-1
+
+    def move_right(self, steps):
+        '''This makes the crawler move to the right in a coordinated way. Most of the functionality lies in the other classes Joint and Leg.'''
+        while steps > 0:
+            walk = True
+            # First half of one step cycle.
+            while walk:
+                w1 = self.legs["front_right"].right_move_ahead()# down
+                w2 = self.legs["rear_left"].right_move_center()# down
+                w3 = self.legs["rear_right"].right_move_center()# up
+                w4 = self.legs["front_left"].right_move_ahead()# up
+                
+                walk = w1 or w2 or w3 or w4
+            
+            walk = True
+            # Second half of one step cycle
+            while walk:
+                w1 = self.legs["front_right"].right_move_center()# up
+                w2 = self.legs["rear_left"].right_move_ahead()# up
+                w3 = self.legs["rear_right"].right_move_ahead()# down
+                w4 = self.legs["front_left"].right_move_center()# down
+                
+                walk = w1 or w2 or w3 or w4
+            steps = steps-1
+
             
     def park(self):
         '''This stretches legs the legs lengthwise, so the robot lies on its underside.'''
