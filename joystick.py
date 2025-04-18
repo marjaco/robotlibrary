@@ -2,8 +2,8 @@ from machine import Pin,ADC,Timer
 from robotlibrary.config import JS_MIN_DUTY, JS_MAX_DUTY, JS_X_MEDIAN, JS_Y_MEDIAN, DEBOUNCE_WAIT, MIN_SPEED, MAX_SPEED
 import utime
 from robotlibrary.motor import Motor
-
 from collections import deque
+
 class Joystick:
     def __init__(self, x,y,b):
         self.x = ADC(x)
@@ -44,7 +44,7 @@ class Joystick:
             speed = -abs(JS_MAX_DUTY-s*2)    
         else:
             speed = 0
-        if speed > -4000 and speed < 4000:
+        if speed > -2000 and speed < 2000:
                 speed = 0
         return int(MAX_SPEED/JS_MAX_DUTY*speed)
     
@@ -55,20 +55,39 @@ class Joystick:
         d = int(sum(self.direction_data)/len(self.direction_data))
         direction = 0
         if d < JS_X_MEDIAN-200:
-            direction = -abs(90-(90/JS_X_MEDIAN*d))
+            direction = - abs(90-(90/JS_MAX_DUTY * d))
         elif d > JS_X_MEDIAN+200:
-            direction = abs(90/JS_MAX_DUTY*d)
+            direction = abs(90/JS_MAX_DUTY * d)
         else:
             direction = 0
         return int(direction)
-    
+
+    def calibration(self):
+        print("calibrating, don't move the joystick.", end='')
+        x = [JS_X_MEDIAN for a in range(1000)]
+        y = [JS_Y_MEDIAN for b in range(1000)]
+        for i in range(0,len(x)):
+            print(".", end="")
+            x[i] = self.x.read_u16()
+            y[i] = self.y.read_u16()
+            utime.sleep_ms(2)
+        print(" ")
+        dx = int(sum(x)/len(x))
+        dy = int(sum(y)/len(y))
+        print(f"JS_X_MEDIAN value (direction): {dx}")
+        print(f"JS_Z_MEDIAN value (speed): {dy}")
+        print("Use those values in config.py.")
+
+ 
+ 
 def main():
     joystick = Joystick(26,27,0)
+    joystick.calibration()
 
-    while True:
-        print(f"X-Werte(Direction): {joystick.get_direction()} | Y-Werte(Speed): {joystick.get_speed()}")
-        utime.sleep_ms(100)
-    
+#     while True:
+#         print(f"X-Werte(Direction): {joystick.get_direction()} | Y-Werte(Speed): {joystick.get_speed()}")
+#         utime.sleep_ms(100)
+#     
 if __name__ == "__main__":
     # execute only if run as a script
     main()

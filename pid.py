@@ -12,12 +12,14 @@ class PID:
         self.kd = 0.05  # Derivative gain
         self.previous_error = 0
         self.integral = 0
-        self.last_control_time = int(time.time_ns())
+        self.last_controlled_state_time = int(time.time_ns())
         self.dt = dt
           
                 
     def pid_controller(self):
         error = self.ir_array.get_error()
+        if error == 0:
+            self.last_controlled_state_time = int(time.time_ns())
         #print(f"Error: {error}")
         self.integral += error * self.dt
         derivative = (error - self.previous_error) / self.dt
