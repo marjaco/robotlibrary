@@ -51,6 +51,57 @@ class Leg:
         w2 = self.shoulder.backward()
         return w1 or w2
     
+
+
+    def left_move_ahead(self) -> bool:
+        '''This makes the leg go to the very front or very back of the robot depended on the position of the shoulder.
+        The knee is raised or lowered depended on the side where it is mounted on.
+        This is used to move the robot to the left.
+        '''
+        if self.right:
+            w1 = self.knee.side_walking_up()
+        else:
+            w1 = self.knee.side_walking_down()
+        w2 = self.shoulder.ahead()
+        return w1 or w2
+    
+    def left_move_center(self) -> bool:
+        '''This makes the leg go to the center, which means setting the servo on 90 degrees.
+        The knee is raised or lowered depended on the side where it is mounted on.
+        This is used to move the robot to the left.
+        '''
+        if self.right:
+            w1 = self.knee.side_walking_down()
+        else:
+            w1 = self.knee.side_walking_up()
+        w2 = self.shoulder.center()
+        return w1 or w2
+    
+
+    def right_move_ahead(self) -> bool:
+        '''This makes the leg go to the very front or very back of the robot depended on the position of the shoulder.
+        The knee is raised or lowered depended on the side where it is mounted on.
+        This is used to move the robot to the right.
+        '''
+        if self.right:
+            w1 = self.knee.side_walking_down()
+        else:
+            w1 = self.knee.side_walking_up()
+        w2 = self.shoulder.ahead()
+        return w1 or w2
+ 
+    def right_move_center(self) -> bool:
+        '''This makes the leg go to the center, which means setting the servo on 90 degrees.
+        The knee is raised or lowered depended on the side where it is mounted on.
+        This is used to move the robot to the right.
+        '''
+        if self.right:
+            w1 = self.knee.side_walking_up()
+        else:
+            w1 = self.knee.side_walking_down()
+        w2 = self.shoulder.center()
+        return w1 or w2
+    
     
     def park(self):
         '''This streteches the leg.'''
