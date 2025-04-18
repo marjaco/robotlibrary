@@ -148,20 +148,20 @@ class Crawly:
             walk = True
             # First half of one step cycle.
             while walk:
-                w1 = self.legs["front_right"].right_move_ahead()# down
-                w2 = self.legs["rear_left"].right_move_center()# down
-                w3 = self.legs["rear_right"].right_move_center()# up
-                w4 = self.legs["front_left"].right_move_ahead()# up
+                w1 = self.legs["front_right"].right_move_ahead()
+                w2 = self.legs["rear_left"].right_move_center()
+                w3 = self.legs["rear_right"].right_move_center()
+                w4 = self.legs["front_left"].right_move_ahead()
                 
                 walk = w1 or w2 or w3 or w4
             
             walk = True
             # Second half of one step cycle
             while walk:
-                w1 = self.legs["front_right"].right_move_center()# up
-                w2 = self.legs["rear_left"].right_move_ahead()# up
-                w3 = self.legs["rear_right"].right_move_ahead()# down
-                w4 = self.legs["front_left"].right_move_center()# down
+                w1 = self.legs["front_right"].right_move_center()
+                w2 = self.legs["rear_left"].right_move_ahead()
+                w3 = self.legs["rear_right"].right_move_ahead()
+                w4 = self.legs["front_left"].right_move_center()
                 
                 walk = w1 or w2 or w3 or w4
             steps = steps-1
