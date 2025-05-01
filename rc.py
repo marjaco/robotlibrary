@@ -1,6 +1,6 @@
 ########## Import the configuration
-from robotlibrary.config import MIN_DUTY, MAX_DUTY, MAX_SPEED, MIN_SPEED
-from robotlibrary.config import ROBOT_NAME
+from robotlibrary.config.general_config import MIN_DUTY, MAX_DUTY, MAX_SPEED, MIN_SPEED
+from robotlibrary.config.general_config import ROBOT_NAME
 from robotlibrary.rotary import Rotary
 
 

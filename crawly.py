@@ -1,7 +1,7 @@
 # peripherals
 from robotlibrary.ultrasonic import Ultra
 from robotlibrary.crawly_leg import Leg
-import robotlibrary.config
+import robotlibrary.config.crawly_config
 
 ########## Bluetooth
 # This is not implemented yet.
@@ -19,8 +19,8 @@ class Crawly:
             "rear_left" : Leg(0, False, False, "rear left"),
             "front_left" : Leg(2, False, True, "front left")
             }
-        if robotlibrary.config.US is not None:
-            self.us = Ultra(robotlibrary.config.US)
+        if robotlibrary.config.crawly_config.US is not None:
+            self.us = Ultra(robotlibrary.config.crawly_config.US)
         
     
     def move_forward(self, steps):

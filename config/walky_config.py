@@ -5,7 +5,7 @@ SERVO_MAX_DUTY = 8100 # Change only if the servo doesn't move 180°.
 SERVO_MIN_DUTY_TYPE2 = 1800 # In case you use different types of servos with different duty_cycles. You need to change the source code in walky_joint.py
 SERVO_MAX_DUTY_TYPE2 = 7600 # In case you use different types of servos with different duty_cycles. You need to change the source code in walky_joint.py
 
-########## Configuration for the Servos in the Crawly robot
+########## Configuration for the Servos in the Walky robot
 SHOULDER_FRONT_MIN_ANGLE =  45 # backward motion
 SHOULDER_FRONT_MAX_ANGLE = 180 # forward motion
 SHOULDER_REAR_MIN_ANGLE =  20 # backward motion

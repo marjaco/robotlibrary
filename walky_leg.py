@@ -1,15 +1,15 @@
 from robotlibrary.walky_joint import Joint
-import robotlibrary.config
+import robotlibrary.config.walky_config
 from time import sleep
 
 class Leg:
     def __init__(self, pin, right, front, name):
         if right: 
-            self.hip = Joint(robotlibrary.config.HIP, name, False, False, pin)
-            self.knee = Joint(robotlibrary.config.KNEE, name, False, False, pin+1)
+            self.hip = Joint(robotlibrary.config.walky_config.HIP, name, False, False, pin)
+            self.knee = Joint(robotlibrary.config.walky_config.KNEE, name, False, False, pin+1)
         if not right:
-            self.hip = Joint(robotlibrary.config.HIP, name, True, False, pin)
-            self.knee = Joint(robotlibrary.config.KNEE, name, True, False, pin+1)
+            self.hip = Joint(robotlibrary.config.walky_config.HIP, name, True, False, pin)
+            self.knee = Joint(robotlibrary.config.walky_config.KNEE, name, True, False, pin+1)
         
     def move_forward(self) -> bool:
 #         walk = True
