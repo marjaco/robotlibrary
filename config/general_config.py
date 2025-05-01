@@ -12,7 +12,7 @@ MIN_DUTY = 0 # Minimum duty for the motors. Absolute minimum is 0.
 MIN_SPEED = 45
 MAX_SPEED = 100
 
-########## Waiting time in millliseconds for any debouncing of buttons. 
+########## Waiting time in milliseconds for any debouncing of buttons. 
 '''This defines the waiting time for the debouncing of the buttons. Leave as it is if 
 you don't know what it means.'''
 DEBOUNCE_WAIT = 30
@@ -41,46 +41,9 @@ JS_MIN_DUTY = 260
 ########## Configuration of the name of the robot for matching with the remote control.
 ROBOT_NAME = "HAL9000"
 
-########## Configuration for the Servos in the Crawly and Walky robot
-# If you mix differnet servo types with different duty cycles, you can use the type2 constant for this.
+########## Configuration for the Servo robot
+# If you mix different servo types with different duty cycles, you can use the type2 constant for this.
 SERVO_MIN_DUTY = 1350 # Change only if the servo doesn't move 180°.
 SERVO_MAX_DUTY = 8100 # Change only if the servo doesn't move 180°.
-SERVO_MIN_DUTY_TYPE2 = 1800 # In case you use different types of servos with different duty_cycles. You need to change the source code in crawly_joint.py
-SERVO_MAX_DUTY_TYPE2 = 7600 # In case you use different types of servos with different duty_cycles. You need to change the source code in crawly_joint.py
-
-########## Configuration for the Servos in the Crawly robot
-SHOULDER_FRONT_MIN_ANGLE =  45 # backward motion
-SHOULDER_FRONT_MAX_ANGLE = 180 # forward motion
-SHOULDER_REAR_MIN_ANGLE =  20 # backward motion
-SHOULDER_REAR_MAX_ANGLE = 140 # forward motion
-KNEE_MIN_ANGLE = 65 # up motion
-KNEE_MAX_ANGLE = 180 # down motion
-
-### Configuration for the movements of Crawly
-CRAWLY_FRONT_FORWARD_ANGLE = 130
-CRAWLY_FRONT_BACKWARD_ANGLE = 90
-CRAWLY_REAR_FORWARD_ANGLE = 90
-CRAWLY_REAR_BACKWARD_ANGLE = 50
-CRAWLY_UP_ANGLE = 75
-CRAWLY_DOWN_ANGLE = 90
-
-# Configurations for side walking
-CRAWLY_SIDE_WALKING_FRONT_ANGLE = 150
-CRAWLY_SIDE_WALKING_REAR_ANGLE = 30
-CRAWLY_SIDE_WALKING_CENTER_ANGLE = 90
-
-CRAWLY_SIDE_WALKING_UP_ANGLE = 140
-CRAWLY_SIDE_WALKING_DOWN_ANGLE = 170
-
-
-### Type definitions
-SHOULDER_FRONT = 4
-SHOULDER_REAR = 6
-KNEE = 8
-HIP = 10
-
-########## Configuration for the servos movements in the Walky robot
-HIP_FORWARD_ANGLE = 110
-HIP_BACKWARD_ANGLE = 80
-KNEE_FORWARD_ANGLE = 180
-KNEE_BACKWARD_ANGLE = 120
+SERVO_MIN_DUTY_TYPE2 = 1800 # In case you use different types of servos with different duty_cycles.
+SERVO_MAX_DUTY_TYPE2 = 7600 # In case you use different types of servos with different duty_cycles.
