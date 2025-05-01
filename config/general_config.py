@@ -41,7 +41,7 @@ JS_MIN_DUTY = 260
 ########## Configuration of the name of the robot for matching with the remote control.
 ROBOT_NAME = "HAL9000"
 
-########## Configuration for the Servo robot
+########## Configuration for the Servo in the robot
 # If you mix different servo types with different duty cycles, you can use the type2 constant for this.
 SERVO_MIN_DUTY = 1350 # Change only if the servo doesn't move 180°.
 SERVO_MAX_DUTY = 8100 # Change only if the servo doesn't move 180°.
