@@ -1,6 +1,6 @@
 # peripherals
 from robotlibrary.servo_crab import Servo
-import robotlibrary.config
+import robotlibrary.config.walky_config
 from time import sleep, sleep_ms
 
 class Joint:
@@ -11,11 +11,11 @@ class Joint:
     def __init__(self, j_type, name, left_side, inverted, pin):
         self.NAME = name
         self.j_type = j_type
-        self.__min_duty = robotlibrary.config.SERVO_MIN_DUTY
-        self.__max_duty = robotlibrary.config.SERVO_MAX_DUTY
+        self.__min_duty = robotlibrary.config.walky_config.SERVO_MIN_DUTY
+        self.__max_duty = robotlibrary.config.walky_config.SERVO_MAX_DUTY
         self.left_side = left_side
-        self.__min_angle = robotlibrary.config.SHOULDER_FRONT_MIN_ANGLE
-        self.__max_angle = robotlibrary.config.SHOULDER_FRONT_MAX_ANGLE
+        self.__min_angle = robotlibrary.config.walky_config.SHOULDER_FRONT_MIN_ANGLE
+        self.__max_angle = robotlibrary.config.walky_config.SHOULDER_FRONT_MAX_ANGLE
         self.servo = Servo(pin, inverted, self.__min_duty, self.__max_duty)
         
         
@@ -54,20 +54,20 @@ class Joint:
         
     def up(self):
         if not self.left_side:
-            self.servo.set_angle(robotlibrary.config.KNEE_BACKWARD_ANGLE)
+            self.servo.set_angle(robotlibrary.config.walky_config.KNEE_BACKWARD_ANGLE)
         else:
-            self.servo.set_angle(180-robotlibrary.config.KNEE_BACKWARD_ANGLE)
+            self.servo.set_angle(180-robotlibrary.config.walky_config.KNEE_BACKWARD_ANGLE)
         return False
     def down(self):
         if not self.left_side:
-            self.servo.set_angle(robotlibrary.config.KNEE_FORWARD_ANGLE)
+            self.servo.set_angle(robotlibrary.config.walky_config.KNEE_FORWARD_ANGLE)
         else:
-            self.servo.set_angle(180-robotlibrary.config.KNEE_FORWARD_ANGLE)
+            self.servo.set_angle(180-robotlibrary.config.walky_config.KNEE_FORWARD_ANGLE)
         return False
 
     def forward(self) -> bool:
         if not self.left_side:
-            if self.j_type == robotlibrary.config.HIP and self.servo.angle < robotlibrary.config.HIP_FORWARD_ANGLE:
+            if self.j_type == robotlibrary.config.walky_config.HIP and self.servo.angle < robotlibrary.config.walky_config.HIP_FORWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle +2)
                 #print(f"Winkel rechts vorne: {self.servo.angle +2}")
                 return True
@@ -75,7 +75,7 @@ class Joint:
             return False
         else:
             #print(self.servo.angle)
-            if self.j_type == robotlibrary.config.HIP and self.servo.angle > 180-robotlibrary.config.HIP_FORWARD_ANGLE:
+            if self.j_type == robotlibrary.config.walky_config.HIP and self.servo.angle > 180-robotlibrary.config.walky_config.HIP_FORWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle - 2)
                 #print(f"Winkel links vorne: {self.servo.angle -2}")
                 return True
@@ -84,21 +84,21 @@ class Joint:
 
     def backward(self) -> bool:
         if not self.left_side:
-            if self.j_type == robotlibrary.config.HIP and self.servo.angle > robotlibrary.config.HIP_BACKWARD_ANGLE:
+            if self.j_type == robotlibrary.config.walky_config.HIP and self.servo.angle > robotlibrary.config.walky_config.HIP_BACKWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle -2)
                 return True
             return False
         else:
-            if self.j_type == robotlibrary.config.HIP and self.servo.angle < 180-robotlibrary.config.HIP_BACKWARD_ANGLE:
+            if self.j_type == robotlibrary.config.walky_config.HIP and self.servo.angle < 180-robotlibrary.config.walky_config.HIP_BACKWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle + 2)
                 return True
             return False
         
 
     def park(self):
-        if self.s_type == robotlibrary.config.KNEE:
+        if self.s_type == robotlibrary.config.walky_config.KNEE:
             self.servo.set_angle(self.min_angle)
-        elif self.s_type == robotlibrary.config.SHOULDER_FRONT:
+        elif self.s_type == robotlibrary.config.walky_config.SHOULDER_FRONT:
             if not self.left_side: 
                 self.servo.set_angle(self.max_angle)
             else:
@@ -110,13 +110,13 @@ class Joint:
                 self.servo.set_angle(180-self.min_angle)
     
     def curl(self):
-        if self.s_type == robotlibrary.config.KNEE:
+        if self.s_type == robotlibrary.config.walky_config.KNEE:
             self.servo.set_angle(self.max_angle)
-        elif self.s_type == robotlibrary.config.SHOULDER_FRONT or self.s_type == robotlibrary.config.SHOULDER_REAR:
+        elif self.s_type == robotlibrary.config.walky_config.SHOULDER_FRONT or self.s_type == robotlibrary.config.walky_config.SHOULDER_REAR:
             self.servo.set_angle(90)
                 
     def tap(self):
-        if self.s_type == robotlibrary.config.KNEE:
+        if self.s_type == robotlibrary.config.walky_config.KNEE:
             for i in range(3):
                 self.servo.set_angle(85)
                 sleep_ms(50)
@@ -124,7 +124,7 @@ class Joint:
                 sleep_ms(50)
             
     def calibrate(self):
-        if self.j_type == robotlibrary.config.HIP: 
+        if self.j_type == robotlibrary.config.walky_config.HIP: 
             self.servo.set_angle(90)
         else:
             if not self.left_side:
@@ -141,7 +141,7 @@ class Joint:
             print(f"Winkel links: {a}")
         
 def main():    
-    j = Joint(robotlibrary.config.KNEE, "rear left", True, False, 1)
+    j = Joint(robotlibrary.config.walky_config.KNEE, "rear left", True, False, 1)
     j.calibrate()
     sleep(30)
     print(j.__min_angle, j.__max_angle)

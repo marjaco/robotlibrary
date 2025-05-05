@@ -2,7 +2,7 @@ import machine
 import utime as time
 from machine import Pin
 import micropython
-from robotlibrary.config import DEBOUNCE_WAIT
+from robotlibrary.config.general_config import DEBOUNCE_WAIT
 micropython.alloc_emergency_exception_buf(100)
 class Rotary:
     '''This class deals with the rotary encoders for the remote control. Don't use directly or edit.'''

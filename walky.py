@@ -3,7 +3,7 @@
 from robotlibrary.ultrasonic import Ultra
 #from robotlibrary.infrared import IR
 from robotlibrary.walky_leg import Leg
-import robotlibrary.config
+import robotlibrary.config.walky_config
 
 ########## Bluetooth
 import bluetooth
@@ -28,8 +28,8 @@ class Walky:
             "rear_left" : Leg(0, False, False, "rear left"),
             "front_left" : Leg(2, False, True, "front left")
             }
-        if robotlibrary.config.US is not None:
-            self.us = Ultra(robotlibrary.config.US)
+        if robotlibrary.config.walky_config.US is not None:
+            self.us = Ultra(robotlibrary.config.walky_config.US)
         
         
     
