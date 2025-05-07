@@ -1,6 +1,6 @@
 # peripherals
 from robotlibrary.servo import Servo
-import robotlibrary.config.crawly_config
+import robotlibrary.config_crawly
 from time import sleep, sleep_ms
 
 class Joint:

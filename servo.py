@@ -1,6 +1,6 @@
 from machine import Pin, PWM
 import time
-import robotlibrary.config.general_config 
+import robotlibrary.config
 
 class Servo:
     '''This class manages the servo motor that turns the ultrasonic sensor. You need a servo motor installed to get use out of this. 

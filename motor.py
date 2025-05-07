@@ -1,5 +1,5 @@
 from machine import Pin, PWM
-from robotlibrary.config.general_config import MIN_DUTY, MAX_DUTY, MAX_SPEED, MIN_SPEED
+from robotlibrary.config import MIN_DUTY, MAX_DUTY, MAX_SPEED, MIN_SPEED
 import utime
 
 class Motor:

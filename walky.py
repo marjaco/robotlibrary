@@ -3,7 +3,7 @@
 from robotlibrary.ultrasonic import Ultra
 #from robotlibrary.infrared import IR
 from robotlibrary.walky_leg import Leg
-import robotlibrary.config.walky_config
+import robotlibrary.config_walky
 
 ########## Bluetooth
 import bluetooth

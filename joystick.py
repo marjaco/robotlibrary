@@ -1,5 +1,5 @@
 from machine import Pin,ADC,Timer
-from robotlibrary.config.general_config import JS_MIN_DUTY, JS_MAX_DUTY, JS_X_MEDIAN, JS_Y_MEDIAN, DEBOUNCE_WAIT, MIN_SPEED, MAX_SPEED
+from robotlibrary.config import JS_MIN_DUTY, JS_MAX_DUTY, JS_X_MEDIAN, JS_Y_MEDIAN, DEBOUNCE_WAIT, MIN_SPEED, MAX_SPEED
 import utime
 from robotlibrary.motor import Motor
 from collections import deque

@@ -1,5 +1,5 @@
 from robotlibrary.crawly_joint import Joint
-import robotlibrary.config.crawly_config
+import robotlibrary.config_crawly
 from time import sleep
 
 class Leg:

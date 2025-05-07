@@ -1,5 +1,5 @@
 from robotlibrary.walky_joint import Joint
-import robotlibrary.config.walky_config
+import robotlibrary.config_walky
 from time import sleep
 
 class Leg:
