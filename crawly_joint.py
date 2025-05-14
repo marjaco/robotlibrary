@@ -1,6 +1,7 @@
 # peripherals
 from robotlibrary.servo import Servo
 import robotlibrary.config_crawly
+import robotlibrary.easing
 from time import sleep, sleep_ms
 
 class Joint:
@@ -22,6 +23,12 @@ class Joint:
         '''
         self.name = name
         self.j_type = j_type
+        self.steps_front = easing.get_steps(0,2,robotlibrary.config_crawly.SHOULDER_FRONT_MAX_ANGLE-
+                                            robotlibrary.config_crawly.SHOULDER_FRONT_MAX_ANGLE)
+        self.steps_rear = easing.get_steps(0,2,robotlibrary.config_crawly.SHOULDER_REAR_MAX_ANGLE-
+                                            robotlibrary.config_crawly.SHOULDER_REAR_MAX_ANGLE)
+        self.steps_knee = easing.get_steps(0,2,robotlibrary.config_crawly.KNEE_MIN_ANGLE-
+                                            robotlibrary.config_crawly.KNEE_MAX_ANGLE)
         min_duty = robotlibrary.config.crawly_config.SERVO_MIN_DUTY
         max_duty = robotlibrary.config.crawly_config.SERVO_MAX_DUTY
         self.left_side = left_side
@@ -53,7 +60,14 @@ class Joint:
     @max_angle.setter
     def set_max_angle(a):
         self.__max_angle = a
-        
+    
+    def reset_movement():
+        self.steps_front = easing.get_steps(0,2,robotlibrary.config_crawly.SHOULDER_FRONT_MAX_ANGLE-
+                                            robotlibrary.config_crawly.SHOULDER_FRONT_MAX_ANGLE)
+        self.steps_rear = easing.get_steps(0,2,robotlibrary.config_crawly.SHOULDER_REAR_MAX_ANGLE-
+                                            robotlibrary.config_crawly.SHOULDER_REAR_MAX_ANGLE)
+        self.steps_knee = easing.get_steps(0,2,robotlibrary.config_crawly.KNEE_MIN_ANGLE-
+                                            robotlibrary.config_crawly.KNEE_MAX_ANGLE)
     def up(self):
         '''If this object is a knee, it is moved up in one go. As the movement is then finished, it 
         returns False. 
@@ -73,18 +87,18 @@ class Joint:
         '''See the documentation for crawly_leg.py for information.'''
         if not self.left_side:
             if self.j_type == robotlibrary.config.crawly_config.SHOULDER_FRONT and self.servo.angle < robotlibrary.config.crawly_config.CRAWLY_FRONT_FORWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle +2)
+                self.servo.set_angle(self.servo.angle +self.steps_front.popleft())
                 return True
             if self.j_type == robotlibrary.config.crawly_config.SHOULDER_REAR and self.servo.angle < robotlibrary.config.crawly_config.CRAWLY_REAR_FORWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle +2)
+                self.servo.set_angle(self.servo.angle +self.steps_rear.popleft())
                 return True
             return False
         else:
             if self.j_type == robotlibrary.config.crawly_config.SHOULDER_FRONT and self.servo.angle > 180-robotlibrary.config.crawly_config.CRAWLY_FRONT_FORWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle - 2)
+                self.servo.set_angle(self.servo.angle - self.steps_front.popleft())
                 return True
             if self.j_type == robotlibrary.config.crawly_config.SHOULDER_REAR and self.servo.angle > 180-robotlibrary.config.crawly_config.CRAWLY_REAR_FORWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle - 2)
+                self.servo.set_angle(self.servo.angle - self.steps_rear.popleft())
                 return True
             return False
 
@@ -92,18 +106,18 @@ class Joint:
         '''See the documentation for crawly_leg.py for information.'''
         if not self.left_side:
             if self.j_type == robotlibrary.config.crawly_config.SHOULDER_FRONT and self.servo.angle > robotlibrary.config.crawly_config.CRAWLY_FRONT_BACKWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle -2)
+                self.servo.set_angle(self.servo.angle - self.steps_front.popleft())
                 return True
             if self.j_type == robotlibrary.config.crawly_config.SHOULDER_REAR and self.servo.angle > robotlibrary.config.crawly_config.CRAWLY_REAR_BACKWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle -2)
+                self.servo.set_angle(self.servo.angle - self.steps_rear.popleft())
                 return True
             return False
         else:
             if self.j_type == robotlibrary.config.crawly_config.SHOULDER_FRONT and self.servo.angle < 180-robotlibrary.config.crawly_config.CRAWLY_FRONT_BACKWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle + 2)
+                self.servo.set_angle(self.servo.angle + self.steps_front.popleft())
                 return True
             if self.j_type == robotlibrary.config.crawly_config.SHOULDER_REAR and self.servo.angle < 180-robotlibrary.config.crawly_config.CRAWLY_REAR_BACKWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle + 2)
+                self.servo.set_angle(self.servo.angle + self.steps_rear.popleft())
                 return True
             return False
         

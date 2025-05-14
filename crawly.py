@@ -22,10 +22,16 @@ class Crawly:
         if robotlibrary.config.crawly_config.US is not None:
             self.us = Ultra(robotlibrary.config.crawly_config.US)
         
+    def reset_movement(self):
+        '''This needs to be called before each new movement of a leg. '''
+        for l in legs:
+            l.reset_movement()
     
     def move_forward(self, steps):
         '''This makes the crawler move forward in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
+        
         while steps > 0:
+            self.reset_movement()
             walk = True
             # First half of one stepcycle.
             while walk:
@@ -37,6 +43,7 @@ class Crawly:
             
             walk = True
             # Second half of one stepcycle
+            self.reset_movement()
             while walk:
                 w1 = self.legs["front_right"].forward_move_backward()
                 w2 = self.legs["rear_left"].forward_move_backward()
@@ -49,6 +56,7 @@ class Crawly:
     def move_backward(self, steps):
         '''This makes the crawler move backward in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
         while steps > 0:
+            self.reset_movement()
             walk = True
             # First half of one stepcycle.
             while walk:
@@ -60,6 +68,7 @@ class Crawly:
             
             walk = True
             # Second half of one stepcycle
+            self.reset_movement()
             while walk:
                 w1 = self.legs["front_right"].backward_move_forward()
                 w2 = self.legs["rear_left"].backward_move_forward()
@@ -192,7 +201,7 @@ def main():
     '''Starting this file calibrates all servos and then terminates.'''
     try: 
         c = Crawly(True)
-        c.calibrate()
+        c.move_forward(10)
     except KeyboardInterrupt:
         c.park()
         sleep(1)
