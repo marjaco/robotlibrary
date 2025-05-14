@@ -3,6 +3,7 @@ from robotlibrary.ultrasonic import Ultra
 from robotlibrary.crawly_leg import Leg
 import robotlibrary.config_crawly
 
+
 ########## Bluetooth
 # This is not implemented yet.
 #BLUETOOTH_CHIP = FALSE
@@ -11,7 +12,7 @@ from time import sleep
 
 
 class Crawly:
-    '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py'''
+    '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config_crawly.py'''
     def __init__(self,rc):
         self.legs = {
             "front_right" : Leg(4, True, True, "front right"),
@@ -19,12 +20,12 @@ class Crawly:
             "rear_left" : Leg(0, False, False, "rear left"),
             "front_left" : Leg(2, False, True, "front left")
             }
-        if robotlibrary.config.crawly_config.US is not None:
-            self.us = Ultra(robotlibrary.config.crawly_config.US)
+        if robotlibrary.config_crawly.US is not None:
+            self.us = Ultra(robotlibrary.config_crawly.US)
         
     def reset_movement(self):
         '''This needs to be called before each new movement of a leg. '''
-        for l in legs:
+        for l in self.legs.values():
             l.reset_movement()
     
     def move_forward(self, steps):
@@ -54,7 +55,7 @@ class Crawly:
             steps = steps-1
 
     def move_backward(self, steps):
-        '''This makes the crawler move backward in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
+        '''This makes the crawler move backward in a coordinated way. Most of the functionality lies in the other classes Joint and Leg'''
         while steps > 0:
             self.reset_movement()
             walk = True
@@ -201,6 +202,7 @@ def main():
     '''Starting this file calibrates all servos and then terminates.'''
     try: 
         c = Crawly(True)
+        c.reset_movement()
         c.move_forward(10)
     except KeyboardInterrupt:
         c.park()

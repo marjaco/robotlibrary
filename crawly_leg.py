@@ -14,7 +14,7 @@ class Leg:
             self.shoulder = Joint(robotlibrary.config_crawly.SHOULDER_REAR, name, True, False, pin)
         self.knee = Joint(robotlibrary.config_crawly.KNEE, name, False, True, pin+1)
     
-    def reset_movement():
+    def reset_movement(self):
         '''This needs to be called before the leg starts moving.'''
         self.shoulder.reset_movement()
         self.knee.reset_movement()
@@ -24,7 +24,7 @@ class Leg:
         and returns False, once the movement is finished. This does not move the robot forward, 
         as the leg is raised in this movement.
         '''
-        w1 = self.knee.up()
+        w1 = self.knee.up_smooth()
         w2 = self.shoulder.forward()
         return w1 or w2
     
@@ -33,7 +33,7 @@ class Leg:
         and returns False, once the movement is finished. This does actually move the robot forward, 
         as the leg is lowered.
         '''
-        w1 = self.knee.down()
+        w1 = self.knee.down_smooth()
         w2 = self.shoulder.backward()
         return w1 or w2
     

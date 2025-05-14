@@ -4,6 +4,7 @@ from time import sleep_ms
 from collections import deque
 
 def get_steps(start, stop, d_angle):
+    print(d_angle)
     increment = stop/d_angle
     i = start
     steps = list()
@@ -11,10 +12,12 @@ def get_steps(start, stop, d_angle):
     while i < stop-increment:
         sum_steps = sum_steps + ease_in_out_sine(i)
         #print(f"i: {i}, Ease: {ease_in_out_sine(i)}")
+        
         i=i+increment
+    #print(sum_steps)
     i = start
     while i < stop-increment:
-        #sum_steps = sum_steps+ ease_in_out_quad(i)
+        #sum_steps = sum_steps+ ease_in_out_sine(i)
         #print(f"i: {i}, Ease: {ease_in_out_sine(i)}")
         steps.append(ease_in_out_sine(i)*d_angle/sum_steps)
         i=i+increment

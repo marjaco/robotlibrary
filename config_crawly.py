@@ -16,7 +16,7 @@ KNEE_MAX_ANGLE = 180 # down motion
 ########## Configuration of pins
 US=None #16
 
-### Configuration for the movements of Crawly
+### Configuration for the movements of Crawly 
 CRAWLY_FRONT_FORWARD_ANGLE = 130
 CRAWLY_FRONT_BACKWARD_ANGLE = 90
 CRAWLY_REAR_FORWARD_ANGLE = 90
