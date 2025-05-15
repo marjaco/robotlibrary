@@ -1,7 +1,8 @@
 # peripherals
 from robotlibrary.servo import Servo
 import robotlibrary.config_crawly
-import robotlibrary.easing
+#import robotlibrary.easing
+from robotlibrary.easing import get_steps
 from time import sleep, sleep_ms
 
 class Joint:
@@ -62,11 +63,14 @@ class Joint:
         self.__max_angle = a
     
     def reset_movement(self):
-        self.steps_front = robotlibrary.easing.get_steps(0,2,robotlibrary.config_crawly.SHOULDER_FRONT_MAX_ANGLE-
+        '''This is called before each new leg movement cycle.'''
+        if self.j_type == robotlibrary.config_crawly.SHOULDER_FRONT:
+            self.steps_front = get_steps(0,2,robotlibrary.config_crawly.SHOULDER_FRONT_MAX_ANGLE-
                                             robotlibrary.config_crawly.SHOULDER_FRONT_MIN_ANGLE)
-        self.steps_rear = robotlibrary.easing.get_steps(0,2,robotlibrary.config_crawly.SHOULDER_REAR_MAX_ANGLE-
+        else:
+            self.steps_rear = get_steps(0,2,robotlibrary.config_crawly.SHOULDER_REAR_MAX_ANGLE-
                                             robotlibrary.config_crawly.SHOULDER_REAR_MIN_ANGLE)
-        self.steps_knee = robotlibrary.easing.get_steps(0,2,robotlibrary.config_crawly.KNEE_MAX_ANGLE-
+        self.steps_knee = get_steps(0,2,robotlibrary.config_crawly.KNEE_MAX_ANGLE-
                                             robotlibrary.config_crawly.KNEE_MIN_ANGLE)
     def up(self):
         '''If this object is a knee, it is moved up in one go. As the movement is then finished, it 
@@ -76,17 +80,20 @@ class Joint:
             self.servo.set_angle(robotlibrary.config_crawly.CRAWLY_UP_ANGLE)
         return False
     
-    def down_smooth(self):
-        self.steps_knee = robotlibrary.easing.get_steps(0,2,robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE-
-                                        robotlibrary.config_crawly.CRAWLY_UP_ANGLE)
-        for steps in self.steps_knee:
-            if self.j_type == robotlibrary.config_crawly.KNEE and self.servo.angle < robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE:       
-                self.servo.set_angle(self.servo.angle + self.steps_knee.popleft())
-                sleep_ms(5)
-            
+    def down(self):
+        '''If this object is a knee, it is moved down in one go. As the movement is then finished, it 
+        returns False. 
+        '''
+        if self.j_type == robotlibrary.config_crawly.KNEE:
+            self.servo.set_angle(robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE)
         return False
     
     def up_smooth(self):
+        '''This is not yet a good solution. It still moves the leg up or down before
+        the shoulder joint is moved and makes for an awkward movement. It should be
+        integrated into the movement in a way that makes it rise or lower only as much
+        as needed before the shoulder is moved. But how?
+        '''
         self.steps_knee = robotlibrary.easing.get_steps(0,2,robotlibrary.config_crawly.KNEE_MAX_ANGLE-
                                         robotlibrary.config_crawly.KNEE_MIN_ANGLE)
         for steps in self.steps_knee:
@@ -96,14 +103,45 @@ class Joint:
             
         return False
     
-    def down(self):
-        '''If this object is a knee, it is moved down in one go. As the movement is then finished, it 
-        returns False. 
+    def down_smooth(self):
+        '''This is not yet a good solution. It still moves the leg up or down before
+        the shoulder joint is moved and makes for an awkward movement. It should be
+        integrated into the movement in a way that makes it rise or lower only as much
+        as needed before the shoulder is moved. But how?
         '''
-        if self.j_type == robotlibrary.config_crawly.KNEE:
-            self.servo.set_angle(robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE)
+        self.steps_knee = robotlibrary.easing.get_steps(0,2,robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE-
+                                        robotlibrary.config_crawly.CRAWLY_UP_ANGLE)
+        for steps in self.steps_knee:
+            if self.j_type == robotlibrary.config_crawly.KNEE and self.servo.angle < robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE:       
+                self.servo.set_angle(self.servo.angle + self.steps_knee.popleft())
+                sleep_ms(5)
+            
         return False
-
+    
+    def up_smooth_v2(self):
+        '''UNTESTED version for smooth movement.
+        '''
+        if self.j_type == robotlibrary.config_crawly.KNEE and self.servo.angle > robotlibrary.config_crawly.CRAWLY_UP_ANGLE:       
+            self.servo.set_angle(self.servo.angle - self.steps_knee.popleft())
+            if self.servo.angle < robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE - (robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE -
+                                            robotlibrary.config_crawly.CRAWLY_UP_ANGLE)/3:
+                return False
+            else:
+                return True
+        return False
+    
+    def down_smooth_v2(self):
+        '''UNTESTED version for smooth movement.
+        '''
+        if self.j_type == robotlibrary.config_crawly.KNEE and self.servo.angle < robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE:       
+            self.servo.set_angle(self.servo.angle + self.steps_knee.popleft())
+            if self.servo.angle > robotlibrary.config_crawly.CRAWLY_UP_ANGLE + (robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE-
+                                            robotlibrary.config_crawly.CRAWLY_UP_ANGLE)/3:
+                return False
+            else:
+                return True
+        return False
+    
     def forward(self) -> bool:
         '''See the documentation for crawly_leg.py for information.'''
         if not self.left_side:

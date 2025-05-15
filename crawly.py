@@ -29,8 +29,9 @@ class Crawly:
             l.reset_movement()
     
     def move_forward(self, steps):
-        '''This makes the crawler move forward in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
-        
+        '''This makes the crawler move forward in a coordinated way. Most of the functionality lies in the other classes Joint and Leg.
+        This method showcases a possible solution.
+        '''
         while steps > 0:
             self.reset_movement()
             walk = True

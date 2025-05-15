@@ -24,8 +24,9 @@ class Leg:
         and returns False, once the movement is finished. This does not move the robot forward, 
         as the leg is raised in this movement.
         '''
-        w1 = self.knee.up_smooth()
-        w2 = self.shoulder.forward()
+        w1 = self.knee.up_smooth_v2()
+        if not w1:
+            w2 = self.shoulder.forward()
         return w1 or w2
     
     def forward_move_backward(self) -> bool:
@@ -33,8 +34,9 @@ class Leg:
         and returns False, once the movement is finished. This does actually move the robot forward, 
         as the leg is lowered.
         '''
-        w1 = self.knee.down_smooth()
-        w2 = self.shoulder.backward()
+        w1 = self.knee.down_smooth_v2()
+        if not w1:
+            w2 = self.shoulder.backward()
         return w1 or w2
     
 
