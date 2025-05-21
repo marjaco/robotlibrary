@@ -27,3 +27,17 @@ class Ultra:
         # print("The distance from object is ", distance, "cm.") # for debugging purposes uncomment the line.
         utime.sleep_ms(10) # Wait necessary or program halts
         return distance
+    
+def main():
+    try:
+        us = Ultra(16)
+        while True:
+            print(us.get_dist())
+            utime.sleep_ms(100)
+    except KeyboardInterrupt:
+        print("Program interrupted.")
+        
+    
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()

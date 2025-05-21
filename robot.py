@@ -28,6 +28,10 @@ class Robot:
             self.ml = Motor(robotlibrary.config.ML)
         if robotlibrary.config.MR is not None:
             self.mr = Motor(robotlibrary.config.MR)
+        if robotlibrary.config.MRF is not None:
+            self.mrf = Motor(robotlibrary.config.MRF)
+        if robotlibrary.config.MLF is not None:
+            self.mlf = Motor(robotlibrary.config.MLF)
         if robotlibrary.config.US is not None:
             self.us = Ultra(robotlibrary.config.US)
         if robotlibrary.config.IR is not None:
@@ -74,6 +78,10 @@ class Robot:
         It accelerates and decelerates to make driving more natural. Do not call directly!!'''
         self.ml.set_forward(dir_l)
         self.mr.set_forward(dir_r)
+        if self.mrf is not None:
+            self.mrf.set_forward(dir_r)
+        if self.mlf is not None:
+            self.mlf.set_forward(dir_l)
         if self.new_speed < self.speed:
             steps = -1
         else:
@@ -81,6 +89,10 @@ class Robot:
         for i in range(self.speed,self.new_speed,steps):
             self.ml.set_speed(i)
             self.mr.set_speed(i)
+            if self.mrf is not None:
+                self.mrf.set_speed(i)
+            if self.mlf is not None:
+                self.mlf.set_speed(i)
             utime.sleep_ms(10+int(i/2))
         self.speed = self.new_speed
         
@@ -91,6 +103,10 @@ class Robot:
         self.mr.set_forward(dir_r)
         self.ml.set_speed(self.new_speed)
         self.mr.set_speed(self.new_speed)
+        if self.mrf is not None:
+            self.mrf.set_speed(self.new_speed)
+        if self.mlf is not None:
+            self.mlf.set_speed(self.new_speed)
         self.speed = self.new_speed
         
     def set_speed_instantly(self,s):
@@ -99,7 +115,10 @@ class Robot:
         self.new_speed = s
         self.ml.set_speed(self.new_speed)
         self.mr.set_speed(self.new_speed)
-        
+        if self.mrf is not None:
+            self.mrf.set_speed(self.new_speed)
+        if self.mlf is not None:
+            self.mlf.set_speed(self.new_speed)
         
     def set_speed(self,s):
         '''Sets the new speed and accelerates and decelerates. Doesn't change the driving mode of the robot. '''
@@ -111,6 +130,10 @@ class Robot:
         for i in range(self.speed,self.new_speed,steps):
             self.ml.set_speed(i)
             self.mr.set_speed(i)
+            if self.mrf is not None:
+                self.mrf.set_speed(i)
+            if self.mlf is not None:
+                self.mlf.set_speed(i)
             utime.sleep_ms(10+int(i/2))
         self.speed = self.new_speed
         
@@ -118,42 +141,90 @@ class Robot:
         '''Sets the direction of the robot. True means forward.'''
         self.ml.set_forward(f)
         self.mr.set_forward(f)
+        if self.mrf is not None:
+            self.mrf.set_forward(f)
+        if self.mlf is not None:
+            self.mlf.set_forward(f)
         self.ml.set_speed(self.speed)
         self.mr.set_speed(self.speed)
+        if self.mrf is not None:
+            self.mrf.set_speed(self.speed)
+        if self.mlf is not None:
+            self.mlf.set_speed(self.speed)
         
     def spin_right(self):
         '''Spin right indefinitely. '''
         self.ml.reset_offset()
         self.mr.reset_offset()
+        if self.mrf is not None:
+            self.mrf.reset_offset()
+        if self.mlf is not None:
+            self.mlf.reset_offset()
         self._drive_instantly(True,False)
     
     def spin_left(self):
         '''Spin left indefinitely. '''
         self.ml.reset_offset()
         self.mr.reset_offset()
+        if self.mrf is not None:
+            self.mrf.reset_offset()
+        if self.mlf is not None:
+            self.mlf.reset_offset()
         self._drive_instantly(False,True)
         
     def turn_right(self):
         '''This turns the robot to the right without it spinning on the spot. Each call makes the turn steeper.'''
         self.ml.change_speed(5)
         self.mr.change_speed(-5)
+        if self.mlf is not None:
+            self.mlf.change_speed(5)
+        if self.mrf is not None:
+            self.mrf.change_speed(-5)
         
     def turn_left(self):
         '''This turns the robot to the right without it spinning on the spot. Each call makes the turn steeper.'''
         self.mr.change_speed(5)
         self.ml.change_speed(-5)
+        if self.mlf is not None:
+            self.mlf.change_speed(-5)
+        if self.mrf is not None:
+            self.mrf.change_speed(5)
+        
+    def go_left(self):
+        self.ml.set_forward(True)
+        self.mlf.set_forward(False)
+        self.mr.set_forward(False)
+        self.mrf.set_forward(True)
+        
+    def go_right(self):
+        self.ml.set_forward(False)
+        self.mlf.set_forward(True)
+        self.mr.set_forward(True)
+        self.mrf.set_forward(False)
         
     def turn(self, turn):
         self.mr.change_speed(-turn)
         self.ml.change_speed(turn)
+        if self.mrf is not None:
+            self.mrf.change_speed(-turn)
+        if self.mlf is not None:
+            self.mlf.change_speed(turn)
         
     def go_straight(self):
         '''Lets the robot go straight on. Usually called when a turn shall end. '''
         self.ml.reset_offset()
         self.mr.reset_offset()
+        if self.mrf is not None:
+            self.mrf.reset_offset()
+        if self.mlf is not None:
+            self.mlf.reset_offset()
         self.ml.set_speed(self.speed)
         self.mr.set_speed(self.speed)
-        
+        if self.mrf is not None:
+            self.mrf.set_speed(self.speed)
+        if self.mlf is not None:
+            self.mlf.set_speed(self.speed)
+           
     def spin_before_obstacle(self, distance):
         '''This spins until the distance to an obstacle is greater than the given parameter *distance*.'''
         self._drive_instantly(True,False)
@@ -190,6 +261,10 @@ class Robot:
         '''Stop the robot immediately.'''
         self.ml.set_speed(0)
         self.mr.set_speed(0)
+        if self.mrf is not None:
+            self.mrf.set_speed(0)
+        if self.mlf is not None:
+            self.mlf.set_speed(0)
         self.speed = 0
     
     def ir_detected(self, pin, pin_num):

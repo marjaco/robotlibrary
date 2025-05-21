@@ -24,12 +24,6 @@ class Joint:
         '''
         self.name = name
         self.j_type = j_type
-        #self.steps_front = robotlibrary.easing.get_steps(0,2,robotlibrary.config_crawly.SHOULDER_FRONT_MAX_ANGLE-
-        #                                    robotlibrary.config_crawly.SHOULDER_FRONT_MIN_ANGLE)
-        #self.steps_rear = robotlibrary.easing.get_steps(0,2,robotlibrary.config_crawly.SHOULDER_REAR_MAX_ANGLE-
-        #                                    robotlibrary.config_crawly.SHOULDER_REAR_MIN_ANGLE)
-        #self.steps_knee = robotlibrary.easing.get_steps(0,2,robotlibrary.config_crawly.KNEE_MAX_ANGLE-
-        #                                    robotlibrary.config_crawly.KNEE_MIN_ANGLE)
         min_duty = robotlibrary.config_crawly.SERVO_MIN_DUTY
         max_duty = robotlibrary.config_crawly.SERVO_MAX_DUTY
         self.left_side = left_side
@@ -123,10 +117,12 @@ class Joint:
         '''
         if self.j_type == robotlibrary.config_crawly.KNEE and self.servo.angle > robotlibrary.config_crawly.CRAWLY_UP_ANGLE:       
             self.servo.set_angle(self.servo.angle - self.steps_knee.popleft())
-            if self.servo.angle < robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE - (robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE -
+            if self.servo.angle > robotlibrary.config_crawly.CRAWLY_UP_ANGLE - (robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE -
                                             robotlibrary.config_crawly.CRAWLY_UP_ANGLE)/3:
+                print("Mark")
                 return False
             else:
+                print("else")
                 return True
         return False
     

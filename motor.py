@@ -1,6 +1,6 @@
 from machine import Pin, PWM
 from robotlibrary.config import MIN_DUTY, MAX_DUTY, MAX_SPEED, MIN_SPEED
-import utime
+import utime, math
 
 class Motor:
     '''This class manages the motor. Don't edit!'''
@@ -24,7 +24,7 @@ class Motor:
         elif s + self.speed_offset >= MAX_SPEED:
             s = MAX_SPEED
             self.reset_offset()
-        self.pwm1.duty_u16(int(MAX_DUTY*(s+self.speed_offset)/100))
+        self.pwm1.duty_u16(int(math.floor((MAX_DUTY*(s+self.speed_offset)/MAX_SPEED)+(MIN_DUTY/MAX_SPEED*(MAX_SPEED-(s+self.speed_offset))))))
         self.speed=s
     
     def change_speed(self,sc):
@@ -51,4 +51,20 @@ class Motor:
         #self.pwm1.duty_u16(int(MAX_DUTY*(self.speed+self.speed_offset)/100)) # uncommenting this causes problems with the remote control. After changing
         # the direction the robot would drive even if the remote control speed said 0.
         
-
+def main():
+    try:
+        motor = Motor(14)
+        for i in range(MIN_SPEED,MAX_SPEED+1,5):
+            print(int(math.floor((MAX_DUTY*(i)/MAX_SPEED)+(MIN_DUTY/MAX_SPEED*(MAX_SPEED-(i))))))
+            #print(int(MAX_DUTY*(i+motor.speed_offset)/100))
+            motor.set_speed(i)
+            utime.sleep_ms(100)
+        motor.off()
+    except KeyboardInterrupt:
+        print("Program interrupted.")
+        motor.off()
+        
+    
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()

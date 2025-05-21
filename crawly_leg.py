@@ -1,6 +1,6 @@
 from robotlibrary.crawly_joint import Joint
 import robotlibrary.config_crawly
-from time import sleep
+from time import sleep,sleep_ms
 
 class Leg:
     def __init__(self, pin, right, front, name):
@@ -24,6 +24,7 @@ class Leg:
         and returns False, once the movement is finished. This does not move the robot forward, 
         as the leg is raised in this movement.
         '''
+        w1,w2 = True,True
         w1 = self.knee.up_smooth_v2()
         if not w1:
             w2 = self.shoulder.forward()
@@ -34,6 +35,7 @@ class Leg:
         and returns False, once the movement is finished. This does actually move the robot forward, 
         as the leg is lowered.
         '''
+        w1,w2 = True,True
         w1 = self.knee.down_smooth_v2()
         if not w1:
             w2 = self.shoulder.backward()
@@ -129,10 +131,16 @@ class Leg:
         '''Taps the leg.'''
         self.knee.tap()
         
+        
 def main():
     '''This file, executed, taps the leg.'''
-    l = Leg(6, False, False, "rear left")
-    l.calibrate()
+    l = Leg(6, True, False, "rear right")
+    l.park()
+    l.knee.down()
+    l.reset_movement()
+    
+    while l.forward_move_forward():
+        sleep_ms(200)
     
 if __name__ == "__main__":
     # execute only if run as a script
