@@ -75,7 +75,7 @@ class Robot:
     
     def _drive(self, dir_l, dir_r):
         '''This abstracted driving function is only called locally by the other functions with better names. 
-        It accelerates and decelerates to make driving more natural. Do not call directly!!'''
+        It accelerates and decelerates to make driving more natural. Do not call directly!'''
         self.ml.set_forward(dir_l)
         self.mr.set_forward(dir_r)
         if self.mrf is not None:
@@ -98,7 +98,7 @@ class Robot:
         
     def _drive_instantly(self,dir_l,dir_r):
         '''This abstracted driving function is only called locally by the other functions with better names. 
-        It sets the speed immediatly. Do not call directly!!'''
+        It sets the speed immediately. Do not call directly!'''
         self.ml.set_forward(dir_l)
         self.mr.set_forward(dir_r)
         self.ml.set_speed(self.new_speed)
@@ -110,7 +110,8 @@ class Robot:
         self.speed = self.new_speed
         
     def set_speed_instantly(self,s):
-        '''Sets the new speed immediately. Doesn't change the driving mode of the robot. '''
+        '''Sets the new speed immediately. Doesn't change the driving mode of the robot.
+        :param s: the speed you want to set.'''
         self.speed = s
         self.new_speed = s
         self.ml.set_speed(self.new_speed)
@@ -121,7 +122,8 @@ class Robot:
             self.mlf.set_speed(self.new_speed)
         
     def set_speed(self,s):
-        '''Sets the new speed and accelerates and decelerates. Doesn't change the driving mode of the robot. '''
+        '''Sets the new speed and accelerates and decelerates. Doesn't change the driving mode of the robot.
+        :param s: the speed you want to set.'''
         self.new_speed = s
         if self.new_speed < self.speed:
             steps = -1
@@ -138,7 +140,8 @@ class Robot:
         self.speed = self.new_speed
         
     def set_forward(self,f):
-        '''Sets the direction of the robot. True means forward.'''
+        '''Sets the direction of the robot. True means forward.
+        :param f: True for forwards and False for backwards.'''
         self.ml.set_forward(f)
         self.mr.set_forward(f)
         if self.mrf is not None:
@@ -191,18 +194,24 @@ class Robot:
             self.mrf.change_speed(5)
         
     def go_left(self):
+        ''' With Meccanum wheels the robot goes sideways to the left.
+        '''
         self.ml.set_forward(True)
         self.mlf.set_forward(False)
         self.mr.set_forward(False)
         self.mrf.set_forward(True)
         
     def go_right(self):
+        ''' With Meccanum wheels the robot goes sideways to the right.
+        '''
         self.ml.set_forward(False)
         self.mlf.set_forward(True)
         self.mr.set_forward(True)
         self.mrf.set_forward(False)
         
     def turn(self, turn):
+        '''This turns the robot right or left. Is mostly used by the remote control.
+        :param turn: positive or negative value. Higher values mean steeper turn.'''
         self.mr.change_speed(-turn)
         self.ml.change_speed(turn)
         if self.mrf is not None:
@@ -226,14 +235,16 @@ class Robot:
             self.mlf.set_speed(self.speed)
            
     def spin_before_obstacle(self, distance):
-        '''This spins until the distance to an obstacle is greater than the given parameter *distance*.'''
+        '''This spins until the distance to an obstacle is greater than the given parameter *distance*.
+        :param distance: The distance'''
         self._drive_instantly(True,False)
         while self.get_dist() < distance:
             pass
         self.emergency_stop()
                 
     def toggle_spin(self, d):
-        '''Toggle turn for the given duration. With each call the opposite direction(clockwise / anti-clockwise) is used.'''
+        '''Toggle turn for the given duration. With each call the opposite direction(clockwise / anti-clockwise) is used.
+        :param d: The duration for the turn in milliseconds.'''
         if self.last_turn_right:
             self.spin_left()
         else:
@@ -244,7 +255,8 @@ class Robot:
     
     
     def random_spin(self,d):
-        '''Randomly turn for the given duration.'''
+        '''Randomly turn for the given duration.
+        :param d: The duration for the turn in milliseconds.'''
         if random.randint(0,1) == 0:
             self.spin_left()
         else:
@@ -268,7 +280,7 @@ class Robot:
         self.speed = 0
     
     def ir_detected(self, pin, pin_num):
-        '''If implemented this method is called when the IR-sensor has detected a change. Fill in your code accordingly'''
+        '''If implemented this method is called when the IR-sensor has detected a change. Fill in your code accordingly.'''
         if pin.value() == 0:
             print("obstacle detected on pin", pin_num)
         else:
@@ -280,7 +292,8 @@ class Robot:
         return self.us.get_dist()
 
     def set_angle(self,a):
-        '''If implemented, turn the servo motor with the ultrasonic sensor to the given angle.'''
+        '''If implemented, turn the servo motor with the ultrasonic sensor to the given angle.
+        :param a: The angle that is to be set.'''
         self.servo.set_angle_slowly(a)
         
     def get_smallest_distance(self):
@@ -333,14 +346,12 @@ class Robot:
         
         
 def main():
-
-    r = Robot(False)
-    r.follow_line()
-        
-
-    print(err)
-    r.emergency_stop()
-    print("stop")
+    try:
+        r = Robot(False)
+        r.set_speed(100)
+    except KeyboardInterrupt:
+        r.emergency_stop()
+    
     
 if __name__ == "__main__":
     # execute only if run as a script
