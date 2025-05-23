@@ -14,9 +14,9 @@ This is a library written in micropython for robots based on the Raspberry Pi Pi
 Detailed description is available on: [Jb Knowledgebase](https://bookstack.jb-net.eu/books/roboter) (Only in German)
 
 ## Installation and running
-Copy the folder *robotlibrary* to the Raspberry Pi Pico. To use the robots import the main class of the robot you want to use: 
+Rename the unpacked folder *robotlibrary* and copy it to the Raspberry Pi Pico. To use the robots, import the main class of the robot you want to use: 
 
-+ `from robotlibrary.robot import Robot` for the SMARS robot.
++ `from robotlibrary.robot import Robot` for the SMARS robot (or any robot with wheels).
 + `from robotlibrary.crawly import Crawly` for the turtle like robot. 
 + `from robotlibrary.walky import Walky` for the dog like robot. 
 
