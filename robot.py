@@ -11,7 +11,7 @@ import robotlibrary.config
 try: 
     import bluetooth
     from robotlibrary.bluetooth.peripheral import BLEPeripheral
-    #from robotlibrary.bluetooth.ble_services_definitions import ROBOT_UUID, MOTOR_RX_UUID, MOTOR_TX_UUID
+    from robotlibrary.bluetooth.ble_services_definitions import ROBOT_UUID, MOTOR_RX_UUID, MOTOR_TX_UUID
     from robotlibrary.bluetooth.parser import decode_motor, encode_motor
     BLUETOOTH_CHIP = True
 except:
