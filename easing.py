@@ -2,12 +2,15 @@ import math
 from robotlibrary.servo import Servo
 from time import sleep_ms
 from collections import deque
+import gc
 
 def get_steps(start, stop, d_angle):
     '''Calculates the necessary steps for the given angle d_angle to make a smooth movement.
     :param start: 0
     :param stop: 0
     :d_angle: The angle the sensor shall move. '''
+    gc.enable()
+    gc.collect()
     #print(d_angle)
     increment = stop/d_angle #This is one way to determine the increment. Others are better.
     #The bigger the angle, the smaller the increment is noch a good idea.

@@ -82,6 +82,7 @@ class Joint:
             self.servo.set_angle(robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE)
         return False
     
+    @deprecated
     def up_smooth(self):
         '''This is not yet a good solution. It still moves the leg up or down before
         the shoulder joint is moved and makes for an awkward movement. It should be
@@ -97,6 +98,7 @@ class Joint:
             
         return False
     
+    @deprecated
     def down_smooth(self):
         '''This is not yet a good solution. It still moves the leg up or down before
         the shoulder joint is moved and makes for an awkward movement. It should be
@@ -119,7 +121,6 @@ class Joint:
             self.servo.set_angle(self.servo.angle - self.steps_knee.popleft())
             if self.servo.angle > robotlibrary.config_crawly.CRAWLY_UP_ANGLE - (robotlibrary.config_crawly.CRAWLY_DOWN_ANGLE -
                                             robotlibrary.config_crawly.CRAWLY_UP_ANGLE)/3:
-                print("Mark")
                 return False
             else:
                 print("else")
