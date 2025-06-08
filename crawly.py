@@ -1,7 +1,7 @@
 # peripherals
 from robotlibrary.ultrasonic import Ultra
 from robotlibrary.crawly_leg import Leg
-import robotlibrary.config_crawly
+from robotlibrary import config_crawly as conf
 
 
 ########## Bluetooth
@@ -20,8 +20,8 @@ class Crawly:
             "rear_left" : Leg(0, False, False, "rear left"),
             "front_left" : Leg(2, False, True, "front left")
             }
-        if robotlibrary.config_crawly.US is not None:
-            self.us = Ultra(robotlibrary.config_crawly.US)
+        if conf.US is not None:
+            self.us = Ultra(conf.US)
         
     def reset_movement(self):
         '''This needs to be called before each new movement of a leg. '''

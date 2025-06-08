@@ -1,18 +1,18 @@
 from robotlibrary.crawly_joint import Joint
-import robotlibrary.config_crawly
+from robotlibrary import config_crawly as conf
 from time import sleep,sleep_ms
 
 class Leg:
     def __init__(self, pin, right, front, name):
         if right and front: 
-            self.shoulder = Joint(robotlibrary.config_crawly.SHOULDER_FRONT, name, False, False, pin)
+            self.shoulder = Joint(conf.SHOULDER_FRONT, name, False, False, pin)
         if right and not front:
-            self.shoulder = Joint(robotlibrary.config_crawly.SHOULDER_REAR, name, False, False, pin)
+            self.shoulder = Joint(conf.SHOULDER_REAR, name, False, False, pin)
         if not right and front:
-            self.shoulder = Joint(robotlibrary.config_crawly.SHOULDER_FRONT, name, True, False, pin)
+            self.shoulder = Joint(conf.SHOULDER_FRONT, name, True, False, pin)
         if not right and not front:
-            self.shoulder = Joint(robotlibrary.config_crawly.SHOULDER_REAR, name, True, False, pin)
-        self.knee = Joint(robotlibrary.config_crawly.KNEE, name, False, True, pin+1)
+            self.shoulder = Joint(conf.SHOULDER_REAR, name, True, False, pin)
+        self.knee = Joint(conf.KNEE, name, False, True, pin+1)
     
     def reset_movement(self):
         '''This needs to be called before the leg starts moving.'''
