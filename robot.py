@@ -24,7 +24,7 @@ from time import sleep, sleep_ms
 
 class Robot:
     '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py'''
-    def __init__(self,rc):
+    def __init__(self,rc,my_read):
         if conf.ML is not None:
             self.ml = Motor(conf.ML)
         if conf.MR is not None:
@@ -46,32 +46,35 @@ class Robot:
         if rc and BLUETOOTH_CHIP:
             self.rc_on = True
             self.controller = BLEPeripheral(conf.ROBOT_NAME, add_robot_stuff=True)
-            def read(buffer: memoryview):
-                speed, turn, forward, button_press = decode_motor(bytes(buffer)) 
-                #print(f"Speed: {speed}, Turn: {turn}, forward: {forward}") # uncomment for debugging
-                if rc_on: # type: ignore
-                    if forward != self.forward:
-                        self.forward = forward
-                        self.set_forward(forward)
-                    if speed != self.speed:
-                        self.set_speed_instantly(speed)                    
-                    if turn == 0:
-                        self.go_straight()
-                    elif turn < 0:
-                        if turn < -50:
-                            self.spin_left()
-                        else:
-                            self.turn_left()
-                    elif turn > 0:
-                        if turn > 50:
-                            self.spin_right()
-                        else:
-                            self.turn_right()
-                    if turn > -50 and turn < 50:
-                        self.set_forward(self.forward)
-                        self.go_straight()
-                    if button_press:
-                        print("Button pressed.")                
+            if my_read is None: 
+                def read(buffer: memoryview):
+                    speed, turn, forward, button_press = decode_motor(bytes(buffer)) 
+                    #print(f"Speed: {speed}, Turn: {turn}, forward: {forward}") # uncomment for debugging
+                    if rc_on: # type: ignore
+                        if forward != self.forward:
+                            self.forward = forward
+                            self.set_forward(forward)
+                        if speed != self.speed:
+                            self.set_speed_instantly(speed)                    
+                        if turn == 0:
+                            self.go_straight()
+                        elif turn < 0:
+                            if turn < -50:
+                                self.spin_left()
+                            else:
+                                self.turn_left()
+                        elif turn > 0:
+                            if turn > 50:
+                                self.spin_right()
+                            else:
+                                self.turn_right()
+                        if turn > -50 and turn < 50:
+                            self.set_forward(self.forward)
+                            self.go_straight()
+                        if button_press:
+                            print("Button pressed.")
+            else:
+                self.read = my_read
             self.controller.register_read_callback(MOTOR_RX_UUID, read)
             self.controller.advertise()
             
@@ -355,13 +358,14 @@ class Robot:
             self.ml.set_speed(self.speed + control)
             sleep_ms(10)
         
-            
-        
-        
+def my_read():
+    print("Hallo")
+    
 def main():
     try:
-        r = Robot(False)
+        r = Robot(True,None)
         r.set_speed(100)
+        r.read()
     except KeyboardInterrupt:
         r.emergency_stop()
     
