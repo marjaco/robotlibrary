@@ -49,7 +49,7 @@ class Joint:
     def set_max_angle(a):
         self.__max_angle = a
     
-    @deprecated
+
     def reset_movement(self):
         '''This is called before each new leg movement cycle.'''
         if self.j_type == conf.SHOULDER_FRONT:
@@ -76,7 +76,7 @@ class Joint:
             self.servo.set_angle(conf.CRAWLY_DOWN_ANGLE)
         return False
     
-    @deprecated
+
     def up_smooth(self):
         '''This is not yet a good solution. It still moves the leg up or down before
         the shoulder joint is moved and makes for an awkward movement. It should be
@@ -92,7 +92,7 @@ class Joint:
             
         return False
     
-    @deprecated
+
     def down_smooth(self):
         '''This is not yet a good solution. It still moves the leg up or down before
         the shoulder joint is moved and makes for an awkward movement. It should be
@@ -118,6 +118,30 @@ class Joint:
                 return False
             else:
                 print("else")
+                return True
+        return False
+    
+    def up_smooth_v3(self,increment):
+        '''UNTESTED version for smooth movement.
+        '''
+        if self.j_type == conf.KNEE and self.servo.angle > conf.CRAWLY_UP_ANGLE:
+            self.servo.set_angle(self.servo.angle - increment)
+            if self.servo.angle > conf.CRAWLY_UP_ANGLE - (conf.CRAWLY_DOWN_ANGLE -
+                                            conf.CRAWLY_UP_ANGLE)/3:
+                return False #movement is enough so that the shoulder can move now too.
+            else:
+                return True # movement is still ongoing
+        return False # movement is finished.
+    
+    def down_smooth_v3(self,increment):
+        '''UNTESTED version for smooth movement.
+        '''
+        if self.j_type == conf.KNEE and self.servo.angle < conf.CRAWLY_DOWN_ANGLE:
+            self.servo.set_angle(self.servo.angle + increment)
+            if self.servo.angle > conf.CRAWLY_UP_ANGLE + (conf.CRAWLY_DOWN_ANGLE-
+                                            conf.CRAWLY_UP_ANGLE)/3:
+                return False
+            else:
                 return True
         return False
     
@@ -151,7 +175,45 @@ class Joint:
                 self.servo.set_angle(self.servo.angle - self.steps_rear.popleft())
                 return True
             return False
-
+        
+    def forward_v3(self,increment) -> bool:
+        '''See the documentation for crawly_leg.py for information.'''
+        if not self.left_side:
+            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle < conf.CRAWLY_FRONT_FORWARD_ANGLE:
+                self.servo.set_angle(self.servo.angle + increment)
+                return True
+            if self.j_type == conf.SHOULDER_REAR and self.servo.angle < conf.CRAWLY_REAR_FORWARD_ANGLE:
+                self.servo.set_angle(self.servo.angle + increment)
+                return True
+            return False
+        else:
+            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle > 180- conf.CRAWLY_FRONT_FORWARD_ANGLE:
+                self.servo.set_angle(self.servo.angle - increment)
+                return True
+            if self.j_type == conf.SHOULDER_REAR and self.servo.angle > 180-conf.CRAWLY_REAR_FORWARD_ANGLE:
+                self.servo.set_angle(self.servo.angle - increment)
+                return True
+            return False
+    
+    def backward_v3(self,increment) -> bool:
+        '''See the documentation for crawly_leg.py for information.'''
+        if not self.left_side:
+            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle > conf.CRAWLY_FRONT_BACKWARD_ANGLE:
+                self.servo.set_angle(self.servo.angle - increment)
+                return True
+            if self.j_type == conf.SHOULDER_REAR and self.servo.angle > conf.CRAWLY_REAR_BACKWARD_ANGLE:
+                self.servo.set_angle(self.servo.angle - increment)
+                return True
+            return False
+        else:
+            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle < 180-conf.CRAWLY_FRONT_BACKWARD_ANGLE:
+                self.servo.set_angle(self.servo.angle + increment)
+                return True
+            if self.j_type == conf.SHOULDER_REAR and self.servo.angle < 180-conf.CRAWLY_REAR_BACKWARD_ANGLE:
+                self.servo.set_angle(self.servo.angle + increment)
+                return True
+            return False
+        
     def backward(self) -> bool:
         '''See the documentation for crawly_leg.py for information.'''
         if not self.left_side:

@@ -14,7 +14,7 @@ class Leg:
             self.shoulder = Joint(conf.SHOULDER_REAR, name, True, False, pin)
         self.knee = Joint(conf.KNEE, name, False, True, pin+1)
     
-    @deprecated
+
     def reset_movement(self):
         '''This needs to be called before the leg starts moving.'''
         self.shoulder.reset_movement()
@@ -26,9 +26,27 @@ class Leg:
         as the leg is raised in this movement.
         '''
         w1,w2 = True,True
-        w1 = self.knee.up_smooth_v2()
+        w1 = self.knee.up_smooth()
         if not w1:
             w2 = self.shoulder.forward()
+        return w1 or w2
+    
+    def forward_move_forward_v3(self,increment) -> bool:
+        '''This makes a small adjustment in the move forward of this leg. Returns True as long as the movement is NOT finished
+        and returns False, once the movement is finished. This does not move the robot forward, 
+        as the leg is raised in this movement.
+        '''
+        w1 = self.knee.up_smooth_v3(increment)
+        w2 = self.shoulder.forward_v3(increment)
+        return w1 or w2
+    
+    def forward_move_backward_v3(self,increment) -> bool:
+        '''This makes a small adjustment in the move forward of this leg. Returns True as long as the movement is NOT finished
+        and returns False, once the movement is finished. This does not move the robot forward, 
+        as the leg is raised in this movement.
+        '''
+        w1 = self.knee.down_smooth_v3(increment)
+        w2 = self.shoulder.backward_v3(increment)
         return w1 or w2
     
     def forward_move_backward(self) -> bool:

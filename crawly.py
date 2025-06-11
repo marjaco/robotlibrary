@@ -2,7 +2,7 @@
 from robotlibrary.ultrasonic import Ultra
 from robotlibrary.crawly_leg import Leg
 from robotlibrary import config_crawly as conf
-
+from robotlibrary.easing import get_factor, get_step
 
 ########## Bluetooth
 # This is not implemented yet.
@@ -23,14 +23,29 @@ class Crawly:
         if conf.US is not None:
             self.us = Ultra(conf.US)
             
-    @deprecated    
+  
     def reset_movement(self):
         '''This needs to be called before each new movement of a leg. '''
         for l in self.legs.values():
             l.reset_movement()
     
-    def move_forward_v2(self):
-        w1 = self.legs["front_right"].forward_move_forward()
+    def move_forward_v2(self,steps,angle):
+        angle=50
+        steps=15
+        factor = get_factor(steps,angle)
+        for i in range(0,steps):
+            step = get_step(i,steps,factor)
+            self.legs["front_right"].forward_move_forward_v3(step)
+            self.legs["rear_left"].forward_move_forward_v3(step)
+            self.legs["rear_right"].forward_move_backward_v3(step)
+            self.legs["front_left"].forward_move_backward_v3(step)
+        for i in range(0,steps):
+            step = get_step(i,steps,factor)
+            self.legs["front_right"].forward_move_backward_v3(step)
+            self.legs["rear_left"].forward_move_backward_v3(step)
+            self.legs["rear_right"].forward_move_forward_v3(step)
+            self.legs["front_left"].forward_move_forward_v3(step)
+            
     
     def move_forward(self, steps):
         '''This makes the crawler move forward in a coordinated way. Most of the functionality lies in the other classes Joint and Leg.
@@ -210,7 +225,7 @@ def main():
         c = Crawly(True)
         #c.calibrate()
         c.reset_movement()
-        c.move_forward(10)
+        c.move_forward_v2(10,15)
     except KeyboardInterrupt:
         c.park()
         sleep(1)

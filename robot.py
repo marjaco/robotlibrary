@@ -1,4 +1,4 @@
-# peripherals
+########## peripherals
 from robotlibrary.motor import Motor
 from robotlibrary.ultrasonic import Ultra
 from robotlibrary.infrared import IR
@@ -6,6 +6,7 @@ from robotlibrary.servo import Servo
 from robotlibrary.ir_array import IR_Array
 from robotlibrary.pid import PID
 from robotlibrary import config as conf
+
 ########## Bluetooth
 
 
@@ -23,7 +24,8 @@ from time import sleep, sleep_ms
 
 
 class Robot:
-    '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py'''
+    '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py
+    You can now also initiate the class with you own read() method, which takes the commands from the rc. '''
     def __init__(self,rc,my_read):
         self.mrf, self.mlf = None, None
         if conf.ML is not None:
@@ -358,7 +360,9 @@ class Robot:
             self.mr.set_speed(self.speed - control)
             self.ml.set_speed(self.speed + control)
             sleep_ms(10)
-        
+
+
+###################################        
 def my_read(buffer: memoryview):
     print("my read called.")
     
