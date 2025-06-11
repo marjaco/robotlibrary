@@ -25,6 +25,7 @@ from time import sleep, sleep_ms
 class Robot:
     '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py'''
     def __init__(self,rc,my_read):
+        self.mrf, self.mlf = None, None
         if conf.ML is not None:
             self.ml = Motor(conf.ML)
         if conf.MR is not None:
@@ -46,7 +47,7 @@ class Robot:
         if rc and BLUETOOTH_CHIP:
             self.rc_on = True
             self.controller = BLEPeripheral(conf.ROBOT_NAME, add_robot_stuff=True)
-            if my_read is None: 
+            if my_read is None:
                 def read(buffer: memoryview):
                     speed, turn, forward, button_press = decode_motor(bytes(buffer)) 
                     #print(f"Speed: {speed}, Turn: {turn}, forward: {forward}") # uncomment for debugging
@@ -74,7 +75,7 @@ class Robot:
                         if button_press:
                             print("Button pressed.")
             else:
-                self.read = my_read
+                read = my_read
             self.controller.register_read_callback(MOTOR_RX_UUID, read)
             self.controller.advertise()
             
@@ -358,14 +359,15 @@ class Robot:
             self.ml.set_speed(self.speed + control)
             sleep_ms(10)
         
-def my_read():
-    print("Hallo")
+def my_read(buffer: memoryview):
+    print("my read called.")
     
 def main():
     try:
-        r = Robot(True,None)
+        r = Robot(True,my_read)
         r.set_speed(100)
-        r.read()
+        while True:
+            sleep(1)
     except KeyboardInterrupt:
         r.emergency_stop()
     

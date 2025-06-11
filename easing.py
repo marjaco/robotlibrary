@@ -4,6 +4,9 @@ from time import sleep_ms
 from collections import deque
 import gc
 
+def get_step(float: x):
+    return _ease_in_out_sine(x)
+
 def get_steps(start, stop, d_angle):
     '''Calculates the necessary steps for the given angle d_angle to make a smooth movement.
     :param start: 0
@@ -11,10 +14,7 @@ def get_steps(start, stop, d_angle):
     :d_angle: The angle the sensor shall move. '''
     gc.enable()
     gc.collect()
-    #print(d_angle)
     increment = stop/d_angle #This is one way to determine the increment. Others are better.
-    #The bigger the angle, the smaller the increment is noch a good idea.
-    # Another possibility: increment = d_angle/100
     i = start
     steps = list()
     sum_steps = 0

@@ -49,6 +49,7 @@ class Joint:
     def set_max_angle(a):
         self.__max_angle = a
     
+    @deprecated
     def reset_movement(self):
         '''This is called before each new leg movement cycle.'''
         if self.j_type == conf.SHOULDER_FRONT:

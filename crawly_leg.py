@@ -14,6 +14,7 @@ class Leg:
             self.shoulder = Joint(conf.SHOULDER_REAR, name, True, False, pin)
         self.knee = Joint(conf.KNEE, name, False, True, pin+1)
     
+    @deprecated
     def reset_movement(self):
         '''This needs to be called before the leg starts moving.'''
         self.shoulder.reset_movement()
