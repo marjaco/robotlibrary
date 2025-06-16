@@ -23,21 +23,17 @@ class Crawly:
             }
         if conf.US is not None:
             self.us = Ultra(conf.US)
-            
-  
-    def reset_movement(self):
-        '''This needs to be called before each new movement of a leg. '''
-        for l in self.legs.values():
-            l.reset_movement()
     
     def move_forward(self,steps,angle):
+        #probably need to put the legs in a defined position first. 
         #angle=50
         #steps=15
         print("start")
+        # First step
         counter = 0
-        dividend=3
+        dividend=2
         knee_step=0
-        d=80
+        d=10
         factor = get_factor(steps,angle)
         while counter < steps/dividend:
             step = get_step(counter,steps,factor)
@@ -61,6 +57,37 @@ class Crawly:
             self.legs["rear_left"].leg_forward(step)
             self.legs["front_left"].leg_backward(step)
             self.legs["rear_right"].leg_backward(step)
+            sleep_ms(d)
+            counter+=1
+        #sleep(3)
+        # Second step
+        counter = 0
+        dividend=3
+        knee_step=0
+        d=0
+        factor = get_factor(steps,angle)
+        while counter < steps/dividend:
+            step = get_step(counter,steps,factor)
+            self.legs["front_right"].leg_down(step)
+            self.legs["rear_left"].leg_down(step)
+            self.legs["front_left"].leg_up(step)
+            self.legs["rear_right"].leg_up(step)
+            sleep_ms(d)
+            knee_step=counter
+            counter+=1
+        counter = 0
+        while counter < steps:
+            if counter < steps-knee_step:
+                step = get_step(counter,steps+knee_step,factor)
+                self.legs["front_right"].leg_down(step)
+                self.legs["rear_left"].leg_down(step)
+                self.legs["front_left"].leg_up(step)
+                self.legs["rear_right"].leg_up(step)
+            step = get_step(counter,steps,factor)
+            self.legs["front_right"].leg_backward(step)
+            self.legs["rear_left"].leg_backward(step)
+            self.legs["front_left"].leg_forward(step)
+            self.legs["rear_right"].leg_forward(step)
             sleep_ms(d)
             counter+=1
         
@@ -92,9 +119,13 @@ def main():
     try: 
         c = Crawly(False)
         #c.calibrate()
-        c.curl()
+        c.legs["front_right"].shoulder.__set_angle(110)
+        c.legs["rear_left"].shoulder.__set_angle(70)
+        c.legs["front_left"].shoulder.__set_angle(110)
+        c.legs["rear_right"].shoulder.__set_angle(70)
+        sleep(2)
         for i in range(0,10):
-             c.move_forward(20,30)
+             c.move_forward(20,40)
         sleep(1)
         c.park()
     except KeyboardInterrupt:

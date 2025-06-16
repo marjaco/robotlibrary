@@ -68,18 +68,18 @@ class Joint:
     def forward_step(self, increment):
         '''This moves the leg forward by increment.'''
         if not self.left_side:
-            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle < conf.SHOULDER_FRONT_MAX_ANGLE:
+            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle < conf.CRAWLY_FRONT_FORWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle + increment)
                 return True # The shoulder is within the safe range.
-            if self.j_type == conf.SHOULDER_REAR and self.servo.angle < conf.SHOULDER_REAR_MAX_ANGLE:
+            if self.j_type == conf.SHOULDER_REAR and self.servo.angle < conf.CRAWLY_REAR_FORWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle + increment)
                 return True # The shoulder is within the safe range.
             return False # The limit of movement is reached. 
         else:
-            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle > 180- conf.SHOULDER_FRONT_MIN_ANGLE:
+            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle > 180 - conf.CRAWLY_FRONT_FORWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle - increment)
                 return True # The shoulder is within the safe range.
-            if self.j_type == conf.SHOULDER_REAR and self.servo.angle > 180-conf.SHOULDER_REAR_MIN_ANGLE:
+            if self.j_type == conf.SHOULDER_REAR and self.servo.angle > 180 - conf.CRAWLY_REAR_FORWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle - increment)
                 return True # The shoulder is within the safe range.
             return False # The limit of movement is reached. 
@@ -87,18 +87,18 @@ class Joint:
     def backward_step(self,increment) -> bool:
         '''This moves the leg backward by increment.'''
         if not self.left_side:
-            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle > conf.SHOULDER_FRONT_MIN_ANGLE:
+            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle > conf.CRAWLY_FRONT_BACKWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle - increment)
                 return True # The shoulder is within the safe range. 
-            if self.j_type == conf.SHOULDER_REAR and self.servo.angle > conf.SHOULDER_REAR_MIN_ANGLE:
+            if self.j_type == conf.SHOULDER_REAR and self.servo.angle > conf.CRAWLY_REAR_BACKWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle - increment)
                 return True # The shoulder is within the safe range.
             return False # The limit of movement is reached. 
         else:
-            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle < 180-conf.SHOULDER_FRONT_MAX_ANGLE:
+            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle < 180 - conf.CRAWLY_FRONT_BACKWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle + increment)
                 return True # The shoulder is within the safe range.
-            if self.j_type == conf.SHOULDER_REAR and self.servo.angle < 180-conf.SHOULDER_REAR_MAX_ANGLE:
+            if self.j_type == conf.SHOULDER_REAR and self.servo.angle < 180 - conf.CRAWLY_REAR_BACKWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle + increment)
                 return True # The shoulder is within the safe range.
             return False # The limit of movement is reached. 
