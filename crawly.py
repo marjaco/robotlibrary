@@ -3,6 +3,7 @@ from robotlibrary.ultrasonic import Ultra
 from robotlibrary.crawly_leg import Leg
 from robotlibrary import config_crawly as conf
 from robotlibrary.easing import get_factor, get_step
+from time import sleep_ms
 
 ########## Bluetooth
 # This is not implemented yet.
@@ -29,173 +30,40 @@ class Crawly:
         for l in self.legs.values():
             l.reset_movement()
     
-    def move_forward_v2(self,steps,angle):
-        angle=50
-        steps=15
+    def move_forward(self,steps,angle):
+        #angle=50
+        #steps=15
+        print("start")
+        counter = 0
+        dividend=3
+        knee_step=0
+        d=80
         factor = get_factor(steps,angle)
-        for i in range(0,steps):
-            step = get_step(i,steps,factor)
-            self.legs["front_right"].forward_move_forward_v3(step)
-            self.legs["rear_left"].forward_move_forward_v3(step)
-            self.legs["rear_right"].forward_move_backward_v3(step)
-            self.legs["front_left"].forward_move_backward_v3(step)
-        for i in range(0,steps):
-            step = get_step(i,steps,factor)
-            self.legs["front_right"].forward_move_backward_v3(step)
-            self.legs["rear_left"].forward_move_backward_v3(step)
-            self.legs["rear_right"].forward_move_forward_v3(step)
-            self.legs["front_left"].forward_move_forward_v3(step)
-            
-    
-    def move_forward(self, steps):
-        '''This makes the crawler move forward in a coordinated way. Most of the functionality lies in the other classes Joint and Leg.
-        This method showcases a possible solution.
-        '''
+        while counter < steps/dividend:
+            step = get_step(counter,steps,factor)
+            self.legs["front_right"].leg_up(step)
+            self.legs["rear_left"].leg_up(step)
+            self.legs["front_left"].leg_down(step)
+            self.legs["rear_right"].leg_down(step)
+            sleep_ms(d)
+            knee_step=counter
+            counter+=1
+        counter = 0
+        while counter < steps:
+            if counter < steps-knee_step:
+                step = get_step(counter,steps+knee_step,factor)
+                self.legs["front_right"].leg_up(step)
+                self.legs["rear_left"].leg_up(step)
+                self.legs["front_left"].leg_down(step)
+                self.legs["rear_right"].leg_down(step)
+            step = get_step(counter,steps,factor)
+            self.legs["front_right"].leg_forward(step)
+            self.legs["rear_left"].leg_forward(step)
+            self.legs["front_left"].leg_backward(step)
+            self.legs["rear_right"].leg_backward(step)
+            sleep_ms(d)
+            counter+=1
         
-        while steps > 0:
-            self.reset_movement()
-            walk = True
-            # First half of one stepcycle.
-            while walk:
-                w1 = self.legs["front_right"].forward_move_forward()
-                w2 = self.legs["rear_left"].forward_move_forward()
-                w3 = self.legs["rear_right"].forward_move_backward()
-                w4 = self.legs["front_left"].forward_move_backward()
-                walk = w1 or w2 or w3 or w4
-            
-            walk = True
-            # Second half of one stepcycle
-            self.reset_movement()
-            while walk:
-                w1 = self.legs["front_right"].forward_move_backward()
-                w2 = self.legs["rear_left"].forward_move_backward()
-                w3 = self.legs["rear_right"].forward_move_forward()
-                w4 = self.legs["front_left"].forward_move_forward()
-                
-                walk = w1 or w2 or w3 or w4
-            steps = steps-1
-
-    def move_backward(self, steps):
-        '''This makes the crawler move backward in a coordinated way. Most of the functionality lies in the other classes Joint and Leg'''
-        while steps > 0:
-            self.reset_movement()
-            walk = True
-            # First half of one stepcycle.
-            while walk:
-                w1 = self.legs["front_right"].backward_move_backward()
-                w2 = self.legs["rear_left"].backward_move_backward()
-                w3 = self.legs["rear_right"].backward_move_forward()
-                w4 = self.legs["front_left"].backward_move_forward()
-                walk = w1 or w2 or w3 or w4
-            
-            walk = True
-            # Second half of one stepcycle
-            self.reset_movement()
-            while walk:
-                w1 = self.legs["front_right"].backward_move_forward()
-                w2 = self.legs["rear_left"].backward_move_forward()
-                w3 = self.legs["rear_right"].backward_move_backward()
-                w4 = self.legs["front_left"].backward_move_backward()
-                
-                walk = w1 or w2 or w3 or w4
-            steps = steps-1
-
-
-    def turn_left(self, steps):
-        '''This makes the crawler turn to the left in one place in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
-        while steps > 0:
-            walk = True
-            # First half of one stepcycle.
-            while walk:
-                w1 = self.legs["front_right"].forward_move_forward()
-                w2 = self.legs["rear_left"].backward_move_backward()
-                w3 = self.legs["rear_right"].forward_move_backward()
-                w4 = self.legs["front_left"].backward_move_forward()
-                walk = w1 or w2 or w3 or w4
-            
-            walk = True
-            # Second half of one stepcycle
-            while walk:
-                w1 = self.legs["front_right"].forward_move_backward()
-                w2 = self.legs["rear_left"].backward_move_forward()
-                w3 = self.legs["rear_right"].forward_move_forward()
-                w4 = self.legs["front_left"].backward_move_backward()
-                
-                walk = w1 or w2 or w3 or w4
-            steps = steps-1
-
-    def turn_right(self, steps):
-        '''This makes the crawler turn to the right in one place in a coordinated way. Most of the funktionality lies in the other classes Joint and Leg'''
-        while steps > 0:
-            walk = True
-            # First half of one stepcycle.
-            while walk:
-                w1 = self.legs["front_right"].backward_move_forward()
-                w2 = self.legs["rear_left"].forward_move_backward()
-                w3 = self.legs["rear_right"].backward_move_backward()
-                w4 = self.legs["front_left"].forward_move_forward()
-                walk = w1 or w2 or w3 or w4
-            
-            walk = True
-            # Second half of one stepcycle
-            while walk:
-                w1 = self.legs["front_right"].backward_move_backward()
-                w2 = self.legs["rear_left"].forward_move_forward()
-                w3 = self.legs["rear_right"].backward_move_forward()
-                w4 = self.legs["front_left"].forward_move_backward()
-                
-                walk = w1 or w2 or w3 or w4
-            steps = steps-1
-
-
-    
-    def move_left(self, steps):
-        '''This makes the crawler move to the left in a coordinated way. Most of the functionality lies in the other classes Joint and Leg.'''
-        while steps > 0:
-            walk = True
-            # First half of one step cycle.
-            while walk:
-                w1 = self.legs["front_right"].left_move_ahead()
-                w2 = self.legs["rear_left"].left_move_center()
-                w3 = self.legs["rear_right"].left_move_center()
-                w4 = self.legs["front_left"].left_move_ahead()
-
-                walk = w1 or w2 or w3 or w4
-            
-            walk = True
-            # Second half of one step cycle
-            while walk:
-                w1 = self.legs["front_right"].left_move_center()
-                w2 = self.legs["rear_left"].left_move_ahead()
-                w3 = self.legs["rear_right"].left_move_ahead()
-                w4 = self.legs["front_left"].left_move_center()
-                
-                walk = w1 or w2 or w3 or w4
-            steps = steps-1
-
-    def move_right(self, steps):
-        '''This makes the crawler move to the right in a coordinated way. Most of the functionality lies in the other classes Joint and Leg.'''
-        while steps > 0:
-            walk = True
-            # First half of one step cycle.
-            while walk:
-                w1 = self.legs["front_right"].right_move_ahead()
-                w2 = self.legs["rear_left"].right_move_center()
-                w3 = self.legs["rear_right"].right_move_center()
-                w4 = self.legs["front_left"].right_move_ahead()
-                
-                walk = w1 or w2 or w3 or w4
-            
-            walk = True
-            # Second half of one step cycle
-            while walk:
-                w1 = self.legs["front_right"].right_move_center()
-                w2 = self.legs["rear_left"].right_move_ahead()
-                w3 = self.legs["rear_right"].right_move_ahead()
-                w4 = self.legs["front_left"].right_move_center()
-                
-                walk = w1 or w2 or w3 or w4
-            steps = steps-1
 
             
     def park(self):
@@ -220,12 +88,15 @@ class Crawly:
             sleep(0.1)
     
 def main():
-    '''Starting this file calibrates all servos and then terminates.'''
+    
     try: 
-        c = Crawly(True)
+        c = Crawly(False)
         #c.calibrate()
-        c.reset_movement()
-        c.move_forward_v2(10,15)
+        c.curl()
+        for i in range(0,10):
+             c.move_forward(20,30)
+        sleep(1)
+        c.park()
     except KeyboardInterrupt:
         c.park()
         sleep(1)

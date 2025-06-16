@@ -10,7 +10,7 @@ def get_step(step,steps,factor):
     '''param: step: step number
     param: steps: number of steps for the whole movement
     param: factor: '''
-    print(_ease_in_out_sine(step*get_increment(steps))*factor)
+    #print(_ease_in_out_sine(step*get_increment(steps))*factor)
     return _ease_in_out_sine(step*get_increment(steps))*factor
 
 def get_factor(steps, angle):

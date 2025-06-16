@@ -1,6 +1,7 @@
 from robotlibrary.crawly_joint import Joint
 from robotlibrary import config_crawly as conf
 from time import sleep,sleep_ms
+from robotlibrary.easing import get_factor, get_step
 
 class Leg:
     def __init__(self, pin, right, front, name):
@@ -14,9 +15,18 @@ class Leg:
             self.shoulder = Joint(conf.SHOULDER_REAR, name, True, False, pin)
         self.knee = Joint(conf.KNEE, name, False, True, pin+1)
     
-
+    def leg_up(self, inc):
+        return self.knee.up_step(inc)
+    def leg_down(self,inc):
+        return self.knee.down_step(inc)
+    def leg_forward(self,inc):
+        return self.shoulder.forward_step(inc) 
+    def leg_backward(self,inc):
+        return self.shoulder.backward_step(inc)
+    
     def reset_movement(self):
         '''This needs to be called before the leg starts moving.'''
+        print("This method is deprecated")
         self.shoulder.reset_movement()
         self.knee.reset_movement()
         
@@ -154,12 +164,26 @@ class Leg:
 def main():
     '''This file, executed, taps the leg.'''
     l = Leg(6, True, False, "rear right")
+    l.curl()
+    steps=20
+    angle=30
+    d=50
+    factor = get_factor(steps,angle)
+    for i in range(0,steps):
+        l.leg_up(get_step(i,steps,factor))
+        sleep_ms(d)
+    for i in range(0,steps):
+        l.leg_forward(get_step(i,steps,factor))
+        sleep_ms(d)
+    for i in range(0,steps):
+        l.leg_down(get_step(i,steps,factor))
+        sleep_ms(d)
+    for i in range(0,steps):
+        l.leg_backward(get_step(i,steps,factor))
+        sleep_ms(d)
+    sleep_ms(200)
     l.park()
-    l.knee.down()
-    l.reset_movement()
-    
-    while l.forward_move_forward():
-        sleep_ms(200)
+
     
 if __name__ == "__main__":
     # execute only if run as a script
