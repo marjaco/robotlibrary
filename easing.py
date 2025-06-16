@@ -30,7 +30,10 @@ def get_steps(start, stop, d_angle):
         #print(f"i: {i}, Ease: {ease_in_out_sine(i)}")
         steps.append(_ease_in_out_sine(i)*d_angle/sum_steps)
         i=i+increment
-    return deque(steps,len(steps))
+    d = deque((),len(steps))
+    for s in steps:
+        d.append(s)
+    return s
 
 def _ease_in_out_quad(t: float) -> float:
         t *= 2
