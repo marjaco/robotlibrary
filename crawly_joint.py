@@ -1,17 +1,11 @@
 # peripherals
 from robotlibrary.servo import Servo
 import robotlibrary.config_crawly
-#import robotlibrary.easing
 from robotlibrary.easing import get_steps
 from time import sleep, sleep_ms
 
 class Joint:
-    # FRONT_FORWARD_ANGLE = 130
-    # FRONT_BACKWARD_ANGLE = 90
-    # REAR_FORWARD_ANGLE = 90
-    # REAR_BACKWARD_ANGLE = 50
-    # UP_ANGLE = 75
-    # DOWN_ANGLE = 90
+
     def __init__(self, j_type, name, left_side, inverted, pin):
         '''Initialize a joint in the Crawly robot. 
         Explanation of parameters: 
@@ -36,8 +30,8 @@ class Joint:
         elif j_type == robotlibrary.config_crawly.KNEE:
             self.__min_angle = robotlibrary.config_crawly.KNEE_MIN_ANGLE
             self.__max_angle = robotlibrary.config_crawly.KNEE_MAX_ANGLE
-            min_duty = robotlibrary.config_crawly.SERVO_MIN_DUTY_TYPE2 # Comment out if the duty cycle is not different from the shoulder servo's duty cycle.
-            max_duty = robotlibrary.config_crawly.SERVO_MAX_DUTY_TYPE2 # Comment out if the duty cycle is not different from the shoulder servo's duty cycle.
+            #min_duty = robotlibrary.config_crawly.SERVO_MIN_DUTY_TYPE2 # Comment out if the duty cycle is not different from the shoulder servo's duty cycle.
+            #max_duty = robotlibrary.config_crawly.SERVO_MAX_DUTY_TYPE2 # Comment out if the duty cycle is not different from the shoulder servo's duty cycle.
         self.servo = Servo(pin, inverted, min_duty, max_duty)
           
     @property
