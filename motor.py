@@ -49,8 +49,6 @@ class Motor:
         self.pwm1,self.pwm2=self.pwm2,self.pwm1        
         self.forward=forward
         self.set_speed(self.speed)
-        #self.pwm1.duty_u16(int(MAX_DUTY*(self.speed+self.speed_offset)/100)) # uncommenting this causes problems with the remote control. After changing
-        # the direction the robot would drive even if the remote control speed said 0.
         
 def main():
     try:

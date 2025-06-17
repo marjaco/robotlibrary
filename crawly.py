@@ -59,7 +59,7 @@ class Crawly:
             self.legs["rear_right"].leg_backward(step)
             sleep_ms(d)
             counter+=1
-        #sleep(3)
+
         # Second step
         counter = 0
         dividend=3
@@ -91,8 +91,6 @@ class Crawly:
             sleep_ms(d)
             counter+=1
         
-
-            
     def park(self):
         '''This stretches legs the legs lengthwise, so the robot lies on its underside.'''
         for l in self.legs.values():

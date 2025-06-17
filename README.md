@@ -5,7 +5,7 @@ This is a library written in micropython for robots based on the Raspberry Pi Pi
 + infrared sensor
 + servo motor that turns the ultrasonic sensor for sweeps of the surroundings.
 + the motors of course
-+ a remote control via bluetooth can be connected. 2 tpyes are available: 1 with a slider for speed and two rotary encoders, one with a joystick.
++ a remote control via bluetooth can be connected. 2 types are available: 1 with a slider for speed and two rotary encoders, one with a joystick.
 + a bluetooth library that handles the connections. 
 ## Types of robots
 + a modified SMARS robot

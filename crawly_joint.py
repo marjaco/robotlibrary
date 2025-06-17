@@ -131,12 +131,13 @@ class Joint:
         if self.j_type == conf.KNEE:
             for i in range(3):
                 self.servo.set_angle(85)
-                sleep_ms(50)
+                sleep_ms(70)
                 self.servo.set_angle(70)
-                sleep_ms(50)
+                sleep_ms(70)
             
     def calibrate(self):
-        '''Set all angles to 90°, so the legs can be attached correctly. '''
+        '''Set all angles to 90°, so the legs can be attached correctly.  The joints are first moved to 0°, so ist can be
+        checked, that they can move.'''
         self.servo.set_angle(0)
         sleep_ms(500)
         self.servo.set_angle(90)
@@ -147,7 +148,7 @@ class Joint:
             #print(f"Winkel rechts: {a}") # Uncomment for debug messages.
         else:
             self.servo.set_angle(180-a)
-            #print(f"Winkel links: {a}") # Uncomment for debug messages.
+            #print(f"Winkel links: {180-a}") # Uncomment for debug messages.
         
 def main():    
     '''Executed, this sets all servos to 90°.'''

@@ -84,10 +84,6 @@ def main():
     joystick = Joystick(26,27,0)
     joystick.calibration()
 
-#     while True:
-#         print(f"X-Werte(Direction): {joystick.get_direction()} | Y-Werte(Speed): {joystick.get_speed()}")
-#         utime.sleep_ms(100)
-#     
 if __name__ == "__main__":
     # execute only if run as a script
     main()
