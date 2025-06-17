@@ -1,6 +1,7 @@
 from machine import Pin,ADC,Timer
 from robotlibrary.config import JS_MIN_DUTY, JS_MAX_DUTY, JS_X_MEDIAN, JS_Y_MEDIAN, DEBOUNCE_WAIT, MIN_SPEED, MAX_SPEED
-import utime
+from time import sleep, sleep_ms,ticks_diff, ticks_ms
+
 from robotlibrary.motor import Motor
 from collections import deque
 
@@ -20,21 +21,20 @@ class Joystick:
         self.pressed = False
     
     def button_handler(self,pin):
-        while utime.ticks_diff(utime.ticks_ms(), self.last_pressed) < DEBOUNCE_WAIT: 
+        while ticks_diff(utime.ticks_ms(), self.last_pressed) < DEBOUNCE_WAIT: 
             pass
-        self.last_pressed = utime.ticks_ms()
+        self.last_pressed = ticks_ms()
         if not self.pressed:
-            while utime.ticks_diff(utime.ticks_ms(), self.last_pressed) < DEBOUNCE_WAIT:
+            while ticks_diff(ticks_ms(), self.last_pressed) < DEBOUNCE_WAIT:
                 pass
             if pin.value() == 1:
                 self.pressed=True 
                 print(pin.value(), "Button pressed")
-                self.last_pressed = utime.ticks_ms()
+                self.last_pressed = ticks_ms()
                 self.timer.init(mode=Timer.ONE_SHOT, period=300, callback=self.reset)
     
     def get_speed(self):
         s = self.y.read_u16()
-        self.speed_data.popleft()
         self.speed_data.append(s)
         s = int(sum(self.speed_data)/len(self.speed_data))
         speed = 0
@@ -44,13 +44,12 @@ class Joystick:
             speed = -abs(JS_MAX_DUTY-s*2)    
         else:
             speed = 0
-        if speed > -2000 and speed < 2000:
+        if speed > -1000 and speed < 1000:
                 speed = 0
         return int(MAX_SPEED/JS_MAX_DUTY*speed)
     
     def get_direction(self):
         d = self.x.read_u16()
-        self.direction_data.popleft()
         self.direction_data.append(d)
         d = int(sum(self.direction_data)/len(self.direction_data))
         direction = 0
@@ -70,12 +69,12 @@ class Joystick:
             print(".", end="")
             x[i] = self.x.read_u16()
             y[i] = self.y.read_u16()
-            utime.sleep_ms(2)
+            sleep_ms(2)
         print(" ")
         dx = int(sum(x)/len(x))
         dy = int(sum(y)/len(y))
         print(f"JS_X_MEDIAN value (direction): {dx}")
-        print(f"JS_Z_MEDIAN value (speed): {dy}")
+        print(f"JS_Y_MEDIAN value (speed): {dy}")
         print("Use those values in config.py.")
 
  
@@ -83,7 +82,9 @@ class Joystick:
 def main():
     joystick = Joystick(26,27,0)
     joystick.calibration()
-
+    while True:
+        print(f"Speed: {joystick.get_speed()}, Direction: {joystick.get_direction()}")
+        sleep_ms(50)
 if __name__ == "__main__":
     # execute only if run as a script
     main()

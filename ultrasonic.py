@@ -1,6 +1,7 @@
 from machine import Pin
 from time import sleep
 from time import sleep_ms, sleep_us, ticks_us
+from collections import deque
 
 class Ultra:
     '''This class manages the ultrasonic sensor. It returns the distance to an obstacle in cm. '''
@@ -29,15 +30,17 @@ class Ultra:
         return distance
     
 def main():
-    try:
+    us = Ultra(16)
+    dist_values = deque([0,0,0,0,0],5)
+    while True:
+        d = us.get_dist()
+        dist_values.append(d)
+        d = sum(dist_values)/len(dist_values)
+        print(f"Entfernung: {d} cm")
+    while True: 
         us = Ultra(16)
-        while True:
-            print(us.get_dist())
-            utime.sleep_ms(100)
-    except KeyboardInterrupt:
-        print("Program interrupted.")
-        
-    
+        print(f"Entfernung: {us.get_dist()} cm")
+
 if __name__ == "__main__":
     # execute only if run as a script
     main()

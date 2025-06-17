@@ -362,12 +362,15 @@ class Robot:
             sleep_ms(10)
 
 
-###################################        
+###################################
+# Example for how to override the read() method that gets input from the remove control.
+# Define your own method. 
 def my_read(buffer: memoryview):
     print("my read called.")
     
 def main():
     try:
+        # Use the name of your method as a parameter when initialising the robot object. 
         r = Robot(True,my_read)
         r.set_speed(100)
         while True:

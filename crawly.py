@@ -25,10 +25,8 @@ class Crawly:
             self.us = Ultra(conf.US)
     
     def move_forward(self,steps,angle):
+        '''Move the legs forward for one step at a time.'''
         #probably need to put the legs in a defined position first. 
-        #angle=50
-        #steps=15
-        print("start")
         # First step
         counter = 0
         dividend=2
@@ -113,7 +111,6 @@ class Crawly:
             sleep(0.1)
     
 def main():
-    
     try: 
         c = Crawly(False)
         #c.calibrate()
