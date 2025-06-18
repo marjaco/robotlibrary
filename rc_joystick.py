@@ -1,6 +1,5 @@
 ########## Import the configuration
-from robotlibrary.config import MIN_DUTY, MAX_DUTY, MAX_SPEED, MIN_SPEED
-from robotlibrary.config import ROBOT_NAME
+from robotlibrary import config as conf
 from robotlibrary.rotary import Rotary
 from robotlibrary.joystick import Joystick
 
@@ -23,13 +22,13 @@ class RC:
         self.turn_val = 0 # 0=straight on; >0=turn right; <0=turn left
         self.button_pressed = False
         self.change = True
-        self.joystick = Joystick(26,27,0) # Pins for x axis, y axis and button
+        self.joystick = Joystick(conf.X_PIN,conf.Y_PIN,conf.B_PIN) # Pins for x axis, y axis and button
         self.timer = Timer()
         self.timer.init(mode=Timer.PERIODIC, period=50, callback=self.set_values)
         self.send_timer = Timer()
         self.send_timer.init(mode=Timer.PERIODIC, period=200, callback=self.send)
         self.duty_cycle = 0
-        self.server = BLECentral(ROBOT_NAME, True)
+        self.server = BLECentral(conf.ROBOT_NAME, True)
         self.server.register_read_callback(MOTOR_TX_UUID, self.read)
         self.server.scan()
         print("waiting for connection")

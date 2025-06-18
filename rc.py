@@ -1,6 +1,5 @@
 ########## Import the configuration
-from robotlibrary.config import MIN_DUTY, MAX_DUTY, MAX_SPEED, MIN_SPEED
-from robotlibrary.config import ROBOT_NAME
+from robotlibrary import config as conf
 from robotlibrary.rotary import Rotary
 
 
@@ -30,7 +29,7 @@ class RC:
         self.send_timer.init(mode=Timer.PERIODIC, period=200, callback=self.send)
         self.duty_cycle = 0
         self.p = ADC(28)
-        self.server = BLECentral(ROBOT_NAME, True)
+        self.server = BLECentral(conf.ROBOT_NAME, True)
         self.server.register_read_callback(MOTOR_TX_UUID, self.read)
         self.server.scan()
         print("waiting for connection")
@@ -80,12 +79,12 @@ class RC:
         dc = sum/5
         if dc > self.duty_cycle + 200 or dc < self.duty_cycle - 200:
             self.duty_cycle = dc    
-            if dc > MAX_DUTY:
-                speed = MAX_SPEED
-            elif dc < MIN_DUTY:
+            if dc > conf.MAX_DUTY:
+                speed = conf.MAX_SPEED
+            elif dc < conf.MIN_DUTY:
                 speed = 0
             else: 
-                speed = int((MAX_SPEED/MAX_DUTY*dc)*((MAX_SPEED-MIN_SPEED)/MAX_SPEED)+MIN_SPEED)
+                speed = int((conf.MAX_SPEED/conf.MAX_DUTY*dc)*((conf.MAX_SPEED-conf.MIN_SPEED)/conf.MAX_SPEED)+conf.MIN_SPEED)
                 print(speed)
             if speed != self.speed:
                 self.speed = speed

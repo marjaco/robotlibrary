@@ -1,7 +1,7 @@
 from machine import Pin, PWM
 import time
-import robotlibrary.config
 
+from robotlibrary import config as conf
 class Servo:
     '''This class manages the servo motor that turns the ultrasonic sensor. You need a servo motor installed to get use out of this. 
     Don't use directly or edit if you don't know what you are doing.'''
@@ -53,8 +53,8 @@ class Servo:
         return round((self.max-self.min)/180*angle+self.min)
     
 def main():
-    s = Servo(6, False)
-    s.set_angle(120)
+    s = Servo(6, False, conf.MIN_DUTY, conf.MAX_DUTY)
+    s.set_angle_slowly(120)
     
 if __name__ == "__main__":
     # execute only if run as a script

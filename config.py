@@ -26,7 +26,9 @@ JS_X_MEDIAN
 JS_Y_MEDIAN
 JS_MAX_DUTY
 JS_MIN_DUTY: These define the parameters for the joystick. You need to calibrate the numbers. Look at joystick.py for details.
-
+X_PIN = 26 Pin for the x direction in the joystick.
+Y_PIN = 27 Pin for the y direction in the joystick. 
+B_PIN = 0 Pin for the button in the joystick. 
 ROBOT_NAME: You need to set a custom name if you use a remote control.
 
 SERVO_MIN_DUTY: Only change if the servo doesn't move the required 180°.
@@ -59,6 +61,10 @@ JS_X_MEDIAN = 29940
 JS_Y_MEDIAN = 30510
 JS_MAX_DUTY = 65535
 JS_MIN_DUTY = 260
+
+X_PIN = 26
+Y_PIN = 27
+B_PIN = 0
 
 ########## Configuration of the name of the robot for matching with the remote control.
 ROBOT_NAME = "HAL9000"
