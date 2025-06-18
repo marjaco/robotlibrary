@@ -1,13 +1,15 @@
-# peripherals
+########## peripherals
 from robotlibrary.motor import Motor
 from robotlibrary.ultrasonic import Ultra
 from robotlibrary.infrared import IR
 from robotlibrary.servo import Servo
 from robotlibrary.ir_array import IR_Array
 from robotlibrary.pid import PID
-import robotlibrary.config
+from robotlibrary import config as conf
 
 ########## Bluetooth
+
+
 try: 
     import bluetooth
     from robotlibrary.bluetooth.peripheral import BLEPeripheral
@@ -17,62 +19,78 @@ try:
 except:
     BLUETOOTH_CHIP = False
 
-import machine, sys, utime, random
+import machine, sys, random
 from time import sleep, sleep_ms
 
 
 class Robot:
-    '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py'''
-    def __init__(self,rc):
-        if robotlibrary.config.ML is not None: 
-            self.ml = Motor(robotlibrary.config.ML)
-        if robotlibrary.config.MR is not None:
-            self.mr = Motor(robotlibrary.config.MR)
-        if robotlibrary.config.MRF is not None:
-            self.mrf = Motor(robotlibrary.config.MRF)
-        if robotlibrary.config.MLF is not None:
-            self.mlf = Motor(robotlibrary.config.MLF)
-        if robotlibrary.config.US is not None:
-            self.us = Ultra(robotlibrary.config.US)
-        if robotlibrary.config.IR is not None:
-            self.ir = IR(robotlibrary.config.IR,self)
-        if robotlibrary.config.SERVO is not None:
-            self.servo = Servo(robotlibrary.config.SERVO, False, robotlibrary.config.SERVO_MIN_DUTY, robotlibrary.config.SERVO_MAX_DUTY)
+    '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py
+    You can now also initiate the class with you own read() method, which takes the commands from the rc. '''
+    def __init__(self,rc,my_read):
+        self.mrf, self.mlf = None, None
+        if conf.ML is not None:
+            self.ml = Motor(conf.ML)
+        if conf.MR is not None:
+            self.mr = Motor(conf.MR)
+        if conf.MRF is not None:
+            self.mrf = Motor(conf.MRF)
+        if conf.MLF is not None:
+            self.mlf = Motor(conf.MLF)
+        if conf.US is not None:
+            self.us = Ultra(conf.US)
+        if conf.IR is not None:
+            self.ir = IR(conf.IR,self)
+        if conf.SERVO is not None:
+            self.servo = Servo(conf.SERVO, False, conf.SERVO_MIN_DUTY, conf.SERVO_MAX_DUTY)
         self.speed = 0
         self.forward = True
         self.new_speed = 0
         self.last_turn_right = random.randint(0,1) == 0
         if rc and BLUETOOTH_CHIP:
-            self.controller = BLEPeripheral(robotlibrary.config.ROBOT_NAME, add_robot_stuff=True)
-            def read(buffer: memoryview):
-                speed, turn, forward, button_press = decode_motor(bytes(buffer)) #forward is unused.
-                #print(f"Speed: {speed}, Turn: {turn}, forward: {forward}") # uncomment for debugging
-                if forward != self.forward:
-                    self.forward = forward
-                    self.set_forward(forward)
-                if speed != self.speed:
-                    self.set_speed_instantly(speed)                    
-                if turn == 0:
-                    self.go_straight()
-                elif turn < 0:
-                    if turn < -50:
-                        self.spin_left()
-                    else:
-                        self.turn_left()
-                elif turn > 0:
-                    if turn > 50:
-                        self.spin_right()
-                    else:
-                        self.turn_right()
-                if turn > -50 and turn < 50:
-                    self.set_forward(self.forward)
-                    self.go_straight()
-                if button_press:
-                    print("Button pressed.")
-            #print("Ende")                
+            self.rc_on = True
+            self.controller = BLEPeripheral(conf.ROBOT_NAME, add_robot_stuff=True)
+            if my_read is None:
+                def read(buffer: memoryview):
+                    speed, turn, forward, button_press = decode_motor(bytes(buffer)) 
+                    #print(f"Speed: {speed}, Turn: {turn}, forward: {forward}") # uncomment for debugging
+                    if rc_on: # type: ignore
+                        if forward != self.forward:
+                            self.forward = forward
+                            self.set_forward(forward)
+                        if speed != self.speed:
+                            self.set_speed_instantly(speed)                    
+                        if turn == 0:
+                            self.go_straight()
+                        elif turn < 0:
+                            if turn < -50:
+                                self.spin_left()
+                            else:
+                                self.turn_left()
+                        elif turn > 0:
+                            if turn > 50:
+                                self.spin_right()
+                            else:
+                                self.turn_right()
+                        if turn > -50 and turn < 50:
+                            self.set_forward(self.forward)
+                            self.go_straight()
+                        if button_press:
+                            print("Button pressed.")
+            else:
+                read = my_read
             self.controller.register_read_callback(MOTOR_RX_UUID, read)
             self.controller.advertise()
-    
+            
+    def rc_on(self):
+        '''Can be used to switch the rc on or off if a combination of driving with rc and automatic driving
+        is used, so the rc does not interfere with the automatic program. '''
+        self.rc_on = True
+        
+    def rc_off(self):
+        '''Can be used to switch the rc on or off if a combination of driving with rc and automatic driving
+        is used, so the rc does not interfere with the automatic program. '''
+        self.rc_on = False
+        
     def _drive(self, dir_l, dir_r):
         '''This abstracted driving function is only called locally by the other functions with better names. 
         It accelerates and decelerates to make driving more natural. Do not call directly!'''
@@ -93,7 +111,7 @@ class Robot:
                 self.mrf.set_speed(i)
             if self.mlf is not None:
                 self.mlf.set_speed(i)
-            utime.sleep_ms(10+int(i/2))
+            sleep_ms(10+int(i/2))
         self.speed = self.new_speed
         
     def _drive_instantly(self,dir_l,dir_r):
@@ -136,7 +154,7 @@ class Robot:
                 self.mrf.set_speed(i)
             if self.mlf is not None:
                 self.mlf.set_speed(i)
-            utime.sleep_ms(10+int(i/2))
+            sleep_ms(10+int(i/2))
         self.speed = self.new_speed
         
     def set_forward(self,f):
@@ -249,7 +267,7 @@ class Robot:
             self.spin_left()
         else:
             self.spin_right()
-        utime.sleep_ms(d)
+        sleep_ms(d)
         self.emergency_stop()
         self.last_turn_right = not self.last_turn_right
     
@@ -261,7 +279,7 @@ class Robot:
             self.spin_left()
         else:
             self.spin_right()
-        utime.sleep_ms(d)
+        sleep_ms(d)
         self.emergency_stop()
                 
     def stop(self):
@@ -285,6 +303,7 @@ class Robot:
             print("obstacle detected on pin", pin_num)
         else:
             print("There is no obstacle anymore on pin ", pin_num)
+        self.my_robot.ir_detected(pin,pin_num)
         # self.emergency_stop()
         
     def get_dist(self):
@@ -299,7 +318,7 @@ class Robot:
     def get_smallest_distance(self):
         '''This returns the angle of the ultrasonic sensor where it measured the smallest distance'''
         self.set_angle(0)
-        utime.sleep_ms(500)
+        sleep_ms(500)
         dist_map = {}
         smallest_index=0
         smallest_dist=2000.0
@@ -315,7 +334,7 @@ class Robot:
     def get_longest_distance(self):
         '''This returns the angle of the ultrasonic sensor where it measured the longest distance'''
         self.set_angle(0)
-        utime.sleep_ms(500)
+        sleep_ms(500)
         dist_map = {}
         longest_index=0
         longest_dist=0.0
@@ -329,7 +348,7 @@ class Robot:
         return longest_index+1
     
     
-    def follow_line(self):
+    def follow_line(self): #unfinished
         pv = 0
         ir = IR_Array(0,5)
         pid = PID(ir, 0.01)
@@ -341,14 +360,21 @@ class Robot:
             self.mr.set_speed(self.speed - control)
             self.ml.set_speed(self.speed + control)
             sleep_ms(10)
-        
-            
-        
-        
+
+
+###################################
+# Example for how to override the read() method that gets input from the remove control.
+# Define your own method. 
+def my_read(buffer: memoryview):
+    print("my read called.")
+    
 def main():
     try:
-        r = Robot(False)
+        # Use the name of your method as a parameter when initialising the robot object. 
+        r = Robot(True,my_read)
         r.set_speed(100)
+        while True:
+            sleep(1)
     except KeyboardInterrupt:
         r.emergency_stop()
     

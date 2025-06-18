@@ -48,9 +48,9 @@ BLACK_DETECTED = 1
 ########## Configuration of pins
 ML=12
 MR=14
-MLF=10 #10
-MRF=20 #20
-US=16 #16
+MLF=None #10
+MRF=None #20
+US=None #16
 IR=None #11
 SERVO=None #9
 

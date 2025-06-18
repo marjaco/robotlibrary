@@ -55,7 +55,7 @@ class RC:
                 
     def set_values(self,t): # Geschwindigkeit vom Joystick holen noch programmieren
         '''This calculates the speed between MIN_SPEED and MAX_SPEED that is sent to the robot.'''
-        self.speed = self.joystick.get_speed()
+        s = self.joystick.get_speed()
         self.speed = abs(s)
         self.turn_val = self.joystick.get_direction()
         self.forward = s >= 0
