@@ -1,7 +1,7 @@
 # peripherals
 from robotlibrary.servo import Servo
 from robotlibrary import config_crawly as conf
-from robotlibrary.easing import get_step
+from robotlibrary.easing import get_steps
 from time import sleep, sleep_ms
 
 class Joint:
@@ -49,11 +49,7 @@ class Joint:
     def set_max_angle(a):
         self.__max_angle = a
     
-<<<<<<< HEAD
-    def up_step(self,increment):
-        '''Move the lower thigh up by increment until the minimum angle is reached.
-=======
-
+    @deprecated
     def reset_movement(self):
         '''This is called before each new leg movement cycle.'''
         if self.j_type == conf.SHOULDER_FRONT:
@@ -67,17 +63,11 @@ class Joint:
     def up(self):
         '''If this object is a knee, it is moved up in one go. As the movement is then finished, it 
         returns False. 
->>>>>>> a55bd26 (Easing completely rebuilt)
         '''
-        if self.j_type == conf.KNEE and self.servo.angle > conf.KNEE_MIN_ANGLE:
-            self.servo.set_angle(self.servo.angle - increment)
-            return True # The lower thigh is within the safe range.
-        return False # The limit of movement is reached.
+        if self.j_type == conf.KNEE:
+            self.servo.set_angle(conf.CRAWLY_UP_ANGLE)
+        return False
     
-<<<<<<< HEAD
-    def down_step(self,increment):
-        '''Move the lower thigh down by increment until the maximum angle is reached.
-=======
     def down(self):
         '''If this object is a knee, it is moved down in one go. As the movement is then finished, it 
         returns False. 
@@ -86,7 +76,7 @@ class Joint:
             self.servo.set_angle(conf.CRAWLY_DOWN_ANGLE)
         return False
     
-
+    @deprecated
     def up_smooth(self):
         '''This is not yet a good solution. It still moves the leg up or down before
         the shoulder joint is moved and makes for an awkward movement. It should be
@@ -102,7 +92,7 @@ class Joint:
             
         return False
     
-
+    @deprecated
     def down_smooth(self):
         '''This is not yet a good solution. It still moves the leg up or down before
         the shoulder joint is moved and makes for an awkward movement. It should be
@@ -131,23 +121,11 @@ class Joint:
                 return True
         return False
     
-    def up_smooth_v3(self,increment):
-        '''UNTESTED version for smooth movement.
-        '''
-        if self.j_type == conf.KNEE and self.servo.angle > conf.CRAWLY_UP_ANGLE:
-            self.servo.set_angle(self.servo.angle - increment)
-            if self.servo.angle > conf.CRAWLY_UP_ANGLE - (conf.CRAWLY_DOWN_ANGLE -
-                                            conf.CRAWLY_UP_ANGLE)/3:
-                return False #movement is enough so that the shoulder can move now too.
-            else:
-                return True # movement is still ongoing
-        return False # movement is finished.
-    
-    def down_smooth_v3(self,increment):
+    def down_smooth_v2(self):
         '''UNTESTED version for smooth movement.
         '''
         if self.j_type == conf.KNEE and self.servo.angle < conf.CRAWLY_DOWN_ANGLE:
-            self.servo.set_angle(self.servo.angle + increment)
+            self.servo.set_angle(self.servo.angle + self.steps_knee.popleft())
             if self.servo.angle > conf.CRAWLY_UP_ANGLE + (conf.CRAWLY_DOWN_ANGLE-
                                             conf.CRAWLY_UP_ANGLE)/3:
                 return False
@@ -155,38 +133,17 @@ class Joint:
                 return True
         return False
     
-    def down_smooth_v2(self):
-        '''UNTESTED version for smooth movement.
->>>>>>> a55bd26 (Easing completely rebuilt)
-        '''
-        if self.j_type == conf.KNEE and self.servo.angle < conf.CRAWLY_DOWN_ANGLE:
-            self.servo.set_angle(self.servo.angle + increment)
-            return True # The lower thigh is within the safe range.
-        return False # The limit of movement is reached.
-    
-    def forward_step(self, increment):
-        '''This moves the leg forward by increment.'''
+    def forward(self) -> bool:
+        '''See the documentation for crawly_leg.py for information.'''
         if not self.left_side:
             if self.j_type == conf.SHOULDER_FRONT and self.servo.angle < conf.CRAWLY_FRONT_FORWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle + increment)
-                return True # The shoulder is within the safe range.
+                self.servo.set_angle(self.servo.angle +self.steps_front.popleft())
+                return True
             if self.j_type == conf.SHOULDER_REAR and self.servo.angle < conf.CRAWLY_REAR_FORWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle + increment)
-                return True # The shoulder is within the safe range.
-            return False # The limit of movement is reached. 
+                self.servo.set_angle(self.servo.angle +self.steps_rear.popleft())
+                return True
+            return False
         else:
-<<<<<<< HEAD
-            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle > 180 - conf.CRAWLY_FRONT_FORWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle - increment)
-                return True # The shoulder is within the safe range.
-            if self.j_type == conf.SHOULDER_REAR and self.servo.angle > 180 - conf.CRAWLY_REAR_FORWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle - increment)
-                return True # The shoulder is within the safe range.
-            return False # The limit of movement is reached. 
-        
-    def backward_step(self,increment) -> bool:
-        '''This moves the leg backward by increment.'''
-=======
             if self.j_type == conf.SHOULDER_FRONT and self.servo.angle > 180-conf.CRAWLY_FRONT_FORWARD_ANGLE:
                 self.servo.set_angle(self.servo.angle - self.steps_front.popleft())
                 return True
@@ -194,68 +151,87 @@ class Joint:
                 self.servo.set_angle(self.servo.angle - self.steps_rear.popleft())
                 return True
             return False
-        
-    def forward_v3(self,increment) -> bool:
-        '''See the documentation for crawly_leg.py for information.'''
-        if not self.left_side:
-            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle < conf.CRAWLY_FRONT_FORWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle + increment)
-                return True
-            if self.j_type == conf.SHOULDER_REAR and self.servo.angle < conf.CRAWLY_REAR_FORWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle + increment)
-                return True
-            return False
-        else:
-            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle > 180- conf.CRAWLY_FRONT_FORWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle - increment)
-                return True
-            if self.j_type == conf.SHOULDER_REAR and self.servo.angle > 180-conf.CRAWLY_REAR_FORWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle - increment)
-                return True
-            return False
-    
-    def backward_v3(self,increment) -> bool:
+
+    def backward(self) -> bool:
         '''See the documentation for crawly_leg.py for information.'''
         if not self.left_side:
             if self.j_type == conf.SHOULDER_FRONT and self.servo.angle > conf.CRAWLY_FRONT_BACKWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle - increment)
+                self.servo.set_angle(self.servo.angle - self.steps_front.popleft())
                 return True
             if self.j_type == conf.SHOULDER_REAR and self.servo.angle > conf.CRAWLY_REAR_BACKWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle - increment)
+                self.servo.set_angle(self.servo.angle - self.steps_rear.popleft())
                 return True
             return False
         else:
             if self.j_type == conf.SHOULDER_FRONT and self.servo.angle < 180-conf.CRAWLY_FRONT_BACKWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle + increment)
+                self.servo.set_angle(self.servo.angle + self.steps_front.popleft())
                 return True
             if self.j_type == conf.SHOULDER_REAR and self.servo.angle < 180-conf.CRAWLY_REAR_BACKWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle + increment)
+                self.servo.set_angle(self.servo.angle + self.steps_rear.popleft())
                 return True
             return False
         
-    def backward(self) -> bool:
+
+
+    def side_walking_up(self):
+        '''If this object is a knee, it is moved slowly. As the movement is then finished, it 
+        returns False. 
+        '''
+        if self.j_type == conf.KNEE:
+            self.servo.set_angle(conf.CRAWLY_SIDE_WALKING_UP_ANGLE)
+        return False
+    
+    def side_walking_down(self):
+        '''If this object is a knee, it is moved down slowly. As the movement is then finished, it 
+        returns False. 
+        '''
+        if self.j_type == conf.KNEE:
+            self.servo.set_angle(conf.CRAWLY_SIDE_WALKING_DOWN_ANGLE)
+        return False
+
+
+    def ahead(self) -> bool:
         '''See the documentation for crawly_leg.py for information.'''
->>>>>>> a55bd26 (Easing completely rebuilt)
         if not self.left_side:
-            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle > conf.CRAWLY_FRONT_BACKWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle - increment)
-                return True # The shoulder is within the safe range. 
-            if self.j_type == conf.SHOULDER_REAR and self.servo.angle > conf.CRAWLY_REAR_BACKWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle - increment)
-                return True # The shoulder is within the safe range.
-            return False # The limit of movement is reached. 
+            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle < conf.CRAWLY_SIDE_WALKING_FRONT_ANGLE:
+                self.servo.set_angle(self.servo.angle + 2)
+                return True
+            if self.j_type == conf.SHOULDER_REAR and self.servo.angle > conf.CRAWLY_SIDE_WALKING_REAR_ANGLE:
+                self.servo.set_angle(self.servo.angle - 2)
+                return True
+            return False
         else:
-            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle < 180 - conf.CRAWLY_FRONT_BACKWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle + increment)
-                return True # The shoulder is within the safe range.
-            if self.j_type == conf.SHOULDER_REAR and self.servo.angle < 180 - conf.CRAWLY_REAR_BACKWARD_ANGLE:
-                self.servo.set_angle(self.servo.angle + increment)
-                return True # The shoulder is within the safe range.
-            return False # The limit of movement is reached. 
+            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle > 180-conf.CRAWLY_SIDE_WALKING_FRONT_ANGLE:
+                self.servo.set_angle(self.servo.angle - 2)
+                return True
+            if self.j_type == conf.SHOULDER_REAR and self.servo.angle < 180-conf.CRAWLY_SIDE_WALKING_REAR_ANGLE:
+                self.servo.set_angle(self.servo.angle + 2)
+                return True
+            return False
+
+    def center(self) -> bool:
+        '''See the documentation for crawly_leg.py for information.'''
+        if not self.left_side:
+            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle > conf.CRAWLY_SIDE_WALKING_CENTER_ANGLE:
+                self.servo.set_angle(self.servo.angle - 2)
+                return True
+            if self.j_type == conf.SHOULDER_REAR and self.servo.angle < conf.CRAWLY_SIDE_WALKING_CENTER_ANGLE:
+                self.servo.set_angle(self.servo.angle + 2)
+                return True
+            return False
+        else:
+            if self.j_type == conf.SHOULDER_FRONT and self.servo.angle < 180-conf.CRAWLY_SIDE_WALKING_CENTER_ANGLE:
+                self.servo.set_angle(self.servo.angle + 2)
+                return True
+            if self.j_type == conf.SHOULDER_REAR and self.servo.angle > 180-conf.CRAWLY_SIDE_WALKING_CENTER_ANGLE:
+                self.servo.set_angle(self.servo.angle - 2)
+                return True
+            return False
+
+
         
 
     def park(self):
-        '''Park the leg e.g. stretch it. '''
         if self.j_type == conf.KNEE:
             self.servo.set_angle(self.min_angle)
         elif self.j_type == conf.SHOULDER_FRONT:
@@ -270,7 +246,6 @@ class Joint:
                 self.servo.set_angle(180-self.min_angle)
     
     def curl(self):
-        '''Curl the leg e.g. go to smallest position.'''
         if self.j_type == conf.KNEE:
             self.servo.set_angle(self.max_angle)
         elif self.j_type == conf.SHOULDER_FRONT or self.j_type == conf.SHOULDER_REAR:
@@ -281,13 +256,11 @@ class Joint:
         if self.j_type == conf.KNEE:
             for i in range(3):
                 self.servo.set_angle(85)
-                sleep_ms(70)
+                sleep_ms(50)
                 self.servo.set_angle(70)
-                sleep_ms(70)
+                sleep_ms(50)
             
     def calibrate(self):
-        '''Set all angles to 90°, so the legs can be attached correctly.  The joints are first moved to 0°, so ist can be
-        checked, that they can move.'''
         self.servo.set_angle(0)
         sleep_ms(500)
         self.servo.set_angle(90)
@@ -298,12 +271,18 @@ class Joint:
             #print(f"Winkel rechts: {a}") # Uncomment for debug messages.
         else:
             self.servo.set_angle(180-a)
-            #print(f"Winkel links: {180-a}") # Uncomment for debug messages.
+            #print(f"Winkel links: {a}") # Uncomment for debug messages.
         
 def main():    
     '''Executed, this sets all servos to 90°.'''
     j = Joint(conf.KNEE, "rear left", True, True, 1)
-    j.calibrate()
+    while True: 
+        if not j.up_smooth():
+            print("up")
+            sleep_ms(5000)
+        if not j.down_smooth():
+            print("down")
+            sleep_ms(5000)
     
 if __name__ == "__main__":
     # execute only if run as a script
