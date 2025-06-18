@@ -1,5 +1,7 @@
 # Documentation for robotlibrary/easing.py 
 
-## get_steps 
-Calculates the necessary steps for the given angle d_angle to make a smooth movmeent
+## get_step 
+param: step: step number
+param: steps: number of steps for the whole movement
+param: factor: 
 

@@ -13,7 +13,8 @@ from time import sleep
 
 
 class Crawly:
-    '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config_crawly.py'''
+    '''This is the central class which manages and uses all the other components of the robot.
+    The parameters are defined in config_crawly.py'''
     def __init__(self,rc):
         self.legs = {
             "front_right" : Leg(4, True, True, "front right"),

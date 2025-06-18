@@ -16,7 +16,9 @@ from time import sleep
 
 
 class Walky:
-    '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py'''
+    '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config_walky.py
+    This class is seriously behind crawly in development. It works (probably) but lacks all the new features which will be merged and
+    adapted from crawly at a later time. '''
     def __init__(self,rc):
 #         self.front_right = Leg(4, True, True, "front right")
 #         self.front_left = Leg(2, False, True, "front left")
