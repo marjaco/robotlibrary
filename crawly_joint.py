@@ -1,7 +1,6 @@
 # peripherals
 from robotlibrary.servo import Servo
 from robotlibrary import config_crawly as conf
-from robotlibrary.easing import get_steps
 from time import sleep, sleep_ms
 
 class Joint:
