@@ -33,7 +33,7 @@ def _ease_in_out_quad(t: float) -> float:
         return -0.5 * (t * (t - 2) - 1)
     
 def _ease_in_out_sine(t: float) -> float:
-        return round(abs(-0.5 * (math.cos(math.pi * t) - 1)),2)
+        return abs(-0.5 * (math.cos(math.pi * t) - 1))
 
 
 def main():    

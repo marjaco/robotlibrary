@@ -27,6 +27,9 @@ class Leg:
     def leg_backward(self,inc):
         return self.shoulder.backward_step(inc)
     
+    def get_angles(self):
+        return f"Shoulder angle; {self.shoulder.servo.angle}; Knee angle; {self.knee.servo.angle}"
+    
     def park(self):
         '''This streteches the leg.'''
         self.knee.park()
