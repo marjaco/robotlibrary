@@ -47,13 +47,13 @@ class Robot:
         self.new_speed = 0
         self.last_turn_right = random.randint(0,1) == 0
         if rc and BLUETOOTH_CHIP:
-            self.rc_on = True
+            self.rc_is_on = True
             self.controller = BLEPeripheral(conf.ROBOT_NAME, add_robot_stuff=True)
             if my_read is None:
                 def read(buffer: memoryview):
                     speed, turn, forward, button_press = decode_motor(bytes(buffer)) 
                     #print(f"Speed: {speed}, Turn: {turn}, forward: {forward}") # uncomment for debugging
-                    if rc_on: # type: ignore
+                    if self.rc_is_on: # type: ignore
                         if forward != self.forward:
                             self.forward = forward
                             self.set_forward(forward)
@@ -84,12 +84,12 @@ class Robot:
     def rc_on(self):
         '''Can be used to switch the rc on or off if a combination of driving with rc and automatic driving
         is used, so the rc does not interfere with the automatic program. '''
-        self.rc_on = True
+        self.rc_is_on = True
         
     def rc_off(self):
         '''Can be used to switch the rc on or off if a combination of driving with rc and automatic driving
         is used, so the rc does not interfere with the automatic program. '''
-        self.rc_on = False
+        self.rc_is_on = False
         
     def _drive(self, dir_l, dir_r):
         '''This abstracted driving function is only called locally by the other functions with better names. 
