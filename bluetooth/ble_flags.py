@@ -1,4 +1,4 @@
-from micropython import const
+# $version
 
 ADV_TYPE_FLAGS = const(0x01)
 ADV_TYPE_NAME = const(0x09)

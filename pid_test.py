@@ -1,4 +1,4 @@
-import time, random
+# $version
 import matplotlib.pyplot as plt
 from datetime import datetime
 def pid_controller(setpoint, pv, kp, ki, kd, previous_error, integral, dt):

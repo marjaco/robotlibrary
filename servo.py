@@ -1,4 +1,4 @@
-from machine import Pin, PWM
+# $version
 import time
 
 from robotlibrary import config as conf

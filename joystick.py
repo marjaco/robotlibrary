@@ -1,4 +1,4 @@
-from machine import Pin,ADC,Timer
+# $version
 from robotlibrary import config as conf
 from time import sleep, sleep_ms,ticks_diff, ticks_ms
 

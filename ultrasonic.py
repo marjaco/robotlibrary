@@ -1,4 +1,4 @@
-from machine import Pin
+# $version
 from time import sleep
 from time import sleep_ms, sleep_us, ticks_us
 from collections import deque

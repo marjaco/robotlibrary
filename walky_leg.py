@@ -1,4 +1,4 @@
-from robotlibrary.walky_joint import Joint
+# $version
 import robotlibrary.config_walky
 from time import sleep
 

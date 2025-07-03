@@ -1,4 +1,4 @@
-from machine import Pin, PWM
+# $version
 from robotlibrary.config import MIN_DUTY, MAX_DUTY, MAX_SPEED, MIN_SPEED
 import math
 from time import sleep, sleep_ms

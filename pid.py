@@ -1,4 +1,4 @@
-import time, random
+# $version
 from robotlibrary.ir_array import IR_Array
 
 

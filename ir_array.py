@@ -1,4 +1,4 @@
-from machine import Pin
+# $version
 from time import sleep, sleep_ms
 BLACK = 1
 

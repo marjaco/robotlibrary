@@ -1,4 +1,4 @@
-########## Configuration for the motors.
+# $version
 '''This defines the parameters for the motors. 
 
 MAX_DUTY: Set to lower than the maximum not to overload the motors. Absolute maximum is 65535.

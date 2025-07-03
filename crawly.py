@@ -1,4 +1,4 @@
-# peripherals
+# $version
 from robotlibrary.ultrasonic import Ultra
 from robotlibrary.crawly_leg import Leg
 from robotlibrary import config_crawly as conf

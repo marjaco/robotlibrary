@@ -1,4 +1,4 @@
-# peripherals
+# $version
 from robotlibrary.servo_crab import Servo
 import robotlibrary.config_walky
 from time import sleep, sleep_ms

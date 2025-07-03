@@ -1,4 +1,4 @@
-import ast,glob
+# $version
 from os import walk
 
 def extract_docstrings(filename):

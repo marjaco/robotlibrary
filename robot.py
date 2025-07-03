@@ -1,4 +1,4 @@
-########## peripherals
+# $version
 from robotlibrary.motor import Motor
 from robotlibrary.ultrasonic import Ultra
 from robotlibrary.infrared import IR
@@ -371,7 +371,7 @@ def my_read(buffer: memoryview):
 def main():
     try:
         # Use the name of your method as a parameter when initialising the robot object. 
-        r = Robot(True,my_read)
+        r = Robot(False,my_read)
         r.set_speed(100)
         while True:
             sleep(1)

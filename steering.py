@@ -1,4 +1,4 @@
-
+# $version
 class Steering:
     def __init__ (self, rc):
         self.rc = rc

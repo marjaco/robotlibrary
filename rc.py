@@ -1,4 +1,4 @@
-########## Import the configuration
+# $version
 from robotlibrary import config as conf
 from robotlibrary.rotary import Rotary
 

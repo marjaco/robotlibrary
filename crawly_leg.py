@@ -1,4 +1,4 @@
-from robotlibrary.crawly_joint import Joint
+# $version
 from robotlibrary import config_crawly as conf
 from time import sleep,sleep_ms
 from robotlibrary.easing import get_factor, get_step

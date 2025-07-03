@@ -1,4 +1,4 @@
-from time import sleep
+# $version
 from central import BLECentral
 from ble_services_definitions import MOTOR_TX_UUID, MOTOR_RX_UUID, ROBOT_UUID
 from parser import encode_motor, decode_motor

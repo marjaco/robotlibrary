@@ -1,4 +1,4 @@
-########## Configuration for the Servos in the Crawly robot
+# $version
 # If you mix different servo types with different duty cycles, you can use the type2 constant for this.
 SERVO_MIN_DUTY = 1350 # Change only if the servo doesn't move 180°.
 SERVO_MAX_DUTY = 8100 # Change only if the servo doesn't move 180°.

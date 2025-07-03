@@ -1,4 +1,4 @@
-from struct import pack, unpack
+# $version
 
 
 def decode_motor(data: bytes):  # returns Tuple[bool, bool int, int] Does it?

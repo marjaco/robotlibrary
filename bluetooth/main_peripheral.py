@@ -1,4 +1,4 @@
-import bluetooth
+# $version
 
 from robotlibrary.bluetooth.peripheral import BLEPeripheral
 from robotlibrary.bluetooth.ble_services_definitions import ROBOT_UUID, MOTOR_RX_UUID, MOTOR_TX_UUID

@@ -1,4 +1,4 @@
-import math
+# $version
 from robotlibrary.servo import Servo
 from time import sleep_ms
 from collections import deque

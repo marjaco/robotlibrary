@@ -1,4 +1,4 @@
-# peripherals
+# $version
 from robotlibrary.servo import Servo
 from robotlibrary import config_crawly as conf
 from time import sleep, sleep_ms

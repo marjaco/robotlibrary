@@ -1,4 +1,4 @@
-# peripherals
+# $version
 #from robotlibrary.motor import Motor
 from robotlibrary.ultrasonic import Ultra
 #from robotlibrary.infrared import IR

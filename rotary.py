@@ -1,4 +1,4 @@
-import machine
+# $version
 import utime as time
 from machine import Pin
 import micropython
