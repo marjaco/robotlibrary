@@ -58,6 +58,7 @@ class RC:
         self.speed = abs(s)
         self.turn_val = self.joystick.get_direction()
         self.forward = s >= 0
+        self.button_pressed = self.joystick.pressed
         
 def main():
     rc = RC()
