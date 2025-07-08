@@ -1,3 +1,4 @@
+# Version 1.90
 ########## Configuration for the Servos in the Walky robot
 # If you mix different servo types with different duty cycles, you can use the type2 constant for this.
 SERVO_MIN_DUTY = 1350 # Change only if the servo doesn't move 180°.
