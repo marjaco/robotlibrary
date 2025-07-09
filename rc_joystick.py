@@ -1,4 +1,4 @@
-# Version 1.90
+# Version 1.91
 ########## Import the configuration
 from robotlibrary import config as conf
 from robotlibrary.rotary import Rotary
@@ -47,7 +47,6 @@ class RC:
             return True
         sleep_ms(20)
         self.button_pressed_sent = False
-        return False
         return False
     
     def send(self,t): 

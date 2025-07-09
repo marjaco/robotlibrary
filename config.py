@@ -1,4 +1,4 @@
-# Version 1.90
+# Version 1.91
 ########## Configuration for the motors.
 '''This defines the parameters for the motors. 
 

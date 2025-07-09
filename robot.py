@@ -1,4 +1,4 @@
-# Version 1.90
+# Version 1.91
 ########## peripherals
 from robotlibrary.motor import Motor
 from robotlibrary.ultrasonic import Ultra
@@ -26,7 +26,7 @@ from time import sleep, sleep_ms
 class Robot:
     '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py
     You can now also initiate the class with you own read() method, which takes the commands from the rc. '''
-    def __init__(self,rc,my_read):
+    def __init__(self,rc):
         self.mrf, self.mlf, self.ml, self.mr, self.us, self.ir, self.servo = None, None, None, None, None, None, None
         self.speed = 0
         self.forward = True
@@ -56,7 +56,8 @@ class Robot:
             self.controller.advertise()
             
     def rc_input(self, speed, turn, forward, button_press):
-        print(f"Speed: {speed}, Turn: {turn}, forward: {forward}, button_press: {button_press}") # uncomment for debugging
+        #print(f"Speed: {speed}, Turn: {turn}, forward: {forward}, button_press: {button_press}") # uncomment for debugging
+        print("rc on parent")
         if self.rc_is_on: 
             if forward != self.forward:
                 self.forward = forward
