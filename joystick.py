@@ -11,18 +11,21 @@ class Joystick:
         self.x = ADC(x)
         self.y = ADC(y)
         self.b = Pin(b,Pin.IN, Pin.PULL_UP)
-        self.b.irq(trigger=Pin.IRQ_FALLING, handler=self.button_handler)
+        self.b.irq(trigger=Pin.IRQ_RISING, handler=self.button_handler)
         self.pressed = False
         self.last_pressed = 0
         self.timer = Timer()
         self.direction_data = deque([conf.JS_X_MEDIAN,conf.JS_X_MEDIAN,conf.JS_X_MEDIAN,conf.JS_X_MEDIAN,conf.JS_X_MEDIAN],5)
         self.speed_data = deque([conf.JS_Y_MEDIAN,conf.JS_Y_MEDIAN,conf.JS_Y_MEDIAN,conf.JS_Y_MEDIAN,conf.JS_Y_MEDIAN],5)
         
+    def get_button_pressed(self):
+        return self.pressed
+    
     def reset(self,t):
         self.pressed = False
     
     def button_handler(self,pin):
-        while ticks_diff(utime.ticks_ms(), self.last_pressed) < conf.DEBOUNCE_WAIT: 
+        while ticks_diff(ticks_ms(), self.last_pressed) < conf.DEBOUNCE_WAIT: 
             pass
         self.last_pressed = ticks_ms()
         if not self.pressed:

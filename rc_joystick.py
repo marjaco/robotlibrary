@@ -10,7 +10,7 @@ from robotlibrary.bluetooth.ble_services_definitions import MOTOR_TX_UUID, MOTOR
 from robotlibrary.bluetooth.parser import encode_motor, decode_motor
 
 ########## Import pico micropython libraries
-import utime
+from time import sleep, sleep_ms
 from machine import Timer,ADC
 import micropython
 micropython.alloc_emergency_exception_buf(100)
@@ -32,28 +32,32 @@ class RC:
         self.server = BLECentral(conf.ROBOT_NAME, True)
         self.server.register_read_callback(MOTOR_TX_UUID, self.read)
         self.server.scan()
+        self.button_pressed_sent = False
         print("waiting for connection")
         while not self.server.is_connected():
-            utime.sleep(1)
-        utime.sleep(5)
+            sleep(1)
+        sleep(5)
         print("Found connection")
             
     def read(self,a):
         print("read")
     
-    def send(self,t):
-        #if self.change: 
-            print("sending data ...")
-            data = encode_motor(self.speed, self.turn_val, self.forward, self.button_pressed)
-            self.server.send(ROBOT_UUID, MOTOR_RX_UUID, data)
-            self.change = False   
-            
-    #def button(self):
-     #   '''This is the button click.'''
-        #self.forward = not self.forward
-        #self.change = True
+    def get_button_pressed(self):
+        if self.button_pressed_sent == False and self.button_pressed:
+            return True
+        sleep_ms(20)
+        self.button_pressed_sent = False
+        return False
+        return False
+    
+    def send(self,t): 
+        print(f"sending data ... speed: {self.speed}, turn: {self.turn_val}, forward: {self.forward}, button: {self.get_button_pressed()}")
+        data = encode_motor(self.speed, self.turn_val, self.forward, self.get_button_pressed())
+        self.server.send(ROBOT_UUID, MOTOR_RX_UUID, data)
+        if self.button_pressed:
+            self.button_pressed_sent = True
                 
-    def set_values(self,t): # Geschwindigkeit vom Joystick holen noch programmieren
+    def set_values(self,t): 
         '''This calculates the speed between MIN_SPEED and MAX_SPEED that is sent to the robot.'''
         s = self.joystick.get_speed()
         self.speed = abs(s)
@@ -64,8 +68,9 @@ class RC:
 def main():
     rc = RC()
     while True:
-        utime.sleep_ms(500)
+        sleep_ms(500)
     
 if __name__ == "__main__":
     # execute only if run as a script
     main()
+
