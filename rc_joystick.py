@@ -22,7 +22,7 @@ class RC:
         self.speed = 0
         self.turn_val = 0 # 0=straight on; >0=turn right; <0=turn left
         self.button_pressed = False
-        self.change = True
+        #self.change = True
         self.joystick = Joystick(conf.X_PIN,conf.Y_PIN,conf.B_PIN) # Pins for x axis, y axis and button
         self.timer = Timer()
         self.timer.init(mode=Timer.PERIODIC, period=50, callback=self.set_values)
@@ -48,10 +48,10 @@ class RC:
             self.server.send(ROBOT_UUID, MOTOR_RX_UUID, data)
             self.change = False   
             
-    def button(self):
-        '''This is the button click.'''
-        self.forward = not self.forward
-        self.change = True
+    #def button(self):
+     #   '''This is the button click.'''
+        #self.forward = not self.forward
+        #self.change = True
                 
     def set_values(self,t): # Geschwindigkeit vom Joystick holen noch programmieren
         '''This calculates the speed between MIN_SPEED and MAX_SPEED that is sent to the robot.'''

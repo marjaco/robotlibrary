@@ -4,7 +4,7 @@
 
 MAX_DUTY: Set to lower than the maximum not to overload the motors. Absolute maximum is 65535.
 MIN_DUTY: Set this to the minimum duty cycle that the motor needs to start moving. 
-MIN_SPEED: Only 0 is making sense here but if you want you can change that. Must be above 0 though.
+MIN_SPEED: Only 0 is making sense here but if you want you can change that. Must be above 0 though. You set set this to a higher appropriate value.
 MAX_SPEED: If you want another scale than 0-100, set the maximum here.
 
 DEBOUNCE_WAIT: This defines the waiting time for the debouncing of the buttons. Leave as it is if 
@@ -38,7 +38,7 @@ SERVO_MAX_DUTY: Only change if the servo doesn't move the required 180°.
 
 MAX_DUTY = 60000 # Maximum duty for the motors. Absolute maximum is 65535.
 MIN_DUTY = 0 # Minimum duty for the motors. Absolute minimum is 0.
-MIN_SPEED = 0 
+MIN_SPEED = 0 # <-- Set this
 MAX_SPEED = 100
 
 ########## Waiting time in milliseconds for any debouncing of buttons. 

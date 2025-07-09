@@ -14,6 +14,7 @@ class Servo:
         self.min=min_duty
         self.max=max_duty
         self.set_angle(90)
+        
     @property
     def angle(self):
         return self.__angle

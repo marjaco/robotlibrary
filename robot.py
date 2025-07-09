@@ -10,7 +10,6 @@ from robotlibrary import config as conf
 
 ########## Bluetooth
 
-
 try: 
     import bluetooth
     from robotlibrary.bluetooth.peripheral import BLEPeripheral
@@ -28,7 +27,11 @@ class Robot:
     '''This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py
     You can now also initiate the class with you own read() method, which takes the commands from the rc. '''
     def __init__(self,rc,my_read):
-        self.mrf, self.mlf = None, None
+        self.mrf, self.mlf, self.ml, self.mr, self.us, self.ir, self.servo = None, None, None, None, None, None, None
+        self.speed = 0
+        self.forward = True
+        self.new_speed = 0
+        self.last_turn_right = random.randint(0,1) == 0
         if conf.ML is not None:
             self.ml = Motor(conf.ML)
         if conf.MR is not None:
@@ -43,45 +46,41 @@ class Robot:
             self.ir = IR(conf.IR,self)
         if conf.SERVO is not None:
             self.servo = Servo(conf.SERVO, False, conf.SERVO_MIN_DUTY, conf.SERVO_MAX_DUTY)
-        self.speed = 0
-        self.forward = True
-        self.new_speed = 0
-        self.last_turn_right = random.randint(0,1) == 0
         if rc and BLUETOOTH_CHIP:
             self.rc_is_on = True
             self.controller = BLEPeripheral(conf.ROBOT_NAME, add_robot_stuff=True)
-            if my_read is None:
-                def read(buffer: memoryview):
-                    speed, turn, forward, button_press = decode_motor(bytes(buffer)) 
-                    #print(f"Speed: {speed}, Turn: {turn}, forward: {forward}") # uncomment for debugging
-                    if self.rc_is_on: # type: ignore
-                        if forward != self.forward:
-                            self.forward = forward
-                            self.set_forward(forward)
-                        if speed != self.speed:
-                            self.set_speed_instantly(speed)                    
-                        if turn == 0:
-                            self.go_straight()
-                        elif turn < 0:
-                            if turn < -50:
-                                self.spin_left()
-                            else:
-                                self.turn_left()
-                        elif turn > 0:
-                            if turn > 50:
-                                self.spin_right()
-                            else:
-                                self.turn_right()
-                        if turn > -50 and turn < 50:
-                            self.set_forward(self.forward)
-                            self.go_straight()
-                        if button_press:
-                            print("Button pressed.")
-            else:
-                read = my_read
+            def read(buffer: memoryview):
+                speed, turn, forward, button_press = decode_motor(bytes(buffer))
+                self.rc_input(speed, turn, forward, button_press)
             self.controller.register_read_callback(MOTOR_RX_UUID, read)
             self.controller.advertise()
             
+    def rc_input(self, speed, turn, forward, button_press):
+        print(f"Speed: {speed}, Turn: {turn}, forward: {forward}, button_press: {button_press}") # uncomment for debugging
+        if self.rc_is_on: 
+            if forward != self.forward:
+                self.forward = forward
+                self.set_forward(forward)
+            if speed != self.speed:
+                self.set_speed_instantly(speed)                    
+            if turn == 0:
+                self.go_straight()
+            elif turn < 0:
+                if turn < -50:
+                    self.spin_left()
+                else:
+                    self.turn_left()
+            elif turn > 0:
+                if turn > 50:
+                    self.spin_right()
+                else:
+                    self.turn_right()
+            if turn > -50 and turn < 50:
+                self.set_forward(self.forward)
+                self.go_straight()
+            if button_press:
+                print("Button pressed.")
+                
     def rc_on(self):
         '''Can be used to switch the rc on or off if a combination of driving with rc and automatic driving
         is used, so the rc does not interfere with the automatic program. '''

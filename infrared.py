@@ -5,7 +5,7 @@ import micropython
 micropython.alloc_emergency_exception_buf(100)
 
 class IR:
-    '''This class manages the IR-sensor. Write your code in Robot.ir_detected()'''
+    '''This class manages the IR-sensor. Calls Robot.ir_detected()'''
     def __init__(self, pinNo,robot):
         self.out = pinNo
         self.robot= robot
