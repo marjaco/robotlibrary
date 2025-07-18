@@ -1,4 +1,4 @@
-# Version 1.91
+# Version 1.92
 from struct import pack, unpack
 
 

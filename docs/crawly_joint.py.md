@@ -13,6 +13,12 @@ left_side: True or False. Servo motors on the left side need to be inverted in t
 inverted: There are servo motors that turn in a different direction than other. In this case, set to True.
 pin: The pin number that controls the servo motor. 
 
+## up 
+Move the leg up to the given angle. 
+
+## down 
+Move the leg down to the given angle. 
+
 ## up_step 
 Move the lower thigh up by increment until the minimum angle is reached.
         

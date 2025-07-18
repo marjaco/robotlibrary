@@ -1,4 +1,4 @@
-# Version 1.91
+# Version 1.92
 from machine import Pin, PWM
 from robotlibrary.config import MIN_DUTY, MAX_DUTY, MAX_SPEED, MIN_SPEED
 import math

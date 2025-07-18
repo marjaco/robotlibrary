@@ -4,6 +4,10 @@
 This is the central class which manages and uses all the other components of the robot. The parameters are defined in config.py
 You can now also initiate the class with you own read() method, which takes the commands from the rc. 
 
+## rc_input 
+This method is called each time the remote control sends new data, which happens often.
+You can overwrite this method to implement your own control.
+
 ## rc_on 
 Can be used to switch the rc on or off if a combination of driving with rc and automatic driving
 is used, so the rc does not interfere with the automatic program. 

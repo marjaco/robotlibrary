@@ -1,4 +1,4 @@
-# Version 1.91
+# Version 1.92
 import bluetooth
 
 from robotlibrary.bluetooth.peripheral import BLEPeripheral

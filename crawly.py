@@ -1,4 +1,4 @@
-# Version 1.91
+# Version 1.92
 # peripherals
 from robotlibrary.ultrasonic import Ultra
 from robotlibrary.crawly_leg import Leg
@@ -36,9 +36,8 @@ class Crawly:
         
     def move_forward(self,steps,angle):
         '''Move the legs forward for one step at a time.'''
-        #probably need to put the legs in a defined position first.
+        # probably need to put the legs in a defined position first.
         # First step
-        print("start")
         counter = 0 # counts the number of micro steps
         dividend=2 # fraction that determines when up or down motion is far enough to move the upper leg.
         knee_step=0 
@@ -47,7 +46,6 @@ class Crawly:
         while counter < steps/dividend:
             step = get_step(counter,steps,factor)
             self.legs["front_right"].leg_up(step)
-            print(self.legs["front_right"].get_angles())
             self.legs["rear_left"].leg_up(step)
             self.legs["front_left"].leg_down(step)
             self.legs["rear_right"].leg_down(step)
@@ -59,13 +57,11 @@ class Crawly:
             if counter < steps-knee_step:
                 step = get_step(counter,steps+knee_step,factor)
                 self.legs["front_right"].leg_up(step)
-                print(self.legs["front_right"].get_angles())
                 self.legs["rear_left"].leg_up(step)
                 self.legs["front_left"].leg_down(step)
                 self.legs["rear_right"].leg_down(step)
             step = get_step(counter,steps,factor)
             self.legs["front_right"].leg_forward(step)
-            print(self.legs["front_right"].get_angles())
             self.legs["rear_left"].leg_forward(step)
             self.legs["front_left"].leg_backward(step)
             self.legs["rear_right"].leg_backward(step)
@@ -80,7 +76,6 @@ class Crawly:
         while counter < steps/dividend:
             step = get_step(counter,steps,factor)
             self.legs["front_right"].leg_down(step)
-            print(self.legs["front_right"].get_angles())
             self.legs["rear_left"].leg_down(step)
             self.legs["front_left"].leg_up(step)
             self.legs["rear_right"].leg_up(step)
@@ -92,19 +87,16 @@ class Crawly:
             if counter < steps-knee_step:
                 step = get_step(counter,steps+knee_step,factor)
                 self.legs["front_right"].leg_down(step)
-                print(self.legs["front_right"].get_angles())
                 self.legs["rear_left"].leg_down(step)
                 self.legs["front_left"].leg_up(step)
                 self.legs["rear_right"].leg_up(step)
             step = get_step(counter,steps,factor)
             self.legs["front_right"].leg_backward(step)
-            print(self.legs["front_right"].get_angles())
             self.legs["rear_left"].leg_backward(step)
             self.legs["front_left"].leg_forward(step)
             self.legs["rear_right"].leg_forward(step)
             sleep_ms(d)
             counter+=1
-        print("end")
         
     def park(self):
         '''This stretches legs the legs lengthwise, so the robot lies on its underside.'''

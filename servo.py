@@ -1,4 +1,4 @@
-# Version 1.91
+# Version 1.92
 from machine import Pin, PWM
 import time
 
@@ -23,6 +23,7 @@ class Servo:
         self.pin.duty_u16(self.__get_duty(90))
         
     def set_angle(self,a):
+        '''This sets the angle of the servo motor immediately. '''
         if 0 <= a <= 180:
             self.__angle = a
             if not self.inverted: 

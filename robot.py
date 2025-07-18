@@ -1,4 +1,4 @@
-# Version 1.91
+# Version 1.92
 ########## peripherals
 from robotlibrary.motor import Motor
 from robotlibrary.ultrasonic import Ultra
@@ -56,8 +56,10 @@ class Robot:
             self.controller.advertise()
             
     def rc_input(self, speed, turn, forward, button_press):
+        ''' This method is called each time the remote control sends new data, which happens often.
+        You can overwrite this method to implement your own control.
+        '''
         #print(f"Speed: {speed}, Turn: {turn}, forward: {forward}, button_press: {button_press}") # uncomment for debugging
-        print("rc on parent")
         if self.rc_is_on: 
             if forward != self.forward:
                 self.forward = forward
@@ -66,20 +68,20 @@ class Robot:
                 self.set_speed_instantly(speed)                    
             if turn == 0:
                 self.go_straight()
-            elif turn < 0:
-                if turn < -50:
+            elif turn < 0: 
+                if turn < -50: # If a high value for turning is sent, then spin left on the spot. 
                     self.spin_left()
-                else:
+                else: # If a lower value for turnin is sent, only turn slightly to the left. 
                     self.turn_left()
             elif turn > 0:
-                if turn > 50:
+                if turn > 50: # If a high value for turning is sent, then spin right on the spot. 
                     self.spin_right()
-                else:
+                else: # If a lower value for turnin is sent, only turn slightly to the right. 
                     self.turn_right()
-            if turn > -50 and turn < 50:
+            if turn > -20 and turn < 20: # Define the interval in the middle of the joystick which produces no turning. 
                 self.set_forward(self.forward)
                 self.go_straight()
-            if button_press:
+            if button_press: # The button press has no default function. 
                 print("Button pressed.")
                 
     def rc_on(self):
@@ -364,15 +366,11 @@ class Robot:
 
 
 ###################################
-# Example for how to override the read() method that gets input from the remove control.
-# Define your own method. 
-def my_read(buffer: memoryview):
-    print("my read called.")
-    
+
 def main():
     try:
         # Use the name of your method as a parameter when initialising the robot object. 
-        r = Robot(True,my_read)
+        r = Robot(True)
         r.set_speed(100)
         while True:
             sleep(1)

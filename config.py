@@ -1,4 +1,4 @@
-# Version 1.91
+# Version 1.92
 ########## Configuration for the motors.
 '''This defines the parameters for the motors. 
 
@@ -23,13 +23,15 @@ US: pin number for the ultrasonic sensor. Use None if not used.
 IR: pin number for the infrared sensor. Use None if not used. 
 SERVO: pin number for the servo motor. Use None if not used.
 
-JS_X_MEDIAN 
-JS_Y_MEDIAN
+JS_X_MEDIAN: These define the parameters for the joystick. You need to calibrate the numbers. Look at joystick.py for details.
+JS_Y_MEDIAN: These define the parameters for the joystick. You need to calibrate the numbers. Look at joystick.py for details.
 JS_MAX_DUTY
-JS_MIN_DUTY: These define the parameters for the joystick. You need to calibrate the numbers. Look at joystick.py for details.
+JS_MIN_DUTY
+
 X_PIN = 26 Pin for the x direction in the joystick.
 Y_PIN = 27 Pin for the y direction in the joystick. 
-B_PIN = 0 Pin for the button in the joystick. 
+B_PIN = 0 Pin for the button in the joystick.
+
 ROBOT_NAME: You need to set a custom name if you use a remote control.
 
 SERVO_MIN_DUTY: Only change if the servo doesn't move the required 180°.

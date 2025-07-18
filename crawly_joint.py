@@ -1,4 +1,4 @@
-# Version 1.91
+# Version 1.92
 # peripherals
 from robotlibrary.servo import Servo
 from robotlibrary import config_crawly as conf
@@ -49,6 +49,16 @@ class Joint:
     def set_max_angle(a):
         self.__max_angle = a
     
+    def up(self, angle):
+        '''Move the leg up to the given angle. '''
+        if angle >= conf.KNEE_MIN_ANGLE:
+            self.servo.set_angle(angle)
+    
+    def down(self, angle):
+        '''Move the leg down to the given angle. '''
+        if angle <= conf.KNEE_MAX_ANGLE:
+            self.servo.set_angle(angle)
+        
     def up_step(self,increment):
         '''Move the lower thigh up by increment until the minimum angle is reached.
         '''

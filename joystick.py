@@ -1,4 +1,4 @@
-# Version 1.91
+# Version 1.92
 from machine import Pin,ADC,Timer
 from robotlibrary import config as conf
 from time import sleep, sleep_ms,ticks_diff, ticks_ms

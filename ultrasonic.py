@@ -1,7 +1,7 @@
-# Version 1.91
+# Version 1.92
 from machine import Pin
 from time import sleep
-from time import sleep_ms, sleep_us, ticks_us
+from time import sleep_ms, sleep_us, ticks_us, ticks_ms
 from collections import deque
 
 class Ultra:
@@ -20,9 +20,14 @@ class Ultra:
         self.trigger.high()
         sleep_us(5)
         self.trigger.low()
+        starttime = ticks_ms()
         while self.echo.value() == 0:
+            if ticks_ms() - starttime > 100:
+                break
             signaloff = ticks_us()
         while self.echo.value() == 1:
+            if ticks_ms() - starttime > 100:
+                break
             signalon = ticks_us()
         timepassed = signalon - signaloff
         distance = round((timepassed * 0.0343) / 2, 2)
@@ -38,9 +43,9 @@ def main():
         dist_values.append(d)
         d = sum(dist_values)/len(dist_values)
         print(f"Entfernung: {d} cm")
-    while True: 
-        us = Ultra(16)
-        print(f"Entfernung: {us.get_dist()} cm")
+#     while True: 
+#         us = Ultra(16)
+#         print(f"Entfernung: {us.get_dist()} cm")
 
 if __name__ == "__main__":
     # execute only if run as a script
