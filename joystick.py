@@ -58,12 +58,14 @@ class Joystick:
         d = int(sum(self.direction_data)/len(self.direction_data))
         direction = 0
         if d < conf.JS_X_MEDIAN-200:
-            direction = - abs(90-(90/conf.JS_MAX_DUTY * d))
+            #direction = - abs(90-(90/conf.JS_MAX_DUTY * d))
+            direction = abs(conf.JS_MAX_DUTY-d*2)
         elif d > conf.JS_X_MEDIAN+200:
-            direction = abs(90/conf.JS_MAX_DUTY * d)
+            #direction = abs(90/conf.JS_MAX_DUTY * d)
+            direction = abs(conf.JS_MAX_DUTY-d*2)
         else:
             direction = 0
-        return int(direction)
+        return int(90/conf.JS_MAX_DUTY*direction)
 
     def calibration(self):
         print("calibrating, don't move the joystick.", end='')
@@ -83,7 +85,10 @@ class Joystick:
 
 def main():
     joystick = Joystick(26,27,0)
-    joystick.calibration()
+    while True: 
+        print(joystick.x.read_u16())
+        sleep_ms(100)
+    #joystick.calibration()
 #     while True:
 #         print(f"Speed: {joystick.get_speed()}, Direction: {joystick.get_direction()}")
 #         sleep_ms(50)

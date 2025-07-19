@@ -31,6 +31,7 @@ class Robot:
         self.speed = 0
         self.forward = True
         self.new_speed = 0
+        self.turn_value = 0
         self.last_turn_right = random.randint(0,1) == 0
         if conf.ML is not None:
             self.ml = Motor(conf.ML)
@@ -71,13 +72,13 @@ class Robot:
             elif turn < 0: 
                 if turn < -50: # If a high value for turning is sent, then spin left on the spot. 
                     self.spin_left()
-                else: # If a lower value for turnin is sent, only turn slightly to the left. 
-                    self.turn_left()
+                else: # If a lower value for turning is sent, only turn slightly to the left. 
+                    self.turn(turn)
             elif turn > 0:
                 if turn > 50: # If a high value for turning is sent, then spin right on the spot. 
                     self.spin_right()
-                else: # If a lower value for turnin is sent, only turn slightly to the right. 
-                    self.turn_right()
+                else: # If a lower value for turning is sent, only turn slightly to the right. 
+                    self.turn(turn)
             if turn > -20 and turn < 20: # Define the interval in the middle of the joystick which produces no turning. 
                 self.set_forward(self.forward)
                 self.go_straight()
@@ -125,8 +126,10 @@ class Robot:
         self.ml.set_speed(self.new_speed)
         self.mr.set_speed(self.new_speed)
         if self.mrf is not None:
+            self.mrf.set_forward(dir_l)
             self.mrf.set_speed(self.new_speed)
         if self.mlf is not None:
+            self.mlf.set_forward(dir_l)
             self.mlf.set_speed(self.new_speed)
         self.speed = self.new_speed
         
@@ -213,6 +216,16 @@ class Robot:
             self.mlf.change_speed(-5)
         if self.mrf is not None:
             self.mrf.change_speed(5)
+    
+    def turn(self,t):
+        if turn <= self.turn_value - 4 or turn >= self.turn_value + 4:
+            self.turn_value = turn
+            self.mr.change_speed(t/-4)
+            self.ml.change_speed(t/4)
+            if self.mlf is not None:
+                self.mlf.change_speed(t/4)
+            if self.mrf is not None:
+                self.mrf.change_speed(t/-4)
         
     def go_left(self):
         ''' With Meccanum wheels the robot goes sideways to the left.

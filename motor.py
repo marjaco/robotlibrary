@@ -53,11 +53,11 @@ class Motor:
         
 def main():
     try:
-        motor = Motor(14)
+        motor = Motor(12)
         for i in range(MIN_SPEED,MAX_SPEED+1,5):
-            print(int(math.floor((MAX_DUTY*(i)/MAX_SPEED)+(MIN_DUTY/MAX_SPEED*(MAX_SPEED-(i))))))
+            print(int(math.floor((MAX_DUTY*(i)/MAX_SPEED)+(MIN_DUTY/MAX_SPEED*(MAX_SPEED-(i))))),f", Speed: {i}")
             motor.set_speed(i)
-            sleep_ms(100)
+            sleep_ms(300)
         motor.off()
     except KeyboardInterrupt:
         print("Program interrupted.")
