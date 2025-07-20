@@ -1,4 +1,4 @@
-# Version 1.92
+# Version 2.0
 from micropython import const
 
 ADV_TYPE_FLAGS = const(0x01)

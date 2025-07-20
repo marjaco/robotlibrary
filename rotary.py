@@ -1,4 +1,4 @@
-# Version 1.92
+# Version 2.0
 import machine
 import utime as time
 from machine import Pin

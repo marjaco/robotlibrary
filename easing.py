@@ -1,4 +1,4 @@
-# Version 1.92
+# Version 2.0
 import math
 from robotlibrary.servo import Servo
 from time import sleep_ms
@@ -10,8 +10,8 @@ STOP=2
 def get_step(step,steps,factor):
     '''param: step: step number
     param: steps: number of steps for the whole movement
-    param: factor: '''
-    return _ease_in_out_sine(step*get_increment(steps))*factor
+    param: factor: the factor to multiply the step with'''
+    return _ease_in_out_sine(step*_get_increment(steps))*factor
 
 def get_factor(steps, angle):
     increment = STOP/steps
@@ -23,7 +23,7 @@ def get_factor(steps, angle):
         i+=increment
     return angle/s_sum
 
-def get_increment(steps):
+def _get_increment(steps):
     return STOP/steps 
 
 def _ease_in_out_quad(t: float) -> float:

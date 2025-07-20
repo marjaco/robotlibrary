@@ -1,4 +1,5 @@
-# Version 1.92
+# Version 2.0
+
 from machine import Pin, PWM
 import time
 
@@ -33,7 +34,7 @@ class Servo:
             time.sleep_ms(5)
      
     def set_angle_slowly(self,a):
-        '''If installed, the servor motor will set the angle of the ultrasonic sensor. 90° ist straight ahead.'''
+        ''' This sets the angle of the servo motor slowly.'''
         if a > self.__angle:
             if not self.inverted:
                 for i in range(self.__get_duty(self.__angle),self.__get_duty(a)):
@@ -49,7 +50,7 @@ class Servo:
                 for i in range(self.__get_duty(180-self.__angle), self.__get_duty(a)):
                     self.pin.duty_u16(i) 
         self.__angle = a
-        time.sleep_ms(4)
+        time.sleep_ms(8)
         
     def __get_duty(self,angle):
         '''Internal function. Calculates the PWM duty for the given angle.'''

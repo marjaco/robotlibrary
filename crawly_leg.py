@@ -1,4 +1,5 @@
-# Version 1.92
+# Version 2.0
+
 from robotlibrary.crawly_joint import Joint
 from robotlibrary import config_crawly as conf
 from time import sleep,sleep_ms

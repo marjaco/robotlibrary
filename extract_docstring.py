@@ -1,4 +1,4 @@
-# Version 1.92
+# Version 2.0
 import ast,glob
 from os import walk
 

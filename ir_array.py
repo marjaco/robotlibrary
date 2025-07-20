@@ -1,9 +1,12 @@
-# Version 1.92
+# Version 2.0
 from machine import Pin
 from time import sleep, sleep_ms
 BLACK = 1
 
 class IR_Array:
+    ''' This class represents an array of ir sensors. A reasonable number of sensors would be 2 to 5. 
+    It returns an error code of negative or positive values according to direction and gravity of the deviation.
+    '''
     def __init__(self, pin, count):
         #assert count % 2 != 0, "count must be uneven"
         self.pins = [0 for x in range(count)]
@@ -25,6 +28,7 @@ class IR_Array:
         return [self.pins[i].value() for i in range(len(self.pins))]
         
     def get_error(self):
+        ''' Returns the error code. '''
         sum = 0
         values = self._get_values()
         #print(values)
@@ -42,7 +46,7 @@ def main():
             print("go right")
         else:
             print("go left")
-        #print(f"Error: {ir.get_error()}")
+        print(f"Error: {ir.get_error()}")
         sleep_ms(1000)
 
         

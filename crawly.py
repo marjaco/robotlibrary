@@ -1,5 +1,5 @@
-# Version 1.92
-# peripherals
+# Version 2.0
+
 from robotlibrary.ultrasonic import Ultra
 from robotlibrary.crawly_leg import Leg
 from robotlibrary import config_crawly as conf
@@ -125,7 +125,7 @@ def main():
         c.move_to_start_pos()
         sleep(1)
         for i in range(0,10):
-             c.move_forward(20,40+1)
+             c.move_forward(20,30)
         sleep(1)
         c.park()
     except KeyboardInterrupt:

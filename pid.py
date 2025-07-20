@@ -1,4 +1,4 @@
-# Version 1.92
+# Version 2.0
 import time, random
 from robotlibrary.ir_array import IR_Array
 

@@ -1,4 +1,4 @@
-# Version 1.92
+# Version 2.0
 ########## peripherals
 from robotlibrary.motor import Motor
 from robotlibrary.ultrasonic import Ultra
@@ -319,7 +319,6 @@ class Robot:
             print("obstacle detected on pin", pin_num)
         else:
             print("There is no obstacle anymore on pin ", pin_num)
-        self.my_robot.ir_detected(pin,pin_num)
         # self.emergency_stop()
         
     def get_dist(self):

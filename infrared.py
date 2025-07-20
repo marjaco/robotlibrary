@@ -1,5 +1,6 @@
-# Version 1.92
+# Version 2.0
 from machine import Pin,Timer
+from time import sleep
 import micropython
 
 micropython.alloc_emergency_exception_buf(100)
@@ -25,3 +26,13 @@ class IR:
             self.timer.init(mode=Timer.ONE_SHOT, period=100, callback=self.reset_detected)
 
     
+def main(): 
+    from robotlibrary.robot import Robot
+    r = Robot(False)
+    while True:
+        sleep(1)
+    
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()
+            
