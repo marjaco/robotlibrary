@@ -8,7 +8,7 @@ Don't use directly or edit if you don't know what you are doing.
 This sets the angle of the servo motor immediately. 
 
 ## set_angle_slowly 
-If installed, the servor motor will set the angle of the ultrasonic sensor. 90° ist straight ahead.
+This sets the angle of the servo motor slowly.
 
 ## __get_duty 
 Internal function. Calculates the PWM duty for the given angle.
