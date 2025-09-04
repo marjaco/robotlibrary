@@ -1,4 +1,4 @@
-# Version 2.0
+# Version 2.0.1
 from time import sleep
 from central import BLECentral
 from ble_services_definitions import MOTOR_TX_UUID, MOTOR_RX_UUID, ROBOT_UUID

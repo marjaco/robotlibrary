@@ -1,4 +1,4 @@
-# Version 2.0
+# Version 2.0.1
 ########## Configuration for the motors.
 '''This defines the parameters for the motors. 
 
@@ -68,6 +68,8 @@ JS_MIN_DUTY = 260
 X_PIN = 26
 Y_PIN = 27
 B_PIN = 0
+
+JS_REVERSED = -1 # 1 for false, -1 for true.
 
 ########## Configuration of the name of the robot for matching with the remote control.
 ROBOT_NAME = "HAL9000"

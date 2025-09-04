@@ -1,4 +1,4 @@
-# Version 2.0
+# Version 2.0.1
 from machine import Pin
 from time import sleep, sleep_ms
 BLACK = 1

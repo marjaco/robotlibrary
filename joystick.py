@@ -1,4 +1,4 @@
-# Version 2.0
+# Version 2.0.1
 from machine import Pin,ADC,Timer
 from robotlibrary import config as conf
 from time import sleep, sleep_ms,ticks_diff, ticks_ms
@@ -50,7 +50,7 @@ class Joystick:
             speed = 0
         if speed > -1000 and speed < 1000:
                 speed = 0
-        return int(conf.MAX_SPEED/conf.JS_MAX_DUTY*speed)
+        return int(conf.MAX_SPEED/conf.JS_MAX_DUTY*speed) * conf.JS_REVERSED
     
     def get_direction(self):
         d = self.x.read_u16()
@@ -65,7 +65,7 @@ class Joystick:
             direction = abs(conf.JS_MAX_DUTY-d*2)
         else:
             direction = 0
-        return int(90/conf.JS_MAX_DUTY*direction)
+        return int(90/conf.JS_MAX_DUTY*direction) * conf.JS_REVERSED
 
     def calibration(self):
         print("calibrating, don't move the joystick.", end='')
@@ -85,10 +85,10 @@ class Joystick:
 
 def main():
     joystick = Joystick(26,27,0)
-    joystick.calibration()
-#     while True:
-#         print(f"Speed: {joystick.get_speed()}, Direction: {joystick.get_direction()}")
-#         sleep_ms(50)
+#    joystick.calibration()
+    while True:
+        print(f"Speed: {joystick.get_speed()}, Direction: {joystick.get_direction()}")
+        sleep_ms(50)
 
 if __name__ == "__main__":
     # execute only if run as a script

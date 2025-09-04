@@ -1,4 +1,4 @@
-# Version 2.0
+# Version 2.0.1
 from robotlibrary.walky_joint import Joint
 import robotlibrary.config_walky
 from time import sleep

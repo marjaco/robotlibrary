@@ -1,4 +1,4 @@
-# Version 2.0
+# Version 2.0.1
 
 from machine import Pin, PWM
 import time

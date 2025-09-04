@@ -1,4 +1,4 @@
-# Version 2.0
+# Version 2.0.1
 # peripherals
 from robotlibrary.servo_crab import Servo
 import robotlibrary.config_walky

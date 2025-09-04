@@ -1,4 +1,4 @@
-# Version 2.0
+# Version 2.0.1
 from machine import Pin
 from time import sleep
 from time import sleep_ms, sleep_us, ticks_us, ticks_ms

@@ -1,4 +1,4 @@
-# Version 2.0
+# Version 2.0.1
 from robotlibrary.bluetooth.ble_flags import *
 from robotlibrary.bluetooth.ble_services_definitions import ROBOT_UUID, MOTOR_RX_UUID, MOTOR_TX_UUID
 from robotlibrary.bluetooth.advertising import decode_services, decode_field

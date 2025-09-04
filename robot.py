@@ -1,4 +1,4 @@
-# Version 2.0
+# Version 2.0.1
 ########## peripherals
 from robotlibrary.motor import Motor
 from robotlibrary.ultrasonic import Ultra

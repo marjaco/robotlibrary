@@ -1,4 +1,4 @@
-# Version 2.0
+# Version 2.0.1
 from bluetooth import UUID
 from robotlibrary.bluetooth.ble_flags import FLAG_READ, FLAG_WRITE, FLAG_NOTIFY, FLAG_WRITE_NO_RESPONSE
 

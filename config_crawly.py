@@ -1,4 +1,4 @@
-# Version 2.0
+# Version 2.0.1
 ########## Configuration for the Servos in the Crawly robot
 '''
 These parameters define the Crawly robot.

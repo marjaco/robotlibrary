@@ -1,4 +1,4 @@
-# Version 2.0
+# Version 2.0.1
 
 from robotlibrary.servo import Servo
 from robotlibrary import config_crawly as conf
