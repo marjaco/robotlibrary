@@ -60,8 +60,8 @@ IR=None #11
 SERVO=None #9
 
 ########## Configuration for the Joystick remote control
-JS_X_MEDIAN = 29940 
-JS_Y_MEDIAN = 30510
+JS_X_MEDIAN = 33306 
+JS_Y_MEDIAN = 32796
 JS_MAX_DUTY = 65535
 JS_MIN_DUTY = 260
 
@@ -69,7 +69,7 @@ X_PIN = 26
 Y_PIN = 27
 B_PIN = 0
 
-JS_REVERSED = -1 # 1 for false, -1 for true.
+JS_REVERSED = -1 # -1 for false, 1 for true.
 
 ########## Configuration of the name of the robot for matching with the remote control.
 ROBOT_NAME = "HAL9000"
