@@ -20,6 +20,7 @@ except:
     BLUETOOTH_CHIP = False
 
 import machine, sys, random
+from machine import ADC
 from time import sleep, sleep_ms
 
 
@@ -47,6 +48,8 @@ class Robot:
             self.ir = IR(conf.IR,self)
         if conf.SERVO is not None:
             self.servo = Servo(conf.SERVO, False, conf.SERVO_MIN_DUTY, conf.SERVO_MAX_DUTY)
+        if conf.BATTERY is not None:
+            self.battery = ADC(conf.BATTERY)
         if rc and BLUETOOTH_CHIP:
             self.rc_is_on = True
             self.controller = BLEPeripheral(conf.ROBOT_NAME, add_robot_stuff=True)
@@ -375,7 +378,19 @@ class Robot:
             self.mr.set_speed(self.speed - control)
             self.ml.set_speed(self.speed + control)
             sleep_ms(10)
-
+            
+    def get_battery_charge(self):
+        x = [0 for a in range(100)]
+        for i in range(0,len(x)):
+            x[i] = self.battery.read_u16()
+            sleep_ms(2)
+        dx = int(sum(x)/len(x))
+        print(f"duty_16: {dx}.")
+        if(dx < conf.BATTERY_MIN):
+            return 0
+        max_charge = conf.BATTERY_MAX-conf.BATTERY_MIN
+        cur = dx - conf.BATTERY_MIN
+        return round(100/conf.BATTERY_MAX*cur, 1)
 
 ###################################
 

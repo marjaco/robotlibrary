@@ -86,9 +86,9 @@ class Joystick:
 def main():
     joystick = Joystick(26,27,0)
     joystick.calibration()
-    while True:
-        print(f"Speed: {joystick.get_speed()}, Direction: {joystick.get_direction()}")
-        sleep_ms(50)
+#     while True:
+#         print(f"Speed: {joystick.get_speed()}, Direction: {joystick.get_direction()}")
+#         sleep_ms(50)
 
 if __name__ == "__main__":
     # execute only if run as a script

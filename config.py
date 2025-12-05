@@ -43,6 +43,8 @@ MIN_DUTY = 0 # Minimum duty for the motors. Absolute minimum is 0.
 MIN_SPEED = 0 # <-- Set this
 MAX_SPEED = 100
 
+BATTERY_MIN = 30000
+BATTERY_MAX = 60000
 ########## Waiting time in milliseconds for any debouncing of buttons. 
 DEBOUNCE_WAIT = 30
 
@@ -58,6 +60,7 @@ MRF=None #20
 US=None #16
 IR=None #11
 SERVO=None #9
+BATTERY=None #28
 
 ########## Configuration for the Joystick remote control
 JS_X_MEDIAN = 33306 
