@@ -44,7 +44,7 @@ MIN_SPEED = 0 # <-- Set this
 MAX_SPEED = 100
 
 BATTERY_MIN = 30000
-BATTERY_MAX = 60000
+BATTERY_MAX = 59453 #Wer für Akku: ?
 ########## Waiting time in milliseconds for any debouncing of buttons. 
 DEBOUNCE_WAIT = 30
 

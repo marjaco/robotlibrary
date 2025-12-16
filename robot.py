@@ -390,7 +390,7 @@ class Robot:
             return 0
         max_charge = conf.BATTERY_MAX-conf.BATTERY_MIN
         cur = dx - conf.BATTERY_MIN
-        return round(100/conf.BATTERY_MAX*cur, 1)
+        return round(100/max_charge*cur, 1)
 
 ###################################
 
@@ -398,9 +398,10 @@ def main():
     try:
         # Use the name of your method as a parameter when initialising the robot object. 
         r = Robot(True)
-        r.set_speed(100)
+        #r.set_speed(100)
         while True:
             sleep(1)
+            print(r.get_battery_charge())
     except KeyboardInterrupt:
         r.emergency_stop()
     

@@ -22,7 +22,7 @@ class PID:
         if error == 0:
             self.last_controlled_state_time = int(time.time_ns())
         #print(f"Error: {error}")
-        self.integral += error * self.dt
+        self.integral += errorsetpoint * self.dt
         derivative = (error - self.previous_error) / self.dt
         self.previous_error = error
         control = self.kp * error + self.ki * self.integral + self.kd * derivative
