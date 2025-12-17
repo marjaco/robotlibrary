@@ -7,6 +7,9 @@ MIN_DUTY: Set this to the minimum duty cycle that the motor needs to start movin
 MIN_SPEED: Only 0 is making sense here but if you want you can change that. Must be above 0 though. You set set this to a higher appropriate value.
 MAX_SPEED: If you want another scale than 0-100, set the maximum here.
 
+BATTERY_MIN: Minimal value that still powers the robot. 
+BATTERY_MAX: Maximum value for the used battery. 
+
 DEBOUNCE_WAIT: This defines the waiting time for the debouncing of the buttons. Leave as it is if 
 you don't know what it means.
 
@@ -44,7 +47,7 @@ MIN_SPEED = 0 # <-- Set this
 MAX_SPEED = 100
 
 BATTERY_MIN = 30000
-BATTERY_MAX = 59453 #Wer für Akku: ?
+BATTERY_MAX = 59453 #Wert für Akku: ?
 ########## Waiting time in milliseconds for any debouncing of buttons. 
 DEBOUNCE_WAIT = 30
 
