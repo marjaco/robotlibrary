@@ -380,6 +380,8 @@ class Robot:
             sleep_ms(10)
             
     def get_battery_charge(self):
+        '''This returns the battery charge in percent from maximum to a minimal value
+        that can still power the robot. This needs to be configured in config.py '''
         x = [0 for a in range(100)]
         for i in range(0,len(x)):
             x[i] = self.battery.read_u16()
