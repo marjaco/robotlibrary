@@ -57,8 +57,12 @@ class Servo:
         return round((self.max-self.min)/180*angle+self.min)
     
 def main():
-    s = Servo(6, False, conf.MIN_DUTY, conf.MAX_DUTY)
-    s.set_angle_slowly(120)
+    s = Servo(0, False, conf.SERVO_MIN_DUTY, conf.SERVO_MAX_DUTY)
+    while True:
+        s.set_angle_slowly(0)
+        time.sleep_ms(800)
+        s.set_angle_slowly(180)
+        time.sleep_ms(800)
     
 if __name__ == "__main__":
     # execute only if run as a script
