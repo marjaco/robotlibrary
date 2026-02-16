@@ -13,10 +13,10 @@ def pid_controller(setpoint, pv, kp, ki, kd, previous_error, integral, dt):
 def main():
     setpoint = 0  # Desired setpoint
     pv = 0  # Initial process variable
-    kp = 0.6  # Proportional gain
-    ki = 0.5  # Integral gain
+    kp = 4  # 0.9 Proportional gain
+    ki = 4  # 0.6 Integral gain
     kd = 0.1  # Derivative gain
-    previous_error = -9
+    previous_error = -10
     integral = 0
     dt = 0.1  # Time step
     time_steps = []
@@ -25,22 +25,25 @@ def main():
     setpoint_values = []
     # setpoint = 100
     print(str(int(time.time())))
-    for i in range(200):  # Simulate for 100 time steps
-            control, error, integral = pid_controller(setpoint, pv, kp, ki, kd, previous_error, integral, dt)
-            print(f"Control: {control}")
-            # print(f"Error: {error}")
-            # print(f"Integral: {integral}")
-            pv += control * dt
-            # Update process variable based on control output (simplified)
-            previous_error = error
+    for i in range(200):  # Simulate for 200 time steps
+        control, error, integral = pid_controller(setpoint, pv, kp, ki, kd, previous_error, integral, dt)
+        print(f"Control {i}: {control}")
+        #print(f"Error: {error}")
+        #print(f"Integral: {integral}")
+        pv += control * dt
+        # Update process variable based on control output (simplified)
+        previous_error = error
+        if i == 100:
+            previous_error = previous_error + 5#(random.randint(-50,50)/50)
             
-            time_steps.append(i * dt)
-            pv_values.append(pv)
-            control_values.append(control)
-            setpoint_values.append(setpoint)
-            # if random.randint(0,100) >95:
-            #    pv = random.randint(0,200)
-            time.sleep(dt)
+        
+        time_steps.append(i * dt)
+        pv_values.append(pv)
+        control_values.append(control)
+        setpoint_values.append(setpoint)
+        # if random.randint(0,100) >95:
+        #    pv = random.randint(0,200)
+        #time.sleep(dt)
 
 
     print(datetime.now())
