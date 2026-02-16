@@ -53,7 +53,7 @@ class Motor:
         
 def main():
     try:
-        motor = Motor(12)
+        motor = Motor(20)
         for i in range(MIN_SPEED,MAX_SPEED+1,5):
             print(int(math.floor((MAX_DUTY*(i)/MAX_SPEED)+(MIN_DUTY/MAX_SPEED*(MAX_SPEED-(i))))),f", Speed: {i}")
             motor.set_speed(i)

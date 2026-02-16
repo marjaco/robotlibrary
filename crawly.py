@@ -119,6 +119,10 @@ class Crawly:
             l.tap()
             sleep(0.1)
     
+    def get_dist(self):
+        '''Get the distance from the ultrasonic sensor.'''
+        return self.us.get_dist()
+    
 def main():
     try: 
         c = Crawly(False)
