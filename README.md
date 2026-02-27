@@ -11,7 +11,8 @@ This is a library written in micropython for robots based on the Raspberry Pi Pi
 + a modified SMARS robot
 + a crawling robot that moves like a turtle
 + a four-legged robot that moves like a dog
-Detailed description is available on: [Jb Knowledgebase](https://bookstack.jb-net.eu/books/roboter) (Only in German)
++ a line following robot. Implementation of PID algorithm not finished yet. 
+Detailed description is available on: [Jb Knowledgebase](https://bookstack.jb-net.eu/books/robotik) (Only in German)
 
 ## Installation and running
 Rename the unpacked folder *robotlibrary* and copy it to the Raspberry Pi Pico. To use the robots, import the main class of the robot you want to use: 
