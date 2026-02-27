@@ -70,7 +70,6 @@ class Crawly:
 
         # Second step
         counter = 0
-        dividend=2
         knee_step=0
         factor = get_factor(steps,angle)
         while counter < steps/dividend:
