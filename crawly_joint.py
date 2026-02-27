@@ -162,7 +162,7 @@ class Joint:
         
 def main():    
     '''Executed, this sets all servos to 90°.'''
-    j = Joint(conf.KNEE, "rear left", True, True, 1)
+    j = Joint(conf.KNEE, "rear left", True, True, 0)
     j.calibrate()
     
 if __name__ == "__main__":
