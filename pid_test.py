@@ -13,8 +13,8 @@ def pid_controller(setpoint, pv, kp, ki, kd, previous_error, integral, dt):
 def main():
     setpoint = 0  # Desired setpoint
     pv = 0  # Initial process variable
-    kp = 4  # 0.9 Proportional gain
-    ki = 4  # 0.6 Integral gain
+    kp = 0.2  # 0.9 Proportional gain
+    ki = 0.2  # 0.6 Integral gain
     kd = 0.1  # Derivative gain
     previous_error = -10
     integral = 0

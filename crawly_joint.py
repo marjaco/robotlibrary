@@ -75,6 +75,18 @@ class Joint:
             return True # The lower thigh is within the safe range.
         return False # The limit of movement is reached.
     
+    def forward(self):
+        if self.j_type == conf.SHOULDER_FRONT:
+            self.servo.set_angle(conf.CRAWLY_FRONT_FORWARD_ANGLE)
+        elif self.j_type == conf.SHOULDER_REAR:
+            self.servo.set_angle(conf.CRAWLY_REAR_FORWARD_ANGLE)
+    
+    def backward(self):
+        if self.j_type == conf.SHOULDER_FRONT:
+            self.servo.set_angle(conf.CRAWLY_FRONT_BACKWARD_ANGLE)
+        elif self.j_type == conf.SHOULDER_REAR:
+            self.servo.set_angle(conf.CRAWLY_REAR_BACKWARD_ANGLE)
+        
     def forward_step(self, increment):
         '''This moves the leg forward by increment.'''
         if not self.left_side:

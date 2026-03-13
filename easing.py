@@ -38,7 +38,10 @@ def _ease_in_out_sine(t: float) -> float:
 
 
 def main():    
-    pass
+    i = 0.000
+    while i < 1:
+        print (_ease_in_out_sine(i))
+        i+=0.01
 
 if __name__ == "__main__":
     # execute only if run as a script

@@ -19,15 +19,27 @@ class Leg:
     
     def leg_up(self, inc):
         return self.knee.up_step(inc)
+    
+    def leg_fully_up(self):
+        return self.knee.up(conf.KNEE_MIN_ANGLE)
 
     def leg_down(self,inc):
         return self.knee.down_step(inc)
+    
+    def leg_fully_down(self):
+        return self.knee.up(conf.KNEE_MAX_ANGLE)
 
     def leg_forward(self,inc):
-        return self.shoulder.forward_step(inc) 
+        return self.shoulder.forward_step(inc)
+    
+    def leg_fully_forward(self):
+        return self.shoulder.forward()
 
     def leg_backward(self,inc):
         return self.shoulder.backward_step(inc)
+    
+    def leg_fully_backward(self):
+        return self.shoulder.backward()
     
     def get_angles(self):
         return f"Shoulder angle; {self.shoulder.servo.angle}; Knee angle; {self.knee.servo.angle}"
