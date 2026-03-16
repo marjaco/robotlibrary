@@ -98,7 +98,7 @@ class Crawly:
             counter+=1
         
     def park(self):
-        '''This stretches legs the legs lengthwise, so the robot lies on its underside.'''
+        '''This stretches the legs lengthwise, so the robot lies on its underside.'''
         for l in self.legs.values():
             l.park()
         
