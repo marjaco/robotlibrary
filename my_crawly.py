@@ -1,4 +1,4 @@
-# Version 2.0.1
+# Version 2.0.2
 
 from time import sleep, sleep_ms
 from robotlibrary.crawly import Crawly
@@ -17,12 +17,20 @@ class MyCrawly(Crawly):
             }
         
     def galumph(self):
-        for l in self.legs.values():
-            l.leg_fully_up()
-            l.leg_fully_forward()
-            l.leg_fully_down()
-            l.leg_fully_backward()
-                
+        while True:
+            for l in self.legs.values():
+                l.leg_fully_up()
+            sleep_ms(150)
+            for l in self.legs.values():
+                l.leg_fully_forward()
+            sleep_ms(150)
+            for l in self.legs.values():
+                l.leg_fully_down()
+            sleep_ms(150)
+            for l in self.legs.values():
+                l.leg_fully_backward()
+            sleep_ms(150)
+#                 
 class MyLeg(Leg):
     def __init__(self, pin, right, front, name):
         if right and front: 

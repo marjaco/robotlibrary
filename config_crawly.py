@@ -1,4 +1,4 @@
-# Version 2.0.1
+# Version 2.0.2
 ########## Configuration for the Servos in the Crawly robot
 '''
 These parameters define the Crawly robot.
@@ -43,7 +43,7 @@ SHOULDER_FRONT_MAX_ANGLE = 180 # forward motion
 SHOULDER_REAR_MIN_ANGLE =  20 # backward motion
 SHOULDER_REAR_MAX_ANGLE = 140 # forward motion
 KNEE_MIN_ANGLE = 65 # up motion
-KNEE_MAX_ANGLE = 180 # down motion
+KNEE_MAX_ANGLE = 179 # down motion
 
 ########## Configuration of pins
 US=None #16

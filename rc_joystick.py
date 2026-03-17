@@ -1,4 +1,4 @@
-# Version 2.0.1
+# Version 2.0.2
 ########## Import the configuration
 from robotlibrary import config as conf
 from robotlibrary.rotary import Rotary

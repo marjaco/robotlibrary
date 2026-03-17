@@ -1,4 +1,4 @@
-# Version 2.0.1
+# Version 2.0.2
 
 from robotlibrary.servo import Servo
 from robotlibrary import config_crawly as conf
@@ -76,16 +76,29 @@ class Joint:
         return False # The limit of movement is reached.
     
     def forward(self):
-        if self.j_type == conf.SHOULDER_FRONT:
-            self.servo.set_angle(conf.CRAWLY_FRONT_FORWARD_ANGLE)
-        elif self.j_type == conf.SHOULDER_REAR:
-            self.servo.set_angle(conf.CRAWLY_REAR_FORWARD_ANGLE)
+        if not self.left_side:
+            if self.j_type == conf.SHOULDER_FRONT:
+                self.servo.set_angle(conf.CRAWLY_FRONT_FORWARD_ANGLE)
+            elif self.j_type == conf.SHOULDER_REAR:
+                self.servo.set_angle(conf.CRAWLY_REAR_FORWARD_ANGLE)
+        else:
+            if self.j_type == conf.SHOULDER_FRONT:
+                self.servo.set_angle(180 - conf.CRAWLY_FRONT_FORWARD_ANGLE)
+            elif self.j_type == conf.SHOULDER_REAR:
+                self.servo.set_angle(180 - conf.CRAWLY_REAR_FORWARD_ANGLE)
+            
     
     def backward(self):
-        if self.j_type == conf.SHOULDER_FRONT:
-            self.servo.set_angle(conf.CRAWLY_FRONT_BACKWARD_ANGLE)
-        elif self.j_type == conf.SHOULDER_REAR:
-            self.servo.set_angle(conf.CRAWLY_REAR_BACKWARD_ANGLE)
+        if not self.left_side:
+            if self.j_type == conf.SHOULDER_FRONT:
+                self.servo.set_angle(conf.CRAWLY_FRONT_BACKWARD_ANGLE)
+            elif self.j_type == conf.SHOULDER_REAR:
+                self.servo.set_angle(conf.CRAWLY_REAR_BACKWARD_ANGLE)
+        else:
+            if self.j_type == conf.SHOULDER_FRONT:
+                self.servo.set_angle(180 - conf.CRAWLY_FRONT_BACKWARD_ANGLE)
+            elif self.j_type == conf.SHOULDER_REAR:
+                self.servo.set_angle(180 - conf.CRAWLY_REAR_BACKWARD_ANGLE)
         
     def forward_step(self, increment):
         '''This moves the leg forward by increment.'''
@@ -174,8 +187,8 @@ class Joint:
         
 def main():    
     '''Executed, this sets all servos to 90°.'''
-    j = Joint(conf.KNEE, "rear left", True, True, 0)
-    j.calibrate()
+    j = Joint(conf.SHOULDER_FRONT, "front left", True, False, 2)
+    j.backward()
     
 if __name__ == "__main__":
     # execute only if run as a script

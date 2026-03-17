@@ -1,4 +1,4 @@
-# Version 2.0.1
+# Version 2.0.2
 from micropython import const
 from robotlibrary.bluetooth.ble_flags import *
 import struct

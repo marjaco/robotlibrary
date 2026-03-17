@@ -1,4 +1,4 @@
-# Version 2.0.1
+# Version 2.0.2
 import bluetooth
 from robotlibrary.bluetooth.advertising import advertising_payload
 from robotlibrary.bluetooth.ble_flags import *

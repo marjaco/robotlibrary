@@ -1,4 +1,4 @@
-# Version 2.0.1
+# Version 2.0.2
 
 class Steering:
     def __init__ (self, rc):

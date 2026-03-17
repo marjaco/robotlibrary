@@ -1,4 +1,4 @@
-# Version 2.0.1
+# Version 2.0.2
 import math
 from robotlibrary.servo import Servo
 from time import sleep_ms

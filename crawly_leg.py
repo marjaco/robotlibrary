@@ -1,4 +1,4 @@
-# Version 2.0.1
+# Version 2.0.2
 
 from robotlibrary.crawly_joint import Joint
 from robotlibrary import config_crawly as conf
@@ -27,7 +27,7 @@ class Leg:
         return self.knee.down_step(inc)
     
     def leg_fully_down(self):
-        return self.knee.up(conf.KNEE_MAX_ANGLE)
+        return self.knee.down(conf.CRAWLY_DOWN_ANGLE)
 
     def leg_forward(self,inc):
         return self.shoulder.forward_step(inc)

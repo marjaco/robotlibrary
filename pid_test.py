@@ -1,4 +1,4 @@
-# Version 2.0.1
+# Version 2.0.2
 import time, random
 import matplotlib.pyplot as plt
 from datetime import datetime
