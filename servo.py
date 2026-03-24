@@ -1,7 +1,7 @@
 # Version 2.0.2
 
 from machine import Pin, PWM
-import time
+from time import sleep_ms, sleep_us
 
 from robotlibrary import config as conf
 class Servo:
@@ -15,6 +15,7 @@ class Servo:
         self.min=min_duty
         self.max=max_duty
         self.set_angle(90)
+        self.__wait=150
         
     @property
     def angle(self):
@@ -31,7 +32,7 @@ class Servo:
                 self.pin.duty_u16(self.__get_duty(self.__angle))
             else:
                 self.pin.duty_u16(self.__get_duty(180-self.__angle))
-            time.sleep_ms(5)
+            sleep_ms(5)
      
     def set_angle_slowly(self,a):
         ''' This sets the angle of the servo motor slowly.'''
@@ -39,18 +40,22 @@ class Servo:
             if not self.inverted:
                 for i in range(self.__get_duty(self.__angle),self.__get_duty(a)):
                     self.pin.duty_u16(i)
+                    sleep_us(self.__wait)
             else: 
                 for i in range(self.__get_duty(180-self.__angle),self.__get_duty(a), -1):
                     self.pin.duty_u16(i)
+                    sleep_us(self.__wait)
         elif a < self.__angle:
             if not self.inverted:
                 for i in range(self.__get_duty(self.__angle), self.__get_duty(a),-1):
                     self.pin.duty_u16(i)
+                    sleep_us(self.__wait)
             else: 
                 for i in range(self.__get_duty(180-self.__angle), self.__get_duty(a)):
-                    self.pin.duty_u16(i) 
+                    self.pin.duty_u16(i)
+                    sleep_us(self.__wait)
         self.__angle = a
-        time.sleep_ms(8)
+        #sleep_ms(8)
         
     def __get_duty(self,angle):
         '''Internal function. Calculates the PWM duty for the given angle.'''
@@ -58,11 +63,13 @@ class Servo:
     
 def main():
     s = Servo(0, False, conf.SERVO_MIN_DUTY, conf.SERVO_MAX_DUTY)
-    while True:
-        s.set_angle_slowly(0)
-        time.sleep_ms(800)
-        s.set_angle_slowly(180)
-        time.sleep_ms(800)
+    s.set_angle(0)
+    for i in range(10):
+        print(f"Turn {i}")
+        s.set_angle(0)
+        sleep_ms(500)
+        s.set_angle(180)
+        sleep_ms(500)
     
 if __name__ == "__main__":
     # execute only if run as a script

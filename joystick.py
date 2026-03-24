@@ -52,6 +52,16 @@ class Joystick:
                 speed = 0
         return int(conf.MAX_SPEED/conf.JS_MAX_DUTY*speed) * conf.JS_REVERSED
     
+    def get_x(self):
+        '''This does the same as get_direction(). You might use this if you want
+        to use the joystick in another way. It is easier to read the code then. '''
+        return get_speed()
+    
+    def get_y(self):
+        '''This does the same as get_direction(). You might use this if you want
+        to use the joystick in another way. It is easier to read the code then. ''' 
+        return get_direction()
+    
     def get_direction(self):
         d = self.x.read_u16()
         self.direction_data.append(d)
